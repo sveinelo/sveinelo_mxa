@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>MXA - Administrasjon - Vis melding</title>
+        <link href="styles/altut.css" rel="stylesheet" type="text/css" media="screen"/>
+    </head>
+	<body>
+		<div id="pageWrap">
+			<div id="headerWrap">
+				<div id="logo">
+					<img src="img/Logo.png" alt="Logo"/>
+				</div>
+				<div id="header">
+					<p class="appNameShort">Administrasjonssider</p>
+					<p class="appNameDesc">Message Exchange Altinn (MXA)</p>					
+				</div>
+			</div>
+			<div id="contentWrap">
+				<div id="nav">
+					<ul>
+						<li>
+							<a href="meldingerMedAvvik.xhtml">tilbake</a>
+						</li>
+					</ul>
+				</div>
+				<div id="content">
+				<ui:composition template="templates/status.xhtml">
+					<ui:define name="title">MXA - Administrasjon - Status<h:outputText value=" #{showMessageModel.message.messageReference}" rendered="#{showMessageModel.message != null}" /></ui:define>
+					<ui:define name="content">
+						<h1>Viser melding: <h:outputText value="#{showMessageModel.message.messageReference}" rendered="#{showMessageModel.message != null}" /></h1>
+						<div class="box">
+							<h2>Logg</h2>						
+							<h:dataTable value="#{showMessageModel.message.log}" var="logEntry" rendered="#{not empty showMessageModel.message.log}" rowClasses=" ,alt1">							
+								<h:column id="timeColumn">
+									<f:facet name="header">
+										<h:outputText value="Når" />
+									</f:facet>
+									<h:outputText value="#{logEntry.time}" styleClass="no-wrap">
+										<f:converter converterId="dateWithHoursAndSecondsConverter" />
+									</h:outputText>
+								</h:column>
+								<h:column id="typeColumn">
+									<f:facet name="header">
+										<h:outputText value="Hendelse" />
+									</f:facet>
+									<h:outputText value="#{logEntry.logType}" />
+								</h:column>
+								<h:column id="logMessageColumn">
+									<f:facet name="header">
+										<h:outputText value="Hendelsesbeskjed" />
+									</f:facet>
+									<h:outputText value="#{logEntry.logMessage}" />
+								</h:column>
+							</h:dataTable>
+						</div>
+						<div class="box">
+							<h2>Metadata</h2>
+							<ul>
+								<li><span>Mottaker Orgnr/Fnr:</span></li>								
+								<li><h:outputText value="#{showMessageModel.message.participantId}" rendered="#{showMessageModel.message != null}" /></li>
+								<li><span>Emne:</span></li>
+								<li><h:outputText value="#{showMessageModel.message.messageHeader}" rendered="#{showMessageModel.message != null}" escape="false" /></li>
+								<li><span>Sammendrag:</span></li>
+								<li><h:outputText value="#{showMessageModel.message.messageSummary}" rendered="#{showMessageModel.message != null}" escape="false" /></li>
+							</ul>
+							<ul class="info">
+								<li><span>Avsender:</span><h:outputText value="#{showMessageModel.message.sendingSystem}" rendered="#{showMessageModel.message != null}" /></li>
+								<li><span>Meldingsreferanse:</span><h:outputText value="#{showMessageModel.message.messageReference}" rendered="#{showMessageModel.message != null}" /></li>
+								<li>
+									<span>Lesefrist:</span>
+									<h:outputText value="#{showMessageModel.message.readDeadline}" rendered="#{showMessageModel.message != null}">
+										<f:converter converterId="dateWithoutHoursAndSecondsConverter" />
+									</h:outputText><br />
+								</li>
+								<li><span>AM-nummer:</span><h:outputText value="#{showMessageModel.message.altinnArchive}" rendered="#{showMessageModel.message != null}" /></li>
+								<li><span>Domene:</span><h:outputText value="#{showMessageModel.message.domain}" rendered="#{showMessageModel.message != null}" /></li>
+								<li>
+									<span>Sendt Altinn:</span>
+									<h:outputText value="#{showMessageModel.message.sentAltinn}" 
+										rendered="#{showMessageModel.message != null and showMessageModel.message.sentAltinn eq 0}" converter="yesNoConverter" />
+									<h:outputText value="#{showMessageModel.message.sentAltinnDate}" 
+										rendered="#{showMessageModel.message.sentAltinn == 1}"
+										converter="dateWithHoursAndSecondsConverter" />	
+								</li>
+								<li><span>Status i MXA:</span><h:outputText value="#{showMessageModel.message.messageStatus}" rendered="#{showMessageModel.message != null}" converter="messageStatusConverter" /></li>
+								<li><span>Kundeinformasjon:</span><h:outputText value="#{showMessageModel.message.caseDescription}" rendered="#{showMessageModel.message != null}" /></li>
+								<li><span>Saksbehandler:</span><h:outputText value="#{showMessageModel.message.caseOfficer}" rendered="#{showMessageModel.message != null}" /></li>
+								<li>
+									<span>Purring sendt:</span>
+									<h:outputText value="#{showMessageModel.message.overdueNoticeSent}" rendered="#{showMessageModel.message != null}" converter="yesNoConverter" />
+								</li>
+							</ul>
+						</div>
+						<div class="box">
+							<h2>Kontaktinformasjon</h2>
+							<h:dataTable value="#{showMessageModel.message.contactInfo}" var="contact" rendered="#{not empty showMessageModel.message.contactInfo}" rowClasses=" ,alt1">
+								<h:column id="typeColumn">
+									<f:facet name="header">
+										<h:outputText value="Type" />
+									</f:facet>
+									<h:outputText value="#{contact.type}" />
+								</h:column>
+								<h:column id="contactColumn">
+									<f:facet name="header">
+										<h:outputText value="Adresse" />
+									</f:facet>
+									<h:outputText value="#{contact.address}" />
+								</h:column>
+							</h:dataTable>
+						</div>
+						<div class="box">
+							<h2>Vedlegg</h2>
+							<h:dataTable value="#{showMessageModel.message.attachments}" var="attachment" rendered="#{not empty showMessageModel.message.attachments}" rowClasses=" ,alt1">
+								<h:column id="nameColumn">
+									<f:facet name="header">
+										<h:outputText value="Dokument" />
+									</f:facet>
+									<h:outputText value="#{attachment.name}" />
+								</h:column>
+								<h:column id="fileNameColumn">
+									<f:facet name="header">
+										<h:outputText value="Filnavn" />
+									</f:facet>
+									<h:outputLink value="LastNed?attachmentId=${attachment.id}" target="_blank">
+										<h:outputText value="#{attachment.fileName}" />
+									</h:outputLink>  
+								</h:column>
+								<h:column id="mimeTypeColumn">
+									<f:facet name="header">
+										<h:outputText value="mime-type" />
+									</f:facet>
+									<h:outputText value="#{attachment.mimeType}" />
+								</h:column>
+							</h:dataTable>
+						</div>
+					</ui:define>
+					<ui:define name="footerWrap">
+						<div id="developedBy"><h:outputText value="#{footerModel.developedBy}" /></div>
+						<div id="version"><h:outputText value="#{footerModel.version}" /></div>
+					</ui:define>
+				</ui:composition>
+					<table>
+						<tr>
+							<th colspan="4">Hendelseslogg</th>
+						</tr>
+						<tr class="alt1">
+							<td><b>Dato</b></td>
+							<td><b>Hendelse</b></td>
+							<td><b>Status</b></td>
+						</tr>
+						<tr class="alt2">
+							<td>02.03.2009 13:31:03</td>
+							<td>Mottatt MXA</td>
+							<td>OK</td>
+						</tr>
+						<tr class="alt1">
+							<td>02.03.2009 13:41:04</td>
+							<td>Oversendt Altinn</td>
+							<td>OK</td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<th>Dokument</th>
+							<th>Filnavn</th>
+						</tr>
+						<tr class="alt1">
+							<td>Svardokument</td>
+							<td><a href=".">Altut melding.txt</a></td>
+						</tr>
+						<tr class="alt2">
+							<td>Vedleggsdokument</td>
+							<td><a href=".">Altut melding.txt</a></td>
+						</tr>
+					</table>
+				</div>			
+			</div>
+			<div id="footerWrap">
+				<div id="developedBy">.</div>
+				<div id="version">SNAPSHOT</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+                           http://www.springframework.org/schema/context
+						   http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="overwriteExistingJobs" value="false" />
+		<property name="autoStartup" value="true" />
+		<property name="startupDelay" value="300" />
+		<property name="triggers">
+			<list>
+				<bean id="cronCheckNewMessages" class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="jobDetail">
+						<bean id="checkNewMessagesQuartzJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+							<property name="jobClass" value="no.mxa.service.batch.CheckNewMessagesQuartzJob" />
+						</bean>
+					</property>
+				</bean>
+				<bean id="cronConfirmationBatch" class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="jobDetail">
+						<bean id="confirmationBatchQuartzJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+							<property name="jobClass" value="no.mxa.service.batch.ConfirmationBatchQuartzJob" />
+						</bean>
+					</property>
+				</bean>
+				<bean id="cronSendDeviationNoticeAndWarn" class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="jobDetail">
+						<bean id="sendDeviationNoticeAndWarnQuartzJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+							<property name="jobClass" value="no.mxa.service.batch.SendDeviationNoticeAndWarnQuartzJob" />
+						</bean>
+					</property>
+				</bean>
+			</list>
+		</property>
+		<property name="quartzProperties" ref="quartzProperties" />
+	</bean>
+	<context:annotation-config />
+</beans>

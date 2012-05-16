@@ -1,0 +1,53 @@
+package no.mxa.service.batch.confirmation;
+
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.inject.Inject;
+
+import no.mxa.service.KeyValues;
+import no.mxa.service.LogGenerator;
+import no.mxa.service.LogService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * This class connects to a FTP server and processes receipt XML files from Altinn
+ */
+public final class ReceiptProcessor {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReceiptProcessor.class);
+
+	private final ReceiptXMLProcessor receiptXMLProcessor;
+
+	private final BatchFTPLoader ftp;
+
+	@Inject
+	public ReceiptProcessor(KeyValues keyValues, ReceiptXMLProcessor receiptXMLProcessor, LogGenerator logGenerator,
+			LogService logService) {
+		this.receiptXMLProcessor = receiptXMLProcessor;
+		ftp = new BatchFTPLoaderImpl(keyValues, logGenerator, logService);
+	}
+
+	/**
+	 * Connects to a FTP server and processes receipt XML
+	 */
+	public void process() {
+		try {
+			Map<String, String> receipts = ftp.getFilesFromFtpAsString();
+			processXML(receipts);
+		} catch (MxaFtpException e) {
+			// TODO: Ftp, handle Exceptions when communicating with FTP
+			LOGGER.error("Failed to establish FTP communication", e);
+		}
+	}
+
+	void processXML(Map<String, String> receipts) {
+		for (Entry<String, String> receipt : receipts.entrySet()) {
+			boolean success = receiptXMLProcessor.process(receipt.getValue(), receipt.getKey());
+			// TODO: Reciept, what to do if processing fails? At this point, the content exist in memory. Ftp-file-handling is
+			// over...
+		}
+	}
+
+}

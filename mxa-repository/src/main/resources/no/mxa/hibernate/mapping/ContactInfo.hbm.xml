@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="no.mxa.dto.ContactInfoDTO" table="CONTACTINFO">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" precision="9" scale="0" />
+			<generator class="native">
+				<param name="sequence">
+					CONTACTINFO_SEQ
+				</param>
+			</generator>
+		</id>
+		<many-to-one name="message" class="no.mxa.dto.MessageDTO" column="MESSAGEID" not-null="true"/>
+		<property name="type" type="java.lang.String" not-null="true">
+			<column name="TYPE" length="10" />
+		</property>
+		<property name="address" type="java.lang.String" not-null="true">
+			<column name="ADDRESS" length="200" />
+		</property>
+	</class>
+</hibernate-mapping>

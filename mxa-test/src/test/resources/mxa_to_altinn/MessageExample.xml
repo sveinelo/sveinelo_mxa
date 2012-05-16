@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Message batchSending="1" domain="PT" sendingSystem="AGENCY"
+	xsi:noNamespaceSchemaLocation="sant_mxa.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	caseDescription="test message example" caseOfficer="ttt,Mr. Test">
+	<ParticipantId>31124901793</ParticipantId>
+	<MessageReference>P1234-5-test</MessageReference>
+	<Idproc>66A50D806D9444E5E044000E7F7E0BD2</Idproc>
+	<DueDate>2009-04-07</DueDate>
+	<AltinnArchive>AM12345</AltinnArchive>
+	<Content>
+    <MessageHeader><![CDATA[VM&nbsp;200900061,Main test altut,Deres ref&nbsp;E29723/soi/test]]></MessageHeader>
+    <MessageSummery><![CDATA[Må besvares innen:2009.06.01<br />Saksnummer:VM&nbsp;200900061&nbsp;<br />Brevtype:Main test altut<br />Deres ref:E29723/soi/test<br />Status:01000&nbsp;Under behandling&nbsp;Mottatt<br />Tittel:test sans player<br />Saksbehandler:soi]]></MessageSummery>		
+    <Attachments>
+			<Attachment filename="filename.txt" name="Vedlegg 1"
+				mimeType="text/plain">RGV0dGUgZXIgZmlsIG51bW1lciAxLgoK</Attachment>
+			<Attachment filename="filename.txt" name="Vedlegg 1"
+				mimeType="text/plain">SGVyIGVyIGZpbCBudW1tZXIgMi4KCg==</Attachment>
+			<Attachment filename="filename.txt" name="Vedlegg 1"
+				mimeType="text/plain">VHJlZGplIGZpbGVuIGVyIGRlbm5lLgo=</Attachment>
+		</Attachments>
+	</Content>
+	<NotificationMessages>
+		<NotificationMessage>
+			<SMSPhoneNumbers>
+				<SMSPhoneNumber>+4700000000</SMSPhoneNumber>
+			</SMSPhoneNumbers>
+			<EmailAddresses>
+                <EmailAddress>oslo@foo.bar</EmailAddress>
+            </EmailAddresses>
+		</NotificationMessage>
+	</NotificationMessages>
+</Message>

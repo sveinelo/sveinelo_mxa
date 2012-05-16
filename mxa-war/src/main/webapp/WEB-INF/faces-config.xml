@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+	version="1.2">
+
+	<application>
+		<view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+	</application>
+
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+	</application>
+
+	<converter>
+		<converter-id>messageStatusConverter</converter-id>
+		<converter-class>no.mxa.web.converter.MessageStatusConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>yesNoConverter</converter-id>
+		<converter-class>no.mxa.web.converter.YesNoConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>dateWithHoursAndSecondsConverter</converter-id>
+		<converter-class>no.mxa.web.converter.DateWithHoursAndSecondsConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>dateWithoutHoursAndSecondsConverter</converter-id>
+		<converter-class>no.mxa.web.converter.DateWithoutHoursAndSecondsConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>deviationTypeConverter</converter-id>
+		<converter-class>no.mxa.web.converter.DeviationTypeConverter</converter-class>
+	</converter>
+</faces-config>

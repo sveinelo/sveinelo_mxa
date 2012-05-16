@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>MXA - Administrasjon - Meldinger med avvik</title>
+        <link href="styles/altut.css" rel="stylesheet" type="text/css" media="screen"/>
+    </head>
+    <body>
+        <div id="pageWrap">
+            <div id="headerWrap">
+                <div id="logo">
+                    <img src="img/Logo.png" alt="Logo"/>
+                </div>
+                <div id="header">
+                    <p class="appNameShort">Administrasjonssider</p>
+
+                    <p class="appNameDesc">Message Exchange Altinn (MXA)</p>
+                </div>
+            </div>
+            <div id="contentWrap">
+                <div id="nav">
+                    <ul>
+                        <li class="active">
+                            <a href="meldingerMedAvvik.html">Meldinger med avvik</a>
+                        </li>
+                        <li>
+                            <a href="filtrerMeldingerAlle.html">Søk/ filtrer (alle meldinger)</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="content">
+                    <ui:composition template="templates/main.xhtml">
+                        <ui:define name="title">MXA - Administrasjon - Meldinger med avvik</ui:define>
+                        <ui:define name="content">
+                        	<h1>Meldinger med avvik</h1>
+                            <p>Tabellen under viser meldinger i MXA som har avvik.</p>
+							<h:dataTable value="#{deviationMessagesModel.deviationList}" var="message" rendered="#{not empty deviationMessagesModel.deviationList}" rowClasses=" ,alt1"> 
+								<h:column id="messageReferenceColumn">
+									<f:facet name="header">
+										<h:outputText value="Meldingsreferanse" />
+									</f:facet>
+									<h:outputLink value="visMelding.xhtml?messageKey=${message.messageKey}">
+										<h:outputText value="#{message.messageReference}" />
+									</h:outputLink>
+								</h:column>
+								<h:column id="domainColumn">
+									<f:facet name="header">
+										<h:outputText value="Dom." />
+									</f:facet>
+									<h:outputText value="#{message.domain}" />
+								</h:column>
+								<h:column id="participantIdColumn">
+									<f:facet name="header">
+										<h:outputText value="Orgnr/Fnr" />
+									</f:facet>
+									<h:outputText value="#{message.participantId}" />
+								</h:column>
+								<h:column id="caseDescriptionColumn">
+									<f:facet name="header">
+										<h:outputText value="Kundeinformasjon" />
+									</f:facet>
+									<h:outputText value="#{message.caseDescription}" />
+								</h:column>
+								<h:column id="altinnArchiveColumn">
+									<f:facet name="header">
+										<h:outputText value="AM" />
+									</f:facet>
+									<h:outputText value="#{message.altinnArchive}" />
+								</h:column>
+								<h:column id="readDeadlineColumn">
+									<f:facet name="header">
+										<h:outputText value="Lesefrist" />
+									</f:facet>
+									<h:outputText value="#{message.readDeadline}" converter="dateWithoutHoursAndSecondsConverter" />
+								</h:column>
+								<h:column id="sentAltinnColumn">
+									<f:facet name="header">
+										<h:outputText value="Sendt Altinn" />
+									</f:facet>
+									<h:outputText value="#{message.sentAltinn}" converter="yesNoConverter" />
+								</h:column>
+								<h:column id="sentAltinnDateColumn">
+									<f:facet name="header">
+										<h:outputText value="Dato sendt Altinn" />
+									</f:facet>
+									<h:outputText value="#{message.sentAltinnDate}" rendered="#{message.sentAltinn == 1}"
+										converter="dateWithHoursAndSecondsConverter" />
+								</h:column>
+								<h:column id="messageStatusColumn">
+									<f:facet name="header">
+										<h:outputText value="Avvikstype" />
+									</f:facet>
+									<h:outputText value="#{message.messageStatus}" converter="deviationTypeConverter" />
+								</h:column>
+							</h:dataTable>
+						</ui:define>
+						<ui:define name="footerWrap">
+							<div id="developedBy"><h:outputText value="#{footerModel.developedBy}" /></div>
+							<div id="version"><h:outputText value="#{footerModel.version}" /></div>
+						</ui:define>
+                    </ui:composition>
+                            <table>
+                                <tr>
+                                    <th>Valg</th>
+                                    <th>Orgnr./Fødselsnr.</th>
+                                    <th>Domene (sakstype)</th>
+                                    <th>Tittel</th>
+                                    <th>Avs. initialer</th>
+                                    <th>Svarfrist</th>
+                                    <th>AM-nummer</th>
+                                    <th>Oversendt dato</th>
+                                    <th>Avvikstype</th>
+                                </tr>
+                                <tr class="alt1">
+                                    <td><a href="visMelding.html">Vis</a></td>
+                                    <td>31124912345</td>
+                                    <td>Brev med frist</td>
+                                    <td>Svar på søknad</td>
+
+                                    <td>AA</td>
+                                    <td>13.10.2009</td>
+                                    <td>AM123456</td>
+                                    <td>13.09.2009</td>
+                                    <td>Ikke bekreftet</td>
+                                </tr>
+                                <tr class="alt2">
+                                    <td><a href="visMelding.html">Vis</a></td>
+                                    <td>999999999</td>
+                                    <td>Varemerke</td>
+                                    <td>Tittel/ emne</td>
+                                    <td>AA</td>
+                                    <td>13.10.2009</td>
+
+                                    <td>677787812/1210</td>
+                                    <td>13.09.2009</td>
+                                    <td>Ikke bekreftet</td>
+                                </tr>
+                            </table>
+                </div>
+            </div>
+            <div id="footerWrap">
+                <div id="developedBy">.</div>
+                <div id="version">SNAPSHOT</div>
+            </div>
+        </div>
+    </body>
+</html>

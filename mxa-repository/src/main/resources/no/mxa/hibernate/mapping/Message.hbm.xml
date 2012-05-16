@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="no.mxa.dto.MessageDTO" table="MESSAGE">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" precision="9" scale="0" />
+			<generator class="native">
+				<param name="sequence">
+					MESSAGE_SEQ
+				</param>
+			</generator>
+		</id>
+		<property name="messageKey" type="java.lang.String" not-null="true">
+			<column name="MESSAGEKEY" length="80" />
+		</property>
+		<property name="sendingSystem" type="java.lang.String" not-null="true">
+			<column name="SENDINGSYSTEM" length="15" />
+		</property>
+		<property name="batchSending" type="java.lang.Integer" not-null="true">
+			<column name="BATCHSENDING" precision="1" />
+		</property>
+		<property name="domain" type="java.lang.String" not-null="true">
+			<column name="DOMAIN" length="10" />
+		</property>
+		<property name="caseDescription" type="java.lang.String">
+			<column name="CASEDESCRIPTION" length="50" />
+		</property>
+		<property name="caseOfficer" type="java.lang.String">
+			<column name="CASEOFFICER" length="50" />
+		</property>
+		<property name="participantId" type="java.lang.String" not-null="true">
+			<column name="PARTICIPANTID" length="11" />
+		</property>
+		<property name="messageReference" type="java.lang.String" not-null="true">
+			<column name="MESSAGEREFERENCE" length="40" />
+		</property>
+		<property name="idproc" type="java.lang.String" not-null="true">
+			<column name="IDPROC" length="40" />
+		</property>
+		<property name="dueDate" type="java.util.Date">
+			<column name="DUEDATE" />
+		</property>
+		<property name="altinnArchive" type="java.lang.String">
+			<column name="ALTINNARCHIVE" length="50" />
+		</property>
+		<property name="messageHeader" type="java.lang.String" not-null="true">
+			<column name="MESSAGEHEADER" length="128" />
+		</property>
+		<property name="messageSummary" type="java.lang.String" not-null="true">
+			<column name="MESSAGESUMMARY" length="512" />
+		</property>
+		<property name="sentAltinn" type="java.lang.Integer" not-null="true">
+			<column name="SENTALTINN" precision="1" />
+		</property>
+		<property name="sentAltinnDate" type="java.sql.Timestamp">
+			<column name="SENTALTINNDATE" />
+		</property>
+		<property name="messageStatus" type="java.lang.Integer" not-null="true">
+			<column name="MSG_STATUS" precision="1" />
+		</property>
+		<property name="readDeadline" type="java.util.Date" not-null="true">
+			<column name="READDEADLINE" />
+		</property>
+		<property name="overdueNoticeSent" type="java.lang.Integer" not-null="true">
+			<column name="OVERDUENOTICESENT" precision="1" />
+		</property>
+		<bag name="attachments" cascade="all" lazy="false" inverse="true">
+			<key column="MESSAGEID" />
+			<one-to-many class="no.mxa.dto.AttachmentDTO" />
+		</bag>
+		<bag name="contactInfo" cascade="all" lazy="false" inverse="true">
+			<key column="MESSAGEID" />
+			<one-to-many class="no.mxa.dto.ContactInfoDTO" />
+		</bag>
+		<bag name="log" cascade="all" lazy="false" inverse="true" order-by="time desc">
+			<key column="MESSAGEID" />
+			<one-to-many class="no.mxa.dto.LogDTO" />
+		</bag>
+	</class>
+</hibernate-mapping>

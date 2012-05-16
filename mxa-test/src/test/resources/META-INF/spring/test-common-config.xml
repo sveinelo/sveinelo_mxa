@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!--configuration of hibernate environment -->
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:no/mxa/hibernate/mapping/Attachment.hbm.xml</value>
+				<value>classpath:no/mxa/hibernate/mapping/ContactInfo.hbm.xml</value>
+				<value>classpath:no/mxa/hibernate/mapping/KeyValues.hbm.xml</value>
+				<value>classpath:no/mxa/hibernate/mapping/Log.hbm.xml</value>
+				<value>classpath:no/mxa/hibernate/mapping/Message.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties" ref="hibernateProperties" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+</beans>

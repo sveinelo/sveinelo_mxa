@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>MXA - Administrasjon - Meldinger med avvik</title>
+		<link href="styles/altut.css" rel="stylesheet" type="text/css" media="screen" />
+	</head>
+	<body>
+		<div id="pageWrap">
+			<div id="headerWrap">
+				<div id="logo">
+					<img src="img/Logo.png" alt="Logo" />
+				</div>
+				<div id="header">
+					<p class="appNameShort">
+						Administrasjonssider
+					</p>
+					<p class="appNameDesc">
+						Message Exchange Altinn (MXA)
+					</p>
+				</div>
+			</div>
+			<div id="contentWrap">
+				<div id="nav">
+					<ul>
+						<li>
+							<a href="meldingerMedAvvik.xhtml">Meldinger med avvik</a>
+						</li>
+						<li class="active">
+							<a href="filtrerMeldingerAlle.xhtml">Søk/ filtrer (alle meldinger)</a>
+						</li>
+					</ul>
+				</div>
+				<div id="content">
+					<ui:composition template="templates/main.xhtml">
+						<ui:define name="title">MXA - Søk/ finn melding</ui:define>
+						<ui:define name="content">
+							<h1>Søk/ finn melding</h1>
+							<p class="highlight">
+								Resultatlisten viser de første 100 resultatene fra søket.
+								Bruk søkefeltene for å begrense utvalget.
+								Feltene "Meldingsreferanse" og "Kundeinformasjon" kan være delvise.
+								De øvrige feltene gir treff kun ved eksakt verdi.
+								Fra- og til-dato søker på "Sendt Altinn". Alle feltene kan fritt kombineres.
+							</p>
+							<h:form>
+								<table id="searchTable">
+									<thead>
+										<tr>
+											<th><h:outputLabel for="messageReference" value="Meldingsref." /></th>
+											<th><h:outputLabel for="domain" value="Dom. " /></th>
+											<th><h:outputLabel for="participantId" value="Orgnr/Fnr" /></th>
+											<th><h:outputLabel for="caseDescription" value="Kundeinf." /></th>
+											<th><h:outputLabel for="altinnArchive" value="AM" /></th>
+											<th class="dateColumn"><h:outputLabel for="fromDate" value="Fra dato: " /><span style="font-size:50%;">[yyyy.mm.dd]</span></th>
+											<th class="dateColumn"><h:outputLabel for="toDate" value="Til dato: " /><span style="font-size:50%;">[yyyy.mm.dd]</span></th>
+											<th><h:outputLabel for="messageStatus" value="Status" /></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="alt1">
+											<td><h:inputText styleClass="inputText" id="messageReference" value="#{filterMessagesModel.messageReference}" /></td>
+											<td><h:inputText styleClass="inputText" id="domain" value="#{filterMessagesModel.criteria.domain}" /></td>
+											<td><h:inputText styleClass="inputText" id="participantId" value="#{filterMessagesModel.criteria.participantId}" /></td>
+											<td><h:inputText styleClass="inputText" id="caseDescription" value="#{filterMessagesModel.caseDescription}" /></td>
+											<td><h:inputText styleClass="inputText" id="altinnArchive" value="#{filterMessagesModel.criteria.altinnArchive}" /></td>
+											<td class="dateColumn">
+												<h:inputText id="fromDate" value="#{filterMessagesModel.fromDate}" >
+													<f:convertDateTime type="date" dateStyle="short" pattern="yyyy.MM.dd" />
+												</h:inputText>
+											</td>
+											<td class="dateColumn">
+												<h:inputText id="toDate" value="#{filterMessagesModel.toDate}" >
+													<f:convertDateTime type="date" dateStyle="short" pattern="yyyy.MM.dd" />
+												</h:inputText>
+											</td>
+											<td>
+											    <h:selectOneMenu id="messageStatus" value="#{filterMessagesModel.criteria.messageStatus}">
+											         <f:selectItem itemValue="-1" itemLabel=""/>
+											         <f:selectItem itemValue="10" itemLabel="Melding mottatt (10)"/>
+											         <f:selectItem itemValue="20" itemLabel="Melding sendt til Altinn (20)"/>
+											         <f:selectItem itemValue="30" itemLabel="Sending til Altinn feilet (30)"/>
+											         <f:selectItem itemValue="40" itemLabel="Melding lest i Altinn (40)"/>
+											         <f:selectItem itemValue="50" itemLabel="Melding bekreftet i Altinn (50)"/>
+											         <f:selectItem itemValue="60" itemLabel="Sak med vedlegg sendt til etat (60)"/>
+											         <f:selectItem itemValue="70" itemLabel="Sak fjernet fra MXA manuelt (70)"/>
+											    </h:selectOneMenu>
+											</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="8">
+												<h:commandButton type="submit" value="Søk" action="#{filterMessagesModel.search}" />
+												<span style="margin: 1em;"/>
+												<h:commandButton type="submit" value="Reset" action="#{filterMessagesModel.reset}" />
+											</td>											
+										</tr>
+									</tfoot>
+								</table>
+							</h:form>
+							<h:message for="messageReference" />
+							<h:message for="domain" />
+							<h:message for="participantId" />
+							<h:message for="caseDescription" />
+							<h:message for="altinnArchive" />
+							<h:message for="fromDate" />
+							<h:message for="toDate" />
+							<h:dataTable value="#{filterMessagesModel.results}" var="message" rendered="#{not empty filterMessagesModel.results}" rowClasses=" ,alt1">
+								<h:column id="messageReferenceColumn">
+									<f:facet name="header">
+										<h:outputText value="Meldingsreferanse" />
+									</f:facet>
+									<h:outputLink value="visMelding.xhtml?messageKey=${message.messageKey}">
+										<h:outputText value="#{message.messageReference}" />
+									</h:outputLink>
+								</h:column>
+								<h:column id="domainColumn">
+									<f:facet name="header">
+										<h:outputText value="Dom." />
+									</f:facet>
+									<h:outputText value="#{message.domain}" />
+								</h:column>
+								<h:column id="participantIdColumn">
+									<f:facet name="header">
+										<h:outputText value="Orgnr/Fnr" />
+									</f:facet>
+									<h:outputText value="#{message.participantId}" />
+								</h:column>
+								<h:column id="caseDescriptionColumn">
+									<f:facet name="header">
+										<h:outputText value="Kundeinformasjon" />
+									</f:facet>
+									<h:outputText value="#{message.caseDescription}" />
+								</h:column>
+								<h:column id="altinnArchiveColumn">
+									<f:facet name="header">
+										<h:outputText value="AM" />
+									</f:facet>
+									<h:outputText value="#{message.altinnArchive}" />
+								</h:column>
+								<h:column id="readDeadlineColumn">
+									<f:facet name="header">
+										<h:outputText value="Lesefrist" />
+									</f:facet>
+									<h:outputText value="#{message.readDeadline}" converter="dateWithoutHoursAndSecondsConverter" />
+								</h:column>
+								<h:column id="sentAltinnColumn">
+									<f:facet name="header">
+										<h:outputText value="Sendt Altinn" />
+									</f:facet>
+									<h:outputText value="#{message.sentAltinn}" converter="yesNoConverter" />
+								</h:column>								
+								<h:column id="sentAltinnDateColumn">
+									<f:facet name="header">
+										<h:outputText value="Dato sendt Altinn" />
+									</f:facet>
+									<h:outputText value="#{message.sentAltinnDate}" converter="dateWithHoursAndSecondsConverter"/>
+								</h:column>
+								<h:column id="messageStatusColumn">
+									<f:facet name="header">
+										<h:outputText value="Status i MXA" />
+									</f:facet>
+									<h:outputText value="#{message.messageStatus}" converter="messageStatusConverter" />
+								</h:column>
+							</h:dataTable>
+						</ui:define>
+						<ui:define name="footerWrap">
+							<div id="developedBy"><h:outputText value="#{footerModel.developedBy}" /></div>
+							<div id="version"><h:outputText value="#{footerModel.version}" /></div>
+						</ui:define>
+					</ui:composition>
+					<div id="footerWrap">
+						<div id="developedBy">.</div>
+						<div id="version">SNAPSHOT</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

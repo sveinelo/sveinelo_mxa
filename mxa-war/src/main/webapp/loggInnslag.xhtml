@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>MXA - Administrasjon - Vis logginnslag som ikke er tilknyttet en melding.</title>
+        <link href="styles/altut.css" rel="stylesheet" type="text/css" media="screen"/>
+    </head>
+	<body>
+		<div id="pageWrap">
+			<div id="headerWrap">
+				<div id="logo">
+					<img src="img/Logo.png" alt="Logo"/>
+				</div>
+				<div id="header">
+					<p class="appNameShort">Administrasjonssider</p>
+					<p class="appNameDesc">Message Exchange Altinn (MXA)</p>					
+				</div>
+			</div>
+			<div id="contentWrap">
+				<div id="nav">
+					<ul>
+						<li>
+							<a href="meldingerMedAvvik.xhtml">tilbake</a>
+						</li>
+					</ul>
+				</div>
+				<div id="content">
+				<ui:composition template="templates/main.xhtml">
+					<ui:define name="title">MXA - Administrasjon - Vis logginnslag som ikke er tilknyttet en melding</ui:define>
+					<ui:define name="content">
+                       	<h1>Viser de 100 siste logginnslag som ikke er tilknyttet en melding</h1>
+						<h:dataTable value="#{logEntriesWithNoMessageModel.logEntriesWithNoMessage}" var="logEntry" rendered="#{not empty logEntriesWithNoMessageModel.logEntriesWithNoMessage}" rowClasses=" ,alt1">							
+							<h:column id="timeColumn">
+								<f:facet name="header">
+									<h:outputText value="Tidspunkt" />
+								</f:facet>
+								<h:outputText value="#{logEntry.time}" styleClass="no-wrap">
+									<f:converter converterId="dateWithHoursAndSecondsConverter" />
+								</h:outputText>
+							</h:column>
+							<h:column id="typeColumn">
+								<f:facet name="header">
+									<h:outputText value="Hendelse" />
+								</f:facet>
+								<h:outputText value="#{logEntry.logType}" />
+							</h:column>
+							<h:column id="logMessageColumn">
+								<f:facet name="header">
+									<h:outputText value="Hendelsesbeskjed" />
+								</f:facet>
+								<h:outputText value="#{logEntry.logMessage}" />
+							</h:column>
+						</h:dataTable>
+					</ui:define>
+					<ui:define name="footerWrap">
+						<div id="developedBy"><h:outputText value="#{footerModel.developedBy}" /></div>
+						<div id="version"><h:outputText value="#{footerModel.version}" /></div>
+					</ui:define>
+				</ui:composition>
+					<table>
+						<tr>
+							<th colspan="4">Hendelseslogg</th>
+						</tr>
+						<tr class="alt1">
+							<td><b>Dato</b></td>
+							<td><b>Hendelse</b></td>
+							<td><b>Status</b></td>
+						</tr>
+						<tr class="alt2">
+							<td>02.03.2009 13:31:03</td>
+							<td>Mottatt MXA</td>
+							<td>OK</td>
+						</tr>
+						<tr class="alt1">
+							<td>02.03.2009 13:41:04</td>
+							<td>Oversendt Altinn</td>
+							<td>OK</td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<th>Dokument</th>
+							<th>Filnavn</th>
+						</tr>
+						<tr class="alt1">
+							<td>Svardokument</td>
+							<td><a href=".">Altut melding.txt</a></td>
+						</tr>
+						<tr class="alt2">
+							<td>Vedleggsdokument</td>
+							<td><a href=".">Altut melding.txt</a></td>
+						</tr>
+					</table>
+				</div>			
+			</div>
+			<div id="footerWrap">
+				<div id="developedBy">.</div>
+				<div id="version">SNAPSHOT</div>
+			</div>
+		</div>
+	</body>
+</html>

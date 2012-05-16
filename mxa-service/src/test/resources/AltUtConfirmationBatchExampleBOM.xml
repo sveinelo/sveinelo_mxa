@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<AltUtConfirmationBatch batchReference="1" previousReference="0" receiverReference="KRT" timeStamp="2005-09-20T17:50:09" confirmationsInBatch="3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../XSD filer/AltUtConfirmationBatch.xsd">
+	<AltUtConfirmations>
+		<Confirmation participantId="924567825" shortName="Årsoppgave" messageReference="P1234-12">
+			<Read>
+				<ReadDateTime>2001-12-17T09:30:47-05:00</ReadDateTime>
+			</Read>
+		</Confirmation>
+		<Confirmation participantId="847364556" shortName="Årsoppgave" messageReference="P1234-12">
+			<Read>
+				<ReadDateTime>2001-12-17T09:30:47-05:00</ReadDateTime>
+			</Read>
+			<Confirmed participantId="01125434335">
+				<ConfirmedDateTime>2001-12-17T10:30:47-05:00</ConfirmedDateTime>
+				<ConfirmedRoleList>ALLEA,REGNA</ConfirmedRoleList>
+				<LoginMethod>4</LoginMethod>
+			</Confirmed>
+		</Confirmation>
+		<Confirmation participantId="01010097092" shortName="Årsoppgave" messageReference="P1234-12">
+			<Read>
+				<ReadDateTime>2001-12-17T09:30:47-05:00</ReadDateTime>
+			</Read>
+		</Confirmation>
+	</AltUtConfirmations>
+</AltUtConfirmationBatch>

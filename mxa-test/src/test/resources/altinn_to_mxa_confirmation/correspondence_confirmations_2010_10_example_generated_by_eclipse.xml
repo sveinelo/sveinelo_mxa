@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:CorrespondenceConfirmations xmlns:p="http://schemas.altinn.no/services/intermediary/correspondence/confirmations/2010/10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.altinn.no/services/intermediary/correspondence/confirmations/2010/10 correspondence.confirmations.2010.10.xsd ">
+  <p:SequenceNo>p:SequenceNo</p:SequenceNo>
+  <p:PreviousSequenceNo>p:PreviousSequenceNo</p:PreviousSequenceNo>
+  <p:SystemUserCode>p:SystemUserCod</p:SystemUserCode>
+  <p:ShipmentDateTime>2001-12-31T12:00:00</p:ShipmentDateTime>
+  <p:CountConfirmationsInShipment>0</p:CountConfirmationsInShipment>
+  <p:Confirmation>
+    <p:ServiceCode>p:ServiceCode</p:ServiceCode>
+    <p:ServiceEdition>p:ServiceEdition</p:ServiceEdition>
+    <p:Reportee>p:Reportee</p:Reportee>
+    <p:CorrespondenceReference>p:CorrespondenceReference</p:CorrespondenceReference>
+    <p:Read>
+      <p:ReadDateTime>2001-12-31T12:00:00</p:ReadDateTime>
+    </p:Read>
+    <p:Confirmed>
+      <p:UserSSN>p:UserSSN</p:UserSSN>
+      <p:ConfirmedDateTime>2001-12-31T12:00:00</p:ConfirmedDateTime>
+      <p:ConfirmedRoleList>p:ConfirmedRoleList</p:ConfirmedRoleList>
+      <p:AuthenticationMethod>0</p:AuthenticationMethod>
+    </p:Confirmed>
+  </p:Confirmation>
+</p:CorrespondenceConfirmations>

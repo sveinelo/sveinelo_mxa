@@ -1,0 +1,146 @@
+package no.mxa.ws.parser;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import no.mxa.UniversalConstants;
+import no.mxa.dto.AttachmentDTO;
+import no.mxa.dto.ContactInfoDTO;
+import no.mxa.dto.LogDTO;
+import no.mxa.dto.MessageDTO;
+
+/**
+ * Class that receives messages with attachments and contact info to be returned as DTO objects
+ */
+public class DTOGenerator {
+	/**
+	 * 
+	 * @param inputMessage
+	 *            The message returned from the xml parser
+	 * @return messageDTO The message DTO object, containing attachments and contact info
+	 */
+	public MessageDTO generateMessageDTO(Message inputMessage) {
+		Attachment attachment;
+		ContactInfo contactInfo;
+		List<Attachment> inputAttachments;
+		List<ContactInfo> inputContactInfo;
+		MessageDTO messageDTO;
+		AttachmentDTO attachmentDTO;
+		ContactInfoDTO contactInfoDTO;
+		List<AttachmentDTO> attachmentsToInclude;
+		List<ContactInfoDTO> contactInfoToInclude;
+		List<LogDTO> logInfoToInclude;
+		LogDTO logDTO;
+
+		// Create a new message DTO
+		messageDTO = new MessageDTO();
+		attachmentsToInclude = new ArrayList<AttachmentDTO>();
+		contactInfoToInclude = new ArrayList<ContactInfoDTO>();
+		logInfoToInclude = new ArrayList<LogDTO>();
+
+		// Get the attached message list objects
+		inputAttachments = inputMessage.getAttachments();
+		inputContactInfo = inputMessage.getContactInfo();
+
+		// Extracts the attachment objects
+		if (inputAttachments != null) {
+			for (Iterator<Attachment> itAtt = inputAttachments.iterator(); itAtt.hasNext();) {
+				attachment = itAtt.next();
+				attachmentDTO = new AttachmentDTO();
+
+				// Set attachmentDTO values based on the incoming attachment values
+				attachmentDTO.setAttachment(attachment.getAttachment());
+				attachmentDTO.setFileName(attachment.getFilename());
+				attachmentDTO.setMimeType(attachment.getMimeType());
+				attachmentDTO.setName(attachment.getName());
+
+				// Set parent
+				attachmentDTO.setMessage(messageDTO);
+
+				// Adds the attachmentDTO object in the list to include in the
+				// messageDTO object
+				attachmentsToInclude.add(attachmentDTO);
+			}
+		}
+		// Extracts the contact info objects
+		if (inputContactInfo != null) {
+			for (Iterator<ContactInfo> itCont = inputContactInfo.iterator(); itCont.hasNext();) {
+				contactInfo = itCont.next();
+				contactInfoDTO = new ContactInfoDTO();
+
+				// Set the contactInfoDTO values based on the incoming contactInfo values
+				contactInfoDTO.setAddress(contactInfo.getAddress());
+				contactInfoDTO.setType(contactInfo.getType());
+
+				// Set parent
+				contactInfoDTO.setMessage(messageDTO);
+
+				// Adds the contactInfoDTO object in the list to include in the
+				// contactInfoDTO object
+				contactInfoToInclude.add(contactInfoDTO);
+			}
+		}
+
+		// Set messageDTO values based on the incoming message values
+		messageDTO.setAltinnArchive(inputMessage.getAltinnArchive());
+		messageDTO.setBatchSending(inputMessage.getBatchSending());
+		messageDTO.setCaseDescription(inputMessage.getCaseDescription());
+		messageDTO.setCaseOfficer(inputMessage.getCaseOfficer());
+		messageDTO.setDomain(inputMessage.getDomain());
+		messageDTO.setDueDate(inputMessage.getDueDate());
+		messageDTO.setIdproc(inputMessage.getIdproc());
+		messageDTO.setMessageHeader(inputMessage.getContentMessageHeader());
+		messageDTO.setMessageKey(inputMessage.getMessageKey());
+		messageDTO.setMessageReference(inputMessage.getMessageReference());
+		messageDTO.setMessageSummary(inputMessage.getContentMessageSummary());
+		messageDTO.setParticipantId(inputMessage.getParticipantId());
+		messageDTO.setSendingSystem(inputMessage.getSendingSystem());
+		messageDTO.setSentAltinn(UniversalConstants.MSG_SENTALTINN_FALSE);
+		messageDTO.setMessageStatus(UniversalConstants.MSG_STATUS_RECEIVED);
+		messageDTO.setReadDeadline(getFutureDate(new Date(), 7));
+		messageDTO.setOverdueNoticeSent(UniversalConstants.MSG_OVERDUENOTICE_FALSE);
+		messageDTO.setAttachments(attachmentsToInclude);
+		messageDTO.setContactInfo(contactInfoToInclude);
+
+		// Set log info
+		logDTO = this.generateLogDTO();
+		logDTO.setMessage(messageDTO);
+		logInfoToInclude.add(logDTO);
+
+		messageDTO.setLog(logInfoToInclude);
+
+		// Returns a message DTO containing attachments, contact info and log
+		return messageDTO;
+	}
+
+	/**
+	 * 
+	 * @return logDTO A log DTO object to be stored in the repository
+	 */
+	private LogDTO generateLogDTO() {
+		LogDTO logDTO;
+		// Create a new logDTO
+		logDTO = new LogDTO();
+
+		// Set logDTO values
+		logDTO.setLogMessage("");
+		Timestamp time = new Timestamp(System.currentTimeMillis());
+		logDTO.setTime(time);
+		logDTO.setLogType(UniversalConstants.MSG_RECEIVED_MXA);
+		logDTO.setLogMessage(UniversalConstants.MESSAGE_RECEIVED_MXA_DESCRIPTION);
+
+		// Returns a log DTO
+		return logDTO;
+	}
+
+	private Date getFutureDate(Date readDeadline, int daysToAdd) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(readDeadline);
+		calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
+		return calendar.getTime();
+	}
+}

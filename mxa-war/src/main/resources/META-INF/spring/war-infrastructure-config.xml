@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/MessageExchangeAltinnDS" />
+
+	<!-- Property placeholder is supposed to load the properties from JNDI. -->
+	<!-- ***** Here the entries needed for Oracle 10g: -->
+	<!-- <Environment name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" type="java.lang.String" override="false"/> -->
+	<!-- <Environment name="quartz.delegate" value="org.quartz.impl.jdbcjobstore.oracle.OracleDelegate" type="java.lang.String" 
+		override="false"/> -->
+	<!-- <Environment name="hibernate.hbm2ddl" value="" type="java.lang.String" override="false" /> -->
+	<!-- ***** And here the same for MS SQL Server: -->
+	<!-- <Environment name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" type="java.lang.String" override="false" 
+		/> -->
+	<!-- <Environment name="hibernate.hbm2ddl" value="validate" type="java.lang.String" override="false" /> -->
+	<!-- <Environment name="quartz.delegate" value="org.quartz.impl.jdbcjobstore.MSSQLDelegate" type="java.lang.String" override="false" 
+		/> -->
+
+	<context:property-placeholder />
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:no/mxa/hibernate/mapping/Attachment.hbm.xml</value>
+				<value>classpath:no/mxa/hibernate/mapping/ContactInfo.hbm.xml</value>
+				<value>classpath:no/mxa/hibernate/mapping/KeyValues.hbm.xml</value>
+				<value>classpath:no/mxa/hibernate/mapping/Log.hbm.xml</value>
+				<value>classpath:no/mxa/hibernate/mapping/Message.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties" ref="hibernateProperties" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<util:properties id="hibernateProperties">
+		<prop key="hibernate.bytecode.use_reflection_optimizer">false</prop>
+		<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+		<prop key="show_sql">${hibernate.showSql?:true}</prop>
+		<prop key="format_sql">true</prop>
+		<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl}</prop>
+		<prop key="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</prop>
+		<prop key="hibernate.cache.use_second_level_cache">true</prop>
+		<prop key="hibernate.cache.use_query_cache">true</prop>
+		<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory</prop>
+	</util:properties>
+
+	<util:properties id="quartzProperties">
+		<prop key="org.quartz.scheduler.instanceName">mxaScheduler</prop>
+		<prop key="org.quartz.scheduler.instanceId">AUTO</prop>
+		<prop key="org.quartz.jobStore.misfireThreshold">60000</prop>
+		<prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
+		<prop key="org.quartz.jobStore.driverDelegateClass">${quartz.delegate}</prop>
+		<prop key="org.quartz.jobStore.tablePrefix">QRTZ_</prop>
+		<prop key="org.quartz.jobStore.isClustered">true</prop>
+		<prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+		<prop key="org.quartz.threadPool.threadCount">25</prop>
+		<prop key="org.quartz.threadPool.threadPriority">5</prop>
+	</util:properties>
+
+
+	<!-- <Environment name="mxa.altinn.correspondence.agency.enpoint" -->
+	<!-- value="https://tt02.altinn.basefarm.net/ServiceEngineExternal/CorrespondenceAgencyExternalBasic.svc" type="java.lang.String" -->
+	<!-- override="false" /> -->
+	<bean id="altinnEndpointAddress" class="java.lang.String">
+		<constructor-arg value="${mxa.altinn.correspondence.agency.enpoint}" />
+	</bean>
+</beans>

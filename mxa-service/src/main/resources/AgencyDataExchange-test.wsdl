@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions
+
+        targetNamespace="http://AltInn.no/agencywebservices/"
+        xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+        xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+        xmlns:s="http://www.w3.org/2001/XMLSchema"
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+        xmlns:tns="http://AltInn.no/agencywebservices/"
+        xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+       >
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://AltInn.no/agencywebservices/">
+      <s:element name="SubmitAltutMessagePw">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="altutMessage" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubmitAltutMessagePwResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SubmitAltutMessagePwResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubmitOnlinePrefillPw">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="prefillMessage" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubmitOnlinePrefillPwResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SubmitOnlinePrefillPwResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubmitAndInstantiateOnlinePrefillPw">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="prefillMessage" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubmitAndInstantiateOnlinePrefillPwResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SubmitAndInstantiateOnlinePrefillPwResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VerifyMessage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="messageData" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VerifyMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VerifyMessageResult" type="tns:MessageVerificationStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MessageVerificationStatus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="EnvelopeStatus" type="tns:EnvelopeVerificationStatus" />
+          <s:element minOccurs="0" maxOccurs="1" name="FormsStatus" type="tns:FormsVerificationStatus" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EnvelopeVerificationStatus">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:VerificationStatus">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Status" type="tns:EnvelopeStatus" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="VerificationStatus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ValidationErrors" type="tns:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ValidationError" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FormVerificationStatus">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:VerificationStatus">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Status" type="tns:FormsStatus" />
+              <s:element minOccurs="1" maxOccurs="1" name="FormNumber" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="FormVersion" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="FormsStatus">
+        <s:restriction base="s:string">
+          <s:enumeration value="NotPerformed" />
+          <s:enumeration value="OK" />
+          <s:enumeration value="Errors" />
+          <s:enumeration value="NotFound" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="EnvelopeStatus">
+        <s:restriction base="s:string">
+          <s:enumeration value="NotPerformed" />
+          <s:enumeration value="OK" />
+          <s:enumeration value="Errors" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="FormsVerificationStatus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FormsStatusCollection" type="tns:ArrayOfAnyType" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAnyType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="FormStatus" nillable="true" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SubmitAltutMessagePwSoapIn">
+    <wsdl:part name="parameters" element="tns:SubmitAltutMessagePw" />
+  </wsdl:message>
+  <wsdl:message name="SubmitAltutMessagePwSoapOut">
+    <wsdl:part name="parameters" element="tns:SubmitAltutMessagePwResponse" />
+  </wsdl:message>
+  <wsdl:message name="SubmitOnlinePrefillPwSoapIn">
+    <wsdl:part name="parameters" element="tns:SubmitOnlinePrefillPw" />
+  </wsdl:message>
+  <wsdl:message name="SubmitOnlinePrefillPwSoapOut">
+    <wsdl:part name="parameters" element="tns:SubmitOnlinePrefillPwResponse" />
+  </wsdl:message>
+  <wsdl:message name="SubmitAndInstantiateOnlinePrefillPwSoapIn">
+    <wsdl:part name="parameters" element="tns:SubmitAndInstantiateOnlinePrefillPw" />
+  </wsdl:message>
+  <wsdl:message name="SubmitAndInstantiateOnlinePrefillPwSoapOut">
+    <wsdl:part name="parameters" element="tns:SubmitAndInstantiateOnlinePrefillPwResponse" />
+  </wsdl:message>
+  <wsdl:message name="VerifyMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:VerifyMessage" />
+  </wsdl:message>
+  <wsdl:message name="VerifyMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:VerifyMessageResponse" />
+  </wsdl:message>
+  <wsdl:portType name="AgencyDataExchangeSoap">
+    <wsdl:operation name="SubmitAltutMessagePw">
+      <wsdl:input message="tns:SubmitAltutMessagePwSoapIn" />
+      <wsdl:output message="tns:SubmitAltutMessagePwSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOnlinePrefillPw">
+      <wsdl:input message="tns:SubmitOnlinePrefillPwSoapIn" />
+      <wsdl:output message="tns:SubmitOnlinePrefillPwSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitAndInstantiateOnlinePrefillPw">
+      <wsdl:input message="tns:SubmitAndInstantiateOnlinePrefillPwSoapIn" />
+      <wsdl:output message="tns:SubmitAndInstantiateOnlinePrefillPwSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyMessage">
+      <wsdl:input message="tns:VerifyMessageSoapIn" />
+      <wsdl:output message="tns:VerifyMessageSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AgencyDataExchangeSoap" type="tns:AgencyDataExchangeSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SubmitAltutMessagePw">
+      <soap:operation soapAction="http://AltInn.no/agencywebservices/SubmitAltutMessagePw" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOnlinePrefillPw">
+      <soap:operation soapAction="http://AltInn.no/agencywebservices/SubmitOnlinePrefillPw" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitAndInstantiateOnlinePrefillPw">
+      <soap:operation soapAction="http://AltInn.no/agencywebservices/SubmitAndInstantiateOnlinePrefillPw" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyMessage">
+      <soap:operation soapAction="http://AltInn.no/agencywebservices/VerifyMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AgencyDataExchangeSoap12" type="tns:AgencyDataExchangeSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SubmitAltutMessagePw">
+      <soap12:operation soapAction="http://AltInn.no/agencywebservices/SubmitAltutMessagePw" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitOnlinePrefillPw">
+      <soap12:operation soapAction="http://AltInn.no/agencywebservices/SubmitOnlinePrefillPw" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitAndInstantiateOnlinePrefillPw">
+      <soap12:operation soapAction="http://AltInn.no/agencywebservices/SubmitAndInstantiateOnlinePrefillPw" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyMessage">
+      <soap12:operation soapAction="http://AltInn.no/agencywebservices/VerifyMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AgencyDataExchange">
+    <wsdl:port name="AgencyDataExchangeSoap" binding="tns:AgencyDataExchangeSoap">
+      <soap:address location="https://tt02.altinn.basefarm.net/webservicesagency/AgencyDataExchange.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AgencyDataExchangeSoap12" binding="tns:AgencyDataExchangeSoap12">
+      <soap12:address location="https://tt02.altinn.basefarm.net/webservicesagency/AgencyDataExchange.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                            http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+		<property name="url" value="jdbc:hsqldb:mem:." />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+
+	<bean id="dataSourceInitializer" class="org.springframework.batch.test.DataSourceInitializer">
+		<property name="dataSource" ref="dataSource" />
+		<property name="initScripts">
+			<util:list>
+				<value>classpath:sql/schema-mxa-hsqldb-test.sql</value>
+			</util:list>
+		</property>
+	</bean>
+
+	<util:properties id="hibernateProperties">
+		<prop key="hibernate.bytecode.use_reflection_optimizer">false</prop>
+		<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+		<prop key="show_sql">true</prop>
+		<prop key="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</prop>
+		<prop key="hibernate.cache.use_second_level_cache">true</prop>
+		<prop key="hibernate.cache.use_query_cache">true</prop>
+		<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory</prop>
+	</util:properties>
+
+	<util:properties id="quartzProperties">
+		<prop key="org.quartz.scheduler.instanceName">mxaScheduler</prop>
+		<prop key="org.quartz.scheduler.instanceId">AUTO</prop>
+		<prop key="org.quartz.jobStore.misfireThreshold">60000</prop>
+		<prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
+		<prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.HSQLDBDelegate</prop>
+		<prop key="org.quartz.jobStore.tablePrefix">QRTZ_</prop>
+		<prop key="org.quartz.jobStore.isClustered">true</prop>
+		<prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+		<prop key="org.quartz.threadPool.threadCount">25</prop>
+		<prop key="org.quartz.threadPool.threadPriority">5</prop>
+	</util:properties>
+
+	<bean id="altinnEndpointAddress" class="java.lang.String">
+		<constructor-arg value="https://tt02.altinn.basefarm.net/ServiceEngineExternal/CorrespondenceAgencyExternalBasic.svc" />
+	</bean>
+</beans>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:ws="http://jax-ws.dev.java.net/spring/core" xmlns:wss="http://jax-ws.dev.java.net/spring/servlet" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://jax-ws.dev.java.net/spring/servlet http://jax-ws.dev.java.net/spring/servlet.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+		http://jax-ws.dev.java.net/spring/core http://jax-ws.dev.java.net/spring/core.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<!-- There is an issue with Eclipse and core.xsd and servlet.xsd since they exist on the Internet with https -->
+	<wss:binding url="/MXAPort" service="#mxaDelegateService"></wss:binding>
+	<ws:service id="mxaDelegateService" bean="#mxaDelegate"></ws:service>
+	<bean id="mxaDelegate" class="no.mxa.ws.webservice.MXADelegate"></bean>
+
+	<bean id="mxa" class="no.mxa.ws.webservice.MXA" />
+
+	<bean id="attachmentService" class="no.mxa.service.implementations.AttachmentServiceImpl" />
+	<bean id="contactInfoService" class="no.mxa.service.implementations.ContactInfoServiceImpl" />
+	<bean id="keyValuesService" class="no.mxa.service.implementations.KeyValuesServiceImpl" />
+	<bean id="logService" class="no.mxa.service.implementations.LogServiceImpl" />
+	<bean id="messageService" class="no.mxa.service.implementations.MessageServiceImpl" />
+
+	<bean id="logGenerator" class="no.mxa.service.implementations.LogGeneratorImpl" />
+	<bean id="messageSender" class="no.mxa.service.altut.MessageSender" />
+	<bean id="sendSingleAltutMessage" class="no.mxa.service.altut.SendSingleCorrespondenceMessage" />
+	<bean id="keyValues" class="no.mxa.service.KeyValues" />
+	<bean id="receiptXMLProcessor" class="no.mxa.service.batch.confirmation.ReceiptXMLProcessorImpl" />
+	<bean id="receiptProcessor" class="no.mxa.service.batch.confirmation.ReceiptProcessor" />
+
+	<bean id="correspondenceConfirmationAdapter" class="no.mxa.service.batch.confirmation.CorrespondenceConfirmationAdapter" />
+	<bean id="altUtConfirmationBatchAdapter" class="no.mxa.service.batch.confirmation.AltUtConfirmationBatchAdapter" />
+
+	<bean id="sendMailService" class="no.mxa.service.implementations.SendMailServiceImpl" />
+	<bean id="sendNoticeOrWarningService" class="no.mxa.service.implementations.SendNoticeOrWarningServiceImpl" />
+	<bean id="sendNoticesAndWarnings" class="no.mxa.service.batch.notification.SendNoticesAndWarningsImpl" />
+
+	<bean id="parser" class="no.mxa.ws.parser.Parser">
+		<constructor-arg value="classpath:no/mxa/ws/xml/wsdl/SantMxa.xsd" />
+	</bean>
+	<bean id="dtoGenerator" class="no.mxa.ws.parser.DTOGenerator" />
+
+	<context:annotation-config />
+</beans>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:element name="AltUtConfirmationBatch">
+		<xs:annotation>
+			<xs:documentation>Rapport over leste og bekreftede meldinger i Altinn siden forrige batch</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AltUtConfirmations">
+					<xs:annotation>
+						<xs:documentation>Samling av lest/bekreftet elementer</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Confirmation" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>En lest/godkjent Altut melding</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Read">
+											<xs:annotation>
+												<xs:documentation>Informasjon om lesing av den aktuelle Altut meldingen</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ReadDateTime" type="xs:dateTime"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Confirmed" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Informasjon om bekrefting av den aktuelle Altut meldingen</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ConfirmedDateTime" type="xs:dateTime">
+														<xs:annotation>
+															<xs:documentation>Bekreftings tidspunkt</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ConfirmedRoleList" type="xs:string">
+														<xs:annotation>
+															<xs:documentation>Brukerens rolleliste på godkjennings tidspunktet</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="LoginMethod">
+														<xs:annotation>
+															<xs:documentation>Brukerens login nivå ved godkjenning</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:byte">
+																<xs:enumeration value="1"/>
+																<xs:enumeration value="2"/>
+																<xs:enumeration value="3"/>
+																<xs:enumeration value="4"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="participantId" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="participantId" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>Altut meldingens eier</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>	
+									<xs:attribute name="shortName" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>Kort beskrivelse til den aktuelle Altut meldingen</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="messageReference" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>Etatens interne referanse til en Altut melding</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Signature" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SignedInfo">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="CanonicalizationMethod">
+											<xs:complexType>
+												<xs:attribute name="Algorithm" type="xs:anyURI" use="required"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="SignatureMethod">
+											<xs:complexType>
+												<xs:attribute name="Algorithm" type="xs:anyURI" use="required"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Reference">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Transforms">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Transform">
+																	<xs:complexType>
+																		<xs:attribute name="Algorithm" type="xs:anyURI" use="required"/>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="DigestMethod">
+														<xs:complexType>
+															<xs:attribute name="Algorithm" type="xs:anyURI" use="required"/>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="DigestValue" type="xs:string"/>
+												</xs:sequence>
+												<xs:attribute name="URI" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SignatureValue" type="xs:string"/>
+							<xs:element name="KeyInfo">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="KeyValue">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="RSAKeyValue">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Modulus" type="xs:string"/>
+																<xs:element name="Exponent" type="xs:string"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="X509Data">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="X509Certificate" type="xs:string"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="batchReference" type="xs:string" use="required"/>
+			<xs:attribute name="previousReference" type="xs:string" use="required"/>
+			<xs:attribute name="receiverReference" type="xs:string" use="required"/>
+			<xs:attribute name="timeStamp" type="xs:dateTime" use="required"/>
+			<xs:attribute name="confirmationsInBatch" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

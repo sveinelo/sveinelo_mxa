@@ -22,10 +22,10 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-                           http://www.springframework.org/schema/context
-						   http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 	<bean id="altinnWs" class="no.mxa.altinn.ws.api.CorrespondenceAgency" />
 
@@ -34,9 +34,19 @@
 		<property name="wsdlDocumentUrl" value="classpath:META-INF/wsdl/CorrespondenceAgencyExternalBasicSF.wsdl" />
 		<property name="namespaceUri" value="http://www.altinn.no/services/ServiceEngine/Correspondence/2009/10" />
 		<property name="serviceName" value="CorrespondenceAgencyExternalBasicSF" />
-		<!-- Se infrastructure config for more information on altinnEndpointAddress-->
+		<!-- Se infrastructure config for more information on altinnEndpointAddress -->
 		<property name="endpointAddress" ref="altinnEndpointAddress" />
+		<property name="handlerResolver" ref="handlerResolver" />
 	</bean>
 
+	<bean id="filePrintStreamFactory" class="no.mxa.altinn.ws.api.FilePrintStreamFactory" />
+
+	<bean id="handlerResolver" class="no.mxa.altinn.ws.api.ConfiguredHandlerResolver">
+		<constructor-arg>
+			<util:list>
+				<bean class="no.mxa.altinn.ws.api.SoapLoggingHandler" />
+			</util:list>
+		</constructor-arg>
+	</bean>
 	<context:annotation-config />
 </beans>

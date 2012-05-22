@@ -1,6 +1,4 @@
-USE [mxa]
-GO
-/****** Object:  Table [dbo].[ATTACHMENT]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[ATTACHMENT]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9,7 +7,7 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[ATTACHMENT](
 	[ID] [numeric](19, 0) IDENTITY(1,1) NOT NULL,
-	[MESSAGEID] [numeric](19, 0) NULL,
+	[MESSAGEID] [numeric](19, 0) NOT NULL,
 	[ATTACHMENT] [text] NULL,
 	[MIMETYPE] [varchar](255) NULL,
 	[FILENAME] [varchar](50) NULL,
@@ -23,7 +21,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[CONTACTINFO]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[CONTACTINFO]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -32,7 +30,7 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[CONTACTINFO](
 	[ID] [numeric](19, 0) IDENTITY(1,1) NOT NULL,
-	[MESSAGEID] [numeric](19, 0) NULL,
+	[MESSAGEID] [numeric](19, 0) NOT NULL,
 	[TYPE] [varchar](10) NULL,
 	[ADDRESS] [varchar](200) NULL,
 PRIMARY KEY CLUSTERED 
@@ -44,7 +42,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[KEYVALUES]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[KEYVALUES]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -67,7 +65,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[LOG]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[LOG]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -89,7 +87,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[MESSAGE]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[MESSAGE]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,7 +96,7 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[MESSAGE](
 	[ID] [numeric](19, 0) IDENTITY(1,1) NOT NULL,
-	[MESSAGEKEY] [varchar](80) NULL,
+	[MESSAGEKEY] [varchar](80) NOT NULL,
 	[SENDINGSYSTEM] [varchar](15) NULL,
 	[BATCHSENDING] [int] NULL,
 	[DOMAIN] [varchar](10) NULL,
@@ -119,13 +117,17 @@ CREATE TABLE [dbo].[MESSAGE](
 PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[MESSAGEKEY] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[QRTZ_BLOB_TRIGGERS]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[QRTZ_BLOB_TRIGGERS]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -141,7 +143,7 @@ CREATE TABLE [dbo].[QRTZ_BLOB_TRIGGERS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[QRTZ_CALENDARS]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[QRTZ_CALENDARS]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -160,7 +162,7 @@ CREATE TABLE [dbo].[QRTZ_CALENDARS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[QRTZ_CRON_TRIGGERS]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[QRTZ_CRON_TRIGGERS]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -182,7 +184,7 @@ CREATE TABLE [dbo].[QRTZ_CRON_TRIGGERS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[QRTZ_FIRED_TRIGGERS]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[QRTZ_FIRED_TRIGGERS]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -211,7 +213,7 @@ CREATE TABLE [dbo].[QRTZ_FIRED_TRIGGERS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[QRTZ_JOB_DETAILS]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[QRTZ_JOB_DETAILS]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -238,7 +240,7 @@ CREATE TABLE [dbo].[QRTZ_JOB_DETAILS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[QRTZ_JOB_LISTENERS]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[QRTZ_JOB_LISTENERS]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -260,7 +262,7 @@ CREATE TABLE [dbo].[QRTZ_JOB_LISTENERS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[QRTZ_LOCKS]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[QRTZ_LOCKS]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -278,7 +280,7 @@ CREATE TABLE [dbo].[QRTZ_LOCKS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[QRTZ_PAUSED_TRIGGER_GRPS]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[QRTZ_PAUSED_TRIGGER_GRPS]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -296,7 +298,7 @@ CREATE TABLE [dbo].[QRTZ_PAUSED_TRIGGER_GRPS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[QRTZ_SCHEDULER_STATE]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[QRTZ_SCHEDULER_STATE]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -316,7 +318,7 @@ CREATE TABLE [dbo].[QRTZ_SCHEDULER_STATE](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[QRTZ_SIMPLE_TRIGGERS]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[QRTZ_SIMPLE_TRIGGERS]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -339,7 +341,7 @@ CREATE TABLE [dbo].[QRTZ_SIMPLE_TRIGGERS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[QRTZ_TRIGGER_LISTENERS]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[QRTZ_TRIGGER_LISTENERS]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -361,7 +363,7 @@ CREATE TABLE [dbo].[QRTZ_TRIGGER_LISTENERS](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[QRTZ_TRIGGERS]    Script Date: 09.05.2012 11:38:50 ******/
+/****** Object:  Table [dbo].[QRTZ_TRIGGERS]    Script Date: 21.05.2012 10:50:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -438,8 +440,4 @@ ALTER TABLE [dbo].[QRTZ_TRIGGERS]  WITH CHECK ADD  CONSTRAINT [FK_QRTZ_TRIGGERS_
 REFERENCES [dbo].[QRTZ_JOB_DETAILS] ([JOB_NAME], [JOB_GROUP])
 GO
 ALTER TABLE [dbo].[QRTZ_TRIGGERS] CHECK CONSTRAINT [FK_QRTZ_TRIGGERS_QRTZ_JOB_DETAILS]
-GO
-USE [master]
-GO
-ALTER DATABASE [mxa] SET  READ_WRITE 
 GO

@@ -460,35 +460,34 @@
 	</dependencies>
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>license-maven-plugin</artifactId>
-<!-- 				<version>1.1</version> -->
-				<configuration>
-					<verbose>false</verbose>
-					<addSvnKeyWords>false</addSvnKeyWords>
-					<licenseName>gpl_v3</licenseName>
-				</configuration>
-				<executions>
-					<execution>
-						<id>first</id>
-						<goals>
-							<goal>update-file-header</goal>
-						</goals>
-						<phase>process-sources</phase>
-						<configuration>
-							<licenseName>gpl_v3</licenseName>
-<!-- 							<roots> -->
-<!-- 								<root>src/main/java</root> -->
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.codehaus.mojo</groupId> -->
+<!-- 				<artifactId>license-maven-plugin</artifactId> -->
+<!-- 				<configuration> -->
+<!-- 					<verbose>false</verbose> -->
+<!-- 					<addSvnKeyWords>false</addSvnKeyWords> -->
+<!-- 					<licenseName>gpl_v3</licenseName> -->
+<!-- 				</configuration> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<id>first</id> -->
+<!-- 						<goals> -->
+<!-- 							<goal>update-file-header</goal> -->
+<!-- 						</goals> -->
+<!-- 						<phase>process-sources</phase> -->
+<!-- 						<configuration> -->
+<!-- 							<licenseName>gpl_v3</licenseName> -->
+<!-- 					<roots> -->
+<!--								<root>src/main/java</root> --> 
 <!-- 								<root>src/test</root> -->
-<!-- 							</roots> -->
-							<excludes>
-								<exclude>*.xhtml</exclude>
-							</excludes>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+<!--							</roots> -->
+<!-- 							<excludes> -->
+<!-- 								<exclude>*.xhtml</exclude> -->
+<!-- 							</excludes> -->
+<!-- 						</configuration> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>

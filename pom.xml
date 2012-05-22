@@ -25,7 +25,7 @@
 		<module>mxa-war</module>
 		<module>mxa-test</module>
 		<module>mxa-db-scripts</module>
-		<module>mxa-build-tools</module>
+<!-- 		<module>mxa-build-tools</module> -->
 		<module>mxa-altinn-ws</module>
 	</modules>
 	<repositories>

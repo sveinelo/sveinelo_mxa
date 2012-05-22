@@ -33,16 +33,16 @@
 			</generator>
 		</id>
 		<property name="messageKey" type="java.lang.String" not-null="true">
-			<column name="MESSAGEKEY" length="80" />
+			<column name="MESSAGEKEY" length="80" not-null="true" />
 		</property>
 		<property name="sendingSystem" type="java.lang.String" not-null="true">
-			<column name="SENDINGSYSTEM" length="15" />
+			<column name="SENDINGSYSTEM" length="15" not-null="true" />
 		</property>
 		<property name="batchSending" type="java.lang.Integer" not-null="true">
-			<column name="BATCHSENDING" precision="1" />
+			<column name="BATCHSENDING" precision="1" not-null="true" check="BATCHSENDING IN (0, 1)"/>
 		</property>
 		<property name="domain" type="java.lang.String" not-null="true">
-			<column name="DOMAIN" length="10" />
+			<column name="DOMAIN" length="10" not-null="true" />
 		</property>
 		<property name="caseDescription" type="java.lang.String">
 			<column name="CASEDESCRIPTION" length="50" />
@@ -51,13 +51,13 @@
 			<column name="CASEOFFICER" length="50" />
 		</property>
 		<property name="participantId" type="java.lang.String" not-null="true">
-			<column name="PARTICIPANTID" length="11" />
+			<column name="PARTICIPANTID" length="11" not-null="true" />
 		</property>
 		<property name="messageReference" type="java.lang.String" not-null="true">
-			<column name="MESSAGEREFERENCE" length="40" />
+			<column name="MESSAGEREFERENCE" length="40" not-null="true" />
 		</property>
 		<property name="idproc" type="java.lang.String" not-null="true">
-			<column name="IDPROC" length="40" />
+			<column name="IDPROC" length="40" not-null="true" />
 		</property>
 		<property name="dueDate" type="java.util.Date">
 			<column name="DUEDATE" />
@@ -66,25 +66,25 @@
 			<column name="ALTINNARCHIVE" length="50" />
 		</property>
 		<property name="messageHeader" type="java.lang.String" not-null="true">
-			<column name="MESSAGEHEADER" length="128" />
+			<column name="MESSAGEHEADER" length="128" not-null="true" />
 		</property>
 		<property name="messageSummary" type="java.lang.String" not-null="true">
-			<column name="MESSAGESUMMARY" length="512" />
+			<column name="MESSAGESUMMARY" length="512" not-null="true" />
 		</property>
 		<property name="sentAltinn" type="java.lang.Integer" not-null="true">
-			<column name="SENTALTINN" precision="1" />
+			<column name="SENTALTINN" precision="1" not-null="true" check="SENTALTINN IN (0, 1)"/>
 		</property>
 		<property name="sentAltinnDate" type="java.sql.Timestamp">
 			<column name="SENTALTINNDATE" />
 		</property>
 		<property name="messageStatus" type="java.lang.Integer" not-null="true">
-			<column name="MSG_STATUS" precision="1" />
+			<column name="MSG_STATUS" precision="1" not-null="true" />
 		</property>
 		<property name="readDeadline" type="java.util.Date" not-null="true">
-			<column name="READDEADLINE" />
+			<column name="READDEADLINE" not-null="true" />
 		</property>
 		<property name="overdueNoticeSent" type="java.lang.Integer" not-null="true">
-			<column name="OVERDUENOTICESENT" precision="1" />
+			<column name="OVERDUENOTICESENT" precision="1" not-null="true" check="OVERDUENOTICESENT IN (0, 1)"/>
 		</property>
 		<bag name="attachments" cascade="all" lazy="false" inverse="true">
 			<key column="MESSAGEID" />

@@ -33,7 +33,7 @@
 			</generator>
 		</id>
 		<property name="key" type="java.lang.String" not-null="true">
-			<column name="KEY_NAME" length="20" />
+			<column name="KEY_NAME" length="20" not-null="true" />
 		</property>
 		<property name="dateValue" type="java.util.Date">
 			<column name="DATEVALUE" />

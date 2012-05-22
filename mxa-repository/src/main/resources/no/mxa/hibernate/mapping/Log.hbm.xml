@@ -25,7 +25,7 @@
 <hibernate-mapping>
 	<class name="no.mxa.dto.LogDTO" table="LOG">
 		<id name="id" type="java.lang.Long">
-			<column name="ID" precision="9" scale="0" />
+			<column name="ID" precision="9" scale="0" not-null="true" />
 			<generator class="native">
 				<param name="sequence">
 					LOG_SEQ
@@ -33,14 +33,14 @@
 			</generator>
 		</id>
 		<many-to-one name="message" class="no.mxa.dto.MessageDTO" column="MESSAGEID" />
-		<property name="time" type="java.sql.Timestamp" not-null="true">
+		<property name="time" type="java.sql.Timestamp" >
 			<column name="TIME" />
 		</property>
 		<property name="logType" type="java.lang.String" not-null="true">
-			<column name="logType" length="1024" />
+			<column name="logType" length="1024" not-null="true" />
 		</property>
 		<property name="logMessage" type="java.lang.String" not-null="true">
-			<column name="LOGMSG" length="1024" />
+			<column name="LOGMSG" length="1024" not-null="true" />
 		</property>
 	</class>
 </hibernate-mapping>

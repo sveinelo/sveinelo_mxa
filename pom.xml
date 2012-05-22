@@ -478,10 +478,13 @@
 						<phase>process-sources</phase>
 						<configuration>
 							<licenseName>gpl_v3</licenseName>
-							<roots>
-								<root>src/main/java</root>
-								<root>src/test</root>
-							</roots>
+<!-- 							<roots> -->
+<!-- 								<root>src/main/java</root> -->
+<!-- 								<root>src/test</root> -->
+<!-- 							</roots> -->
+							<excludes>
+								<exclude>*.xhtml</exclude>
+							</excludes>
 						</configuration>
 					</execution>
 				</executions>

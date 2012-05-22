@@ -1,1 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?><Message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" sendingSystem="AGENCY" batchSending="0" domain="VM" caseDescription="test sans player" caseOfficer="mcr,Charrier Mathieu"><ParticipantId>31124901793</ParticipantId><MessageReference>VM20090006136-01</MessageReference><Idproc>1111133</Idproc><AltinnArchive>AM12345</AltinnArchive><Content><MessageHeader><![CDATA[VM&amp;nbsp;200900061,Main test altut (pdf),Deres ref&amp;nbsp;E29723/soi/test]]></MessageHeader><MessageSummery><![CDATA[Må besvares innen:&lt;br /&gt;Saksnummer:VM&amp;nbsp;200900061&amp;nbsp;&lt;br /&gt;Brevtype:Main test altut (pdf)&lt;br /&gt;Deres ref:E29723/soi/test&lt;br /&gt;Status:01000&amp;nbsp;Under behandling&amp;nbsp;Mottatt&lt;br /&gt;Tittel:test sans player&lt;br /&gt;Patentstyrets saksbehandler:mcr]]></MessageSummery><Attachments><Attachment filename="filename.txt" name="Svar på patentsøknad" mimeType="text/plain">TVhBLWRva3VtZW50IHRpbCBBbHR1dC4K</Attachment></Attachments></Content><NotificationMessages><NotificationMessage><SMSPhoneNumbers><SMSPhoneNumber>+332145864</SMSPhoneNumber></SMSPhoneNumbers><EmailAddresses><EmailAddress>oslo@patentkontor.com</EmailAddress></EmailAddresses></NotificationMessage></NotificationMessages></Message>
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  #%L
+  Integration tests
+  %%
+  Copyright (C) 2009 - 2012 Patentstyret
+  %%
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the 
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public 
+  License along with this program.  If not, see
+  <http://www.gnu.org/licenses/gpl-3.0.html>.
+  #L%
+  -->
+<Message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" sendingSystem="AGENCY" batchSending="0" domain="VM" caseDescription="test sans player" caseOfficer="mcr,Charrier Mathieu"><ParticipantId>31124901793</ParticipantId><MessageReference>VM20090006136-01</MessageReference><Idproc>1111133</Idproc><AltinnArchive>AM12345</AltinnArchive><Content><MessageHeader><![CDATA[VM&amp;nbsp;200900061,Main test altut (pdf),Deres ref&amp;nbsp;E29723/soi/test]]></MessageHeader><MessageSummery><![CDATA[Må besvares innen:&lt;br /&gt;Saksnummer:VM&amp;nbsp;200900061&amp;nbsp;&lt;br /&gt;Brevtype:Main test altut (pdf)&lt;br /&gt;Deres ref:E29723/soi/test&lt;br /&gt;Status:01000&amp;nbsp;Under behandling&amp;nbsp;Mottatt&lt;br /&gt;Tittel:test sans player&lt;br /&gt;Patentstyrets saksbehandler:mcr]]></MessageSummery><Attachments><Attachment filename="filename.txt" name="Svar på patentsøknad" mimeType="text/plain">TVhBLWRva3VtZW50IHRpbCBBbHR1dC4K</Attachment></Attachments></Content><NotificationMessages><NotificationMessage><SMSPhoneNumbers><SMSPhoneNumber>+332145864</SMSPhoneNumber></SMSPhoneNumbers><EmailAddresses><EmailAddress>oslo@patentkontor.com</EmailAddress></EmailAddresses></NotificationMessage></NotificationMessages></Message>

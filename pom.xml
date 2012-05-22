@@ -470,6 +470,13 @@
 				</configuration>
 				<executions>
 					<execution>
+						<id>third-party</id>
+						<goals>
+							<goal>add-third-party</goal>
+						</goals>
+						<phase>generate-resources</phase>
+					</execution>
+					<execution>
 						<id>first</id>
 						<goals>
 							<goal>update-file-header</goal>
@@ -477,9 +484,11 @@
 						<phase>process-sources</phase>
 						<configuration>
 							<licenseName>gpl_v3</licenseName>
+							<canUpdateCopyright>true</canUpdateCopyright>
 							<roots>
 								<root>src/main/java</root>
-								<root>src/test</root>
+								<root>src/main/webapp</root>
+								<root>src/test/java</root>
 							</roots>
 							<excludes>
 								<exclude>*.xhtml</exclude>
@@ -643,7 +652,8 @@
 					<artifactId>maven-source-plugin</artifactId>
 					<version>2.1.2</version>
 				</plugin>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -666,6 +676,7 @@
 											<goal>
 												update-file-header
 											</goal>
+											<goal>add-third-party</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>

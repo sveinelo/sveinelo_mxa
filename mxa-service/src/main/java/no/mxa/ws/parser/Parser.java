@@ -97,32 +97,14 @@ public class Parser extends DefaultHandler {
 
 			return returnMessage;
 		} catch (SAXException e) {
-<<<<<<< HEAD
-			if (LOGGER.isTraceEnabled()) {
-				LOGGER.trace("SAXException: " + e.getMessage());
-				e.printStackTrace();
-			}
+
+			LOGGER.error("Problem validating document.", e);
 			return "SAXException: " + e.getMessage();
 		} catch (IOException e) {
-			if (LOGGER.isTraceEnabled()) {
-				LOGGER.trace("IOException: " + e.getMessage());
-				e.printStackTrace();
-			}
+			LOGGER.error("IOException while validating document.", e);
 			return "IOException: " + e.getMessage();
 		} catch (ParserConfigurationException e) {
-			if (LOGGER.isTraceEnabled()) {
-				LOGGER.trace("ParserConfigurationException: " + e.getMessage());
-				e.printStackTrace();
-			}
-=======
-			LOGGER.debug("Problem validating document.", e);
-			return "SAXException: " + e.getMessage();
-		} catch (IOException e) {
-			LOGGER.debug("IOException while validating document.", e);
-			return "IOException: " + e.getMessage();
-		} catch (ParserConfigurationException e) {
-			LOGGER.debug("ParserConfigurationException: ", e);
->>>>>>> Improved the test of the parser
+			LOGGER.error("ParserConfigurationException: ", e);
 			return "ParerConfigurationException: " + e.getMessage();
 		}
 	}
@@ -172,32 +154,13 @@ public class Parser extends DefaultHandler {
 			sp.parse(document, this);
 			return tempMessage;
 		} catch (SAXException e) {
-<<<<<<< HEAD
-			if (LOGGER.isTraceEnabled()) {
-				LOGGER.trace("SAXException: " + e.getMessage());
-				e.printStackTrace();
-			}
+			LOGGER.error("Error parsing document.", e);
 			return null;
 		} catch (IOException e) {
-			if (LOGGER.isTraceEnabled()) {
-				LOGGER.trace("IOException: " + e.getMessage());
-				e.printStackTrace();
-			}
+			LOGGER.error("Error parsing document.", e);
 			return null;
 		} catch (ParserConfigurationException e) {
-			if (LOGGER.isTraceEnabled()) {
-				LOGGER.trace("ParserConfigurationException: " + e.getMessage());
-				e.printStackTrace();
-			}
-=======
-			LOGGER.debug("Error parsing document.", e);
-			return null;
-		} catch (IOException e) {
-			LOGGER.debug("Error parsing document.", e);
-			return null;
-		} catch (ParserConfigurationException e) {
-			LOGGER.debug("Error parsing document.", e);
->>>>>>> Improved the test of the parser
+			LOGGER.error("Error parsing document.", e);
 			return null;
 		}
 	}
@@ -209,13 +172,7 @@ public class Parser extends DefaultHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		// reset
-<<<<<<< HEAD
-		if (LOGGER.isTraceEnabled()) {
-			LOGGER.trace("Start element:" + qName);
-		}
-=======
-		LOGGER.debug("Start element:{}", qName);
->>>>>>> Improved the test of the parser
+		LOGGER.trace("Start element:{}", qName);
 		tempVal = "";
 		tempQName = qName; // qName is the element that is currently being
 							// parsed
@@ -245,16 +202,9 @@ public class Parser extends DefaultHandler {
 	 */
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
-<<<<<<< HEAD
-		if (LOGGER.isTraceEnabled()) {
-			LOGGER.trace("Character element:" + tempQName);
-		}
-		// In the case of attachment elements the character sequence might not be long enough to cover the entire
-=======
-		LOGGER.debug("Character element: {}", tempQName);
+		LOGGER.trace("Character element: {}", tempQName);
 		// In the case of attachment elements the character sequence might not
 		// be long enough to cover the entire
->>>>>>> Improved the test of the parser
 		// elements, hence the need to append the sequence to a CharArrayWriter
 
 		if (tempQName.equalsIgnoreCase("Attachment") && (tempFil != null)) {
@@ -271,13 +221,7 @@ public class Parser extends DefaultHandler {
 	 */
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-<<<<<<< HEAD
-		if (LOGGER.isTraceEnabled()) {
-			LOGGER.trace("End element:" + qName);
-		}
-=======
-		LOGGER.debug("End element:{}", qName);
->>>>>>> Improved the test of the parser
+		LOGGER.trace("End element:{}", qName);
 		tempQName = qName; // qName is the element currently being parsed
 
 		if (qName.equalsIgnoreCase("Idproc")) {
@@ -297,13 +241,7 @@ public class Parser extends DefaultHandler {
 		} else if (qName.equalsIgnoreCase("Attachment")) {
 			tempAttachment.setAttachment(tempFil.toCharArray());
 			attachments.add(tempAttachment);
-<<<<<<< HEAD
-			if (LOGGER.isTraceEnabled()) {
-				LOGGER.trace("Attachment:" + tempFil.toString());
-			}
-=======
-			LOGGER.debug("Attachment: {}", tempFil);
->>>>>>> Improved the test of the parser
+			LOGGER.trace("Attachment: {}", tempFil);
 		} else if (qName.equalsIgnoreCase("SMSPhoneNumber")) {
 			tempContactInfo = new ContactInfo();
 			tempContactInfo.setType(UniversalConstants.CONTACTINFOTYPE_SMS);

@@ -49,7 +49,7 @@ public class DateWithHoursAndSecondsConverterTest {
 
 	@Test
 	public void testGetAsStringValidParams() {
-		assertEquals("Converter running with null values should return empty.", DATE_STRING_VALUE,
+		assertEquals("Converter running with null values but real date should return the right date.", DATE_STRING_VALUE,
 				conv.getAsString(null, null, date));
 	}
 
@@ -60,12 +60,14 @@ public class DateWithHoursAndSecondsConverterTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetAsStringIllegalArgumentString() {
-		assertEquals("Converter running with null values should return empty.", "", conv.getAsString(null, null, "Per Abich"));
+		assertEquals("Converter running with the wrong object type (String) values should return empty.", "",
+				conv.getAsString(null, null, "Per Abich"));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetAsStringIllegalArgumentInteger() {
-		assertEquals("Converter running with null values should return empty.", "", conv.getAsString(null, null, 1));
+		assertEquals("Converter running with the wrong object type (Integer) values should return empty.", "",
+				conv.getAsString(null, null, 1));
 	}
 
 }

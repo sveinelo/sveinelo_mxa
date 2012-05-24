@@ -58,8 +58,8 @@ public class DateWithoutHoursAndSecondsConverterTest {
 
 	@Test
 	public void testGetAsStringValidArguments() {
-		assertEquals("", conv.getAsString(null, null, null));
-		assertEquals(DATE_STRING_VALUE, conv.getAsString(null, null, date));
+		assertEquals("Test if null parameters return empty date", "", conv.getAsString(null, null, null));
+		assertEquals("Input date should return as String without time.", DATE_STRING_VALUE, conv.getAsString(null, null, date));
 	}
 
 }

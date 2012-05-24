@@ -37,13 +37,10 @@ public class YesNoConverterTest {
 		ynConv = new YesNoConverter();
 	}
 
-	@Test
+	@Test(expected = NotImplementedException.class)
 	public void testGetAsObjectIsNotImplemented() {
-		try {
-			ynConv.getAsObject(null, null, null);
-			fail("Expected a NotImplementedException to be thrown");
-		} catch (NotImplementedException e) {
-		}
+		ynConv.getAsObject(null, null, null);
+		fail("Expected a NotImplementedException to be thrown");
 	}
 
 	@Test(expected = NullPointerException.class)

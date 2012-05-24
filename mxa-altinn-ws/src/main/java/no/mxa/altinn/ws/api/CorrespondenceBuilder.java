@@ -234,13 +234,11 @@ public class CorrespondenceBuilder {
 
 	/** Correspondences.Correspondence.Content.MessageTitle */
 	private JAXBElement<String> getMessageTitle(MessageDTO message) {
-		// TODO unescapeHtml, da en blir escapet i JAXB marshaller.
 		return objectFactory.createExternalContentV2MessageTitle(StringEscapeUtils.unescapeHtml(message.getMessageHeader()));
 	}
 
 	/** Correspondences.Correspondence.Content.MessageBody */
 	private JAXBElement<String> getMessageBody(MessageDTO message) {
-		// TODO unescapeHtml, da en blir escapet i JAXB marshaller.
 		return objectFactory.createExternalContentV2MessageBody(StringEscapeUtils.unescapeHtml(message.getMessageSummary()));
 	}
 

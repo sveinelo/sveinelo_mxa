@@ -21,19 +21,13 @@
  */
 package no.mxa.service.altut;
 
-import static no.mxa.UniversalConstants.MSG_FAILED_ALTINN;
-import static no.mxa.UniversalConstants.MSG_SENTALTINN_FALSE;
-import static no.mxa.UniversalConstants.MSG_SENTALTINN_TRUE;
-import static no.mxa.UniversalConstants.MSG_SENT_ALTINN;
-import static no.mxa.UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED;
-import static no.mxa.UniversalConstants.MSG_STATUS_SENT_ALTINN;
-
 import java.net.MalformedURLException;
 import java.sql.Timestamp;
 
 import javax.inject.Inject;
 import javax.xml.bind.JAXBElement;
 
+import no.mxa.UniversalConstants;
 import no.mxa.altinn.ws.AltinnFault;
 import no.mxa.altinn.ws.ICorrespondenceAgencyExternalBasicInsertCorrespondenceBasicV2AltinnFaultFaultFaultMessage;
 import no.mxa.altinn.ws.ReceiptExternal;
@@ -53,10 +47,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class SendSingleCorrespondenceMessage implements SingleMessageSender {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SendSingleCorrespondenceMessage.class);
 
-	private AltinnWS altinnWS;
-	private MessageService messageService;
-	private LogGenerator logGenerator;
-	private LogService logService;
+	private final AltinnWS altinnWS;
+	private final MessageService messageService;
+	private final LogGenerator logGenerator;
+	private final LogService logService;
 
 	@Inject
 	public SendSingleCorrespondenceMessage(AltinnWS altinnWS, MessageService messageService, LogGenerator logGenerator,
@@ -96,8 +90,8 @@ public class SendSingleCorrespondenceMessage implements SingleMessageSender {
 	private Timestamp markMessageAsSentAltinn(MessageDTO messageDTO) {
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		MessageDTO message = messageService.searchById(messageDTO.getId());
-		message.setSentAltinn(MSG_SENTALTINN_TRUE);
-		message.setMessageStatus(MSG_STATUS_SENT_ALTINN);
+		message.setSentAltinn(UniversalConstants.MSG_SENTALTINN_TRUE);
+		message.setMessageStatus(UniversalConstants.MSG_STATUS_SENT_ALTINN);
 		message.setSentAltinnDate(time);
 		messageService.mergeMessage(message);
 		return time;
@@ -105,7 +99,8 @@ public class SendSingleCorrespondenceMessage implements SingleMessageSender {
 
 	private void logSuccess(MessageDTO messageDTO, ReceiptExternal receipt, Timestamp time) {
 		String additionalLogMessage = extractRecieptText(receipt);
-		LogDTO logEntry = logGenerator.generateLog(additionalLogMessage, MSG_SENT_ALTINN, messageDTO.getId(), time);
+		LogDTO logEntry = logGenerator.generateLog(additionalLogMessage, UniversalConstants.MSG_SENT_ALTINN,
+				messageDTO.getId(), time);
 		logService.saveLog(logEntry);
 	}
 
@@ -117,7 +112,7 @@ public class SendSingleCorrespondenceMessage implements SingleMessageSender {
 	}
 
 	private void loggExceptionFailure(MessageDTO messageDTO, String error) {
-		LogDTO logEntry = logGenerator.generateLog(error, MSG_FAILED_ALTINN, messageDTO.getId());
+		LogDTO logEntry = logGenerator.generateLog(error, UniversalConstants.MSG_FAILED_ALTINN, messageDTO.getId());
 		logService.saveLog(logEntry);
 		if (LOGGER.isErrorEnabled()) {
 			LOGGER.error("Sending til Altinn feilet:" + messageDTO.getId() + ":" + error);
@@ -126,13 +121,14 @@ public class SendSingleCorrespondenceMessage implements SingleMessageSender {
 
 	private void markMessageAsFailed(MessageDTO messageDTO) {
 		MessageDTO message = messageService.searchById(messageDTO.getId());
-		message.setSentAltinn(MSG_SENTALTINN_FALSE);
-		message.setMessageStatus(MSG_STATUS_SEND_ALTINN_FAILED);
+		message.setSentAltinn(UniversalConstants.MSG_SENTALTINN_FALSE);
+		message.setMessageStatus(UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED);
 		messageService.mergeMessage(message);
 	}
 
 	private void logFailure(MessageDTO messageDTO, ReceiptExternal receipt) {
-		LogDTO logEntry = logGenerator.generateLog(extractRecieptText(receipt), MSG_FAILED_ALTINN, messageDTO.getId());
+		LogDTO logEntry = logGenerator.generateLog(extractRecieptText(receipt), UniversalConstants.MSG_FAILED_ALTINN,
+				messageDTO.getId());
 		logService.saveLog(logEntry);
 		if (LOGGER.isErrorEnabled()) {
 			LOGGER.error("Sending til Altinn feilet:" + messageDTO.getId() + ":" + extractRecieptText(receipt));

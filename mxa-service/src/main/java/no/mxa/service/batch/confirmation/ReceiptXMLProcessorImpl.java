@@ -70,7 +70,11 @@ public class ReceiptXMLProcessorImpl implements ReceiptXMLProcessor {
 				}
 				// If we can decode the XML with the adapter, stop processing with other adapters.
 				break;
-			} catch (MarshalException | ValidationException e) {
+			} catch (ValidationException e) {
+				LOGGER.debug("The Message cannot be decoded with the {} adapter", new Object[] { adapter.getClass().getName(),
+						e });
+				LOGGER.trace("Problem while decoding", e);
+			} catch (MarshalException e) {
 				LOGGER.debug("The Message cannot be decoded with the {} adapter", new Object[] { adapter.getClass().getName(),
 						e });
 				LOGGER.trace("Problem while decoding", e);

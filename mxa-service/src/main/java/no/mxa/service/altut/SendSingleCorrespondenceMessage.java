@@ -79,7 +79,10 @@ public class SendSingleCorrespondenceMessage implements SingleMessageSender {
 			markMessageAsFailed(messageDTO);
 			String altinnFault = createMessageFromAltinnFault(e.getFaultInfo());
 			loggExceptionFailure(messageDTO, altinnFault);
-		} catch (MalformedURLException | CorrespondenceBuilderException e) {
+		} catch (CorrespondenceBuilderException e) {
+			markMessageAsFailed(messageDTO);
+			loggExceptionFailure(messageDTO, e.getMessage());
+		} catch (MalformedURLException e) {
 			markMessageAsFailed(messageDTO);
 			loggExceptionFailure(messageDTO, e.getMessage());
 		}

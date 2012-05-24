@@ -21,56 +21,69 @@
  */
 package no.mxa.altinn.ws.api;
 
-import java.io.PrintStream;
+import java.io.OutputStream;
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
+import no.mxa.utils.LoggingOutputStream;
+import no.mxa.utils.LoggingOutputStream.Level;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SoapLoggingHandler implements SOAPHandler<SOAPMessageContext> {
-	private final FilePrintStreamFactory filePrintStreamFactory;
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(SoapLoggingHandler.class);
+	private boolean throwRuntimeExceptions = false;
 
-	@Inject
-	public SoapLoggingHandler(FilePrintStreamFactory filePrintStreamFactory) {
-		this.filePrintStreamFactory = filePrintStreamFactory;
-	}
-
+	@Override
 	public Set<QName> getHeaders() {
 		return null;
 	}
 
+	@Override
 	public boolean handleMessage(SOAPMessageContext smc) {
-		// TODO sjekke log level
-		logToSystemOut(smc);
+		logToLogger(smc);
 		return true;
 	}
 
+	@Override
 	public boolean handleFault(SOAPMessageContext smc) {
-		// TODO sjekke log levels
-		logToSystemOut(smc);
+		logToLogger(smc);
 		return true;
 	}
 
+	@Override
 	public void close(MessageContext messageContext) {
 		// nothing to clean up
 	}
 
-	private void logToSystemOut(SOAPMessageContext smc) {
-		PrintStream out = filePrintStreamFactory.create();
-
-		SOAPMessage message = smc.getMessage();
-		try {
-			message.writeTo(out);
-			out.println(""); // just to add a newline
+	private void logToLogger(SOAPMessageContext smc) {
+		try (OutputStream out = new LoggingOutputStream(LOGGER, Level.TRACE);) {
+			SOAPMessage message = smc.getMessage();
+			if (message != null) {
+				message.writeTo(out);
+			} else {
+				LOGGER.debug("No Message to Log");
+			}
 		} catch (Exception e) {
-			out.println("Exception in handler: " + e);
-		} finally {
-			out.close();
+			LOGGER.warn("Exception in handler: ", e);
+			if (throwRuntimeExceptions) {
+				throw new SoapLoggingHandlerExeption(e);
+			}
 		}
 	}
 
+	public void setThrowRuntimeExceptions() {
+		throwRuntimeExceptions = true;
+	}
+
+	public void setDoNotThrowRuntimeExceptions() {
+		throwRuntimeExceptions = false;
+	}
 }

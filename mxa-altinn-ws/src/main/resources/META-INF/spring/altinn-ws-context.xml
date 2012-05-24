@@ -39,8 +39,6 @@
 		<property name="handlerResolver" ref="handlerResolver" />
 	</bean>
 
-	<bean id="filePrintStreamFactory" class="no.mxa.altinn.ws.api.FilePrintStreamFactory" />
-
 	<bean id="handlerResolver" class="no.mxa.altinn.ws.api.ConfiguredHandlerResolver">
 		<constructor-arg>
 			<util:list>

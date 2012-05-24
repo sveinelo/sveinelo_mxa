@@ -26,8 +26,14 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.fail;
 
 import java.net.MalformedURLException;
+import java.sql.Clob;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
+import javax.sql.rowset.serial.SerialClob;
+import javax.sql.rowset.serial.SerialException;
 
 import no.mxa.altinn.ws.AltinnFault;
 import no.mxa.altinn.ws.ICorrespondenceAgencyExternalBasic;
@@ -37,6 +43,7 @@ import no.mxa.altinn.ws.ReceiptExternal;
 import no.mxa.altinn.ws.ReceiptStatusEnum;
 import no.mxa.altinn.ws.api.AltinnWS;
 import no.mxa.altinn.ws.api.CorrespondenceBuilderException;
+import no.mxa.dto.AttachmentDTO;
 import no.mxa.dto.MessageDTO;
 import no.mxa.test.support.SpringBasedTest;
 
@@ -70,10 +77,26 @@ public class AltinnWsTest extends SpringBasedTest {
 	}
 
 	@Test
-	public void shouldSendAMessageToAltinnTest() throws MalformedURLException, CorrespondenceBuilderException {
+	public void shouldSendAMessageToAltinnTest() throws MalformedURLException, CorrespondenceBuilderException, SerialException,
+			SQLException {
 		MessageDTO message = new MessageDTO();
 		message.setMessageReference("REF001");
 		message.setParticipantId("910013874");
+		message.setCaseOfficer("Test Case Officer");
+		message.setCaseDescription("Test Case Description");
+		message.setMessageHeader("VM&nbsp;200900061,Main test altut,Deres ref&nbsp;E29723/soi/test");
+		message.setMessageSummary("Må besvares innen:2009.06.01<br />Saksnummer:VM&nbsp;200900061&nbsp;<br />Brevtype:Main test altut<br />Deres ref:E29723/soi/test<br />Status:01000&nbsp;Under behandling&nbsp;Mottatt<br />Tittel:test sans player<br />Saksbehandler:soi");
+		List<AttachmentDTO> attachments = new ArrayList<>();
+		String string = "originalBase64encodedStreng";
+		char[] content = string.toCharArray();
+		Clob attachment = new SerialClob(content);
+		String mimeType = "application/txt";
+		String fileName = "filnavn";
+		String name = "visningsnavn";
+		String attachmentAsString = string;
+		AttachmentDTO attachement = new AttachmentDTO(attachment, mimeType, fileName, name, attachmentAsString);
+		attachments.add(attachement);
+		message.setAttachments(attachments);
 
 		try {
 			ReceiptExternal receiptExternal = altinnWS.sendMessage(message);

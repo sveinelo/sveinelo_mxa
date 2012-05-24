@@ -25,7 +25,7 @@
 		<module>mxa-war</module>
 		<module>mxa-test</module>
 		<module>mxa-db-scripts</module>
-<!-- 		<module>mxa-build-tools</module> -->
+		<!-- <module>mxa-build-tools</module> -->
 		<module>mxa-altinn-ws</module>
 	</modules>
 	<repositories>
@@ -71,6 +71,7 @@
 		<commons.collections.version>3.2.1</commons.collections.version>
 		<commons.net.version>3.1</commons.net.version>
 		<commons.codec.version>1.6</commons.codec.version>
+		<commons.lang.version>2.4</commons.lang.version>
 
 		<mimepull.version>1.8</mimepull.version>
 		<jaxp.api.version>1.4.5</jaxp.api.version>
@@ -249,6 +250,11 @@
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
 				<version>${commons.codec.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons.lang.version}</version>
 			</dependency>
 			<!-- webservice -->
 			<dependency>
@@ -538,6 +544,11 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>license-maven-plugin</artifactId>
+					<version>1.1</version>
+				</plugin>
+				<plugin>
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>2.4</version>
 				</plugin>
@@ -652,8 +663,7 @@
 					<artifactId>maven-source-plugin</artifactId>
 					<version>2.1.2</version>
 				</plugin>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -820,8 +830,8 @@
 														</copy>
 													</then>
 												</if>
-												<cobertura-report datafile="${cobertura.complete.ser.file}"
-													format="${cobertura.format}" destdir="${cobertura.working.dir}/report">
+												<cobertura-report datafile="${cobertura.complete.ser.file}" format="${cobertura.format}"
+													destdir="${cobertura.working.dir}/report">
 													<fileset dir="${cobertura.working.dir}/source" />
 												</cobertura-report>
 											</then>

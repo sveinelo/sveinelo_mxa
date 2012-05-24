@@ -97,20 +97,20 @@ public class Parser extends DefaultHandler {
 
 			return returnMessage;
 		} catch (SAXException e) {
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("SAXException: " + e.getMessage());
+			if (LOGGER.isTraceEnabled()) {
+				LOGGER.trace("SAXException: " + e.getMessage());
 				e.printStackTrace();
 			}
 			return "SAXException: " + e.getMessage();
 		} catch (IOException e) {
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("IOException: " + e.getMessage());
+			if (LOGGER.isTraceEnabled()) {
+				LOGGER.trace("IOException: " + e.getMessage());
 				e.printStackTrace();
 			}
 			return "IOException: " + e.getMessage();
 		} catch (ParserConfigurationException e) {
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("ParserConfigurationException: " + e.getMessage());
+			if (LOGGER.isTraceEnabled()) {
+				LOGGER.trace("ParserConfigurationException: " + e.getMessage());
 				e.printStackTrace();
 			}
 			return "ParerConfigurationException: " + e.getMessage();
@@ -159,20 +159,20 @@ public class Parser extends DefaultHandler {
 			sp.parse(document, this);
 			return tempMessage;
 		} catch (SAXException e) {
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("SAXException: " + e.getMessage());
+			if (LOGGER.isTraceEnabled()) {
+				LOGGER.trace("SAXException: " + e.getMessage());
 				e.printStackTrace();
 			}
 			return null;
 		} catch (IOException e) {
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("IOException: " + e.getMessage());
+			if (LOGGER.isTraceEnabled()) {
+				LOGGER.trace("IOException: " + e.getMessage());
 				e.printStackTrace();
 			}
 			return null;
 		} catch (ParserConfigurationException e) {
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("ParserConfigurationException: " + e.getMessage());
+			if (LOGGER.isTraceEnabled()) {
+				LOGGER.trace("ParserConfigurationException: " + e.getMessage());
 				e.printStackTrace();
 			}
 			return null;
@@ -185,8 +185,8 @@ public class Parser extends DefaultHandler {
 	 */
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		// reset
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Start element:" + qName);
+		if (LOGGER.isTraceEnabled()) {
+			LOGGER.trace("Start element:" + qName);
 		}
 		tempVal = "";
 		tempQName = qName; // qName is the element that is currently being parsed
@@ -215,8 +215,8 @@ public class Parser extends DefaultHandler {
 	 * The sequence of characters currently being read by the parser
 	 */
 	public void characters(char[] ch, int start, int length) throws SAXException {
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Character element:" + tempQName);
+		if (LOGGER.isTraceEnabled()) {
+			LOGGER.trace("Character element:" + tempQName);
 		}
 		// In the case of attachment elements the character sequence might not be long enough to cover the entire
 		// elements, hence the need to append the sequence to a CharArrayWriter
@@ -234,8 +234,8 @@ public class Parser extends DefaultHandler {
 	 * Sets the various message elements when an end tag of a particular element is encountered
 	 */
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("End element:" + qName);
+		if (LOGGER.isTraceEnabled()) {
+			LOGGER.trace("End element:" + qName);
 		}
 		tempQName = qName; // qName is the element currently being parsed
 
@@ -256,8 +256,8 @@ public class Parser extends DefaultHandler {
 		} else if (qName.equalsIgnoreCase("Attachment")) {
 			tempAttachment.setAttachment(tempFil.toCharArray());
 			attachments.add(tempAttachment);
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Attachment:" + tempFil.toString());
+			if (LOGGER.isTraceEnabled()) {
+				LOGGER.trace("Attachment:" + tempFil.toString());
 			}
 		} else if (qName.equalsIgnoreCase("SMSPhoneNumber")) {
 			tempContactInfo = new ContactInfo();

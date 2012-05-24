@@ -21,6 +21,7 @@
  */
 package no.mxa.service.implementations;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -45,6 +46,9 @@ import no.mxa.service.KeyValues;
 import no.mxa.service.RecipientDTO;
 import no.mxa.service.SendMailService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Class used to send email to external parties.
  */
@@ -52,6 +56,8 @@ public class SendMailServiceImpl implements SendMailService {
 
 	private final KeyValues keyValues;
 	private final AttachmentService attachmentService;
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(SendMailServiceImpl.class);
 
 	@Inject
 	public SendMailServiceImpl(KeyValues keyValues, AttachmentService attachmentService) {
@@ -105,7 +111,11 @@ public class SendMailServiceImpl implements SendMailService {
 				BodyPart bp = new MimeBodyPart();
 				byte[] attachmentData = attachmentService.getAttachmentAsByteArray(attachment.getId());
 				if (attachment.getMimeType().equals("text/plain")) {
-					bp.setContent(new String(attachmentData), attachment.getMimeType());
+					try {
+						bp.setContent(new String(attachmentData, "UTF-8"), attachment.getMimeType());
+					} catch (UnsupportedEncodingException e) {
+						LOGGER.error("Encoding problem", e);
+					}
 				} else {
 					bp.setContent(attachmentData, attachment.getMimeType());
 				}

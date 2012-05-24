@@ -23,6 +23,7 @@ package no.mxa.utils;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 
 import org.slf4j.Logger;
 
@@ -231,7 +232,13 @@ public class LoggingOutputStream extends OutputStream {
 
 		final byte[] theBytes = new byte[count];
 		System.arraycopy(buf, 0, theBytes, 0, count);
-		String message = new String(theBytes);
+		String message;
+		try {
+			message = new String(theBytes, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			logger.error("Cannot encode the String", e);
+			message = "";
+		}
 		level.log(logger, message);
 		reset();
 

@@ -37,7 +37,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@ContextConfiguration(locations = { CTX_WAR, CTX_ALTINN_WS, CTX_SERVICE, CTX_REPOSITORY, CTX_TEST_COMMON, CTX_TEST_HSQL })
+@ContextConfiguration(locations = { CTX_WAR, CTX_ALTINN_WS, CTX_SERVICE,
+		CTX_REPOSITORY, CTX_TEST_COMMON, CTX_TEST_HSQL })
 @RunWith(SpringJUnit4ClassRunner.class)
 public abstract class SpringBasedTest {
 	private static final String DELETE_FROM_KEYVALUES = "DELETE FROM KEYVALUES";
@@ -51,7 +52,7 @@ public abstract class SpringBasedTest {
 
 	@Before
 	public void prepareDataBase() {
-		simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
+		simpleJdbcTemplate = new SimpleJdbcTemplate(getDataSource());
 	}
 
 	/**
@@ -67,6 +68,10 @@ public abstract class SpringBasedTest {
 
 	public SimpleJdbcTemplate getSimpleJdbcTemplate() {
 		return simpleJdbcTemplate;
+	}
+
+	public DataSource getDataSource() {
+		return dataSource;
 	}
 
 }

@@ -30,7 +30,9 @@ import java.io.InputStreamReader;
 
 import javax.inject.Inject;
 
+import no.mxa.dto.KeyValuesDTO;
 import no.mxa.test.support.SpringBasedTest;
+import no.mxa.test.support.TestDataHelper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +48,8 @@ public class SubmitMessageTest extends SpringBasedTest {
 
 	@Before
 	public void setUp() throws IOException {
-		ClassPathResource classPathResource = new ClassPathResource("mxa_to_altinn/MessageExample.xml");
+		ClassPathResource classPathResource = new ClassPathResource(
+				"mxa_to_altinn/MessageExample.xml");
 		InputStream is = classPathResource.getInputStream();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		StringBuilder sb = new StringBuilder();
@@ -69,6 +72,15 @@ public class SubmitMessageTest extends SpringBasedTest {
 
 		xmlString = sb.toString();
 
+	}
+
+	@Before
+	public void setupDB() {
+		TestDataHelper testDataHelper = new TestDataHelper(getDataSource());
+		testDataHelper.insertKeyvalue(new KeyValuesDTO("MAILWARNDAYS", null,
+				14, null, null));
+		testDataHelper.insertKeyvalue(new KeyValuesDTO("MAILNOTICEDAYS", null,
+				7, null, null));
 	}
 
 	@Test

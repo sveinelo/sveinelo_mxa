@@ -32,7 +32,7 @@ import no.mxa.dto.KeyValuesDTO;
  * Singleton that holds keyvalues from database. Loaded when application starts.
  */
 public class KeyValues implements MessageValues {
-	private KeyValuesService keyValuesService;
+	private final KeyValuesService keyValuesService;
 
 	@Inject
 	public KeyValues(KeyValuesService keyValuesService) {
@@ -47,11 +47,13 @@ public class KeyValues implements MessageValues {
 	 */
 	private KeyValuesDTO findKeyValue(String key) {
 		// Get values from database
-		List<KeyValuesDTO> keyValues = keyValuesService.searchByProperty("key", key);
+		List<KeyValuesDTO> keyValues = keyValuesService.searchByProperty("key",
+				key);
 
 		// Throw exception if not found in DB or multiple values in DB.
 		if (keyValues != null && keyValues.size() != 1) {
-			throw new RuntimeException("Error reading keyvalue " + key + " from database.");
+			throw new RuntimeException("Error reading keyvalue " + key
+					+ " from database.");
 		}
 		return keyValues.get(0);
 	}
@@ -190,6 +192,14 @@ public class KeyValues implements MessageValues {
 
 	public String getMailWarnContent() {
 		return findKeyValue("MAILWARNCONTENT").getStringValue();
+	}
+
+	public Integer getMailWarnDays() {
+		return findKeyValue("MAILNOTICEDAYS").getNumericValue();
+	}
+
+	public Integer getMailNoticeDays() {
+		return findKeyValue("MAILWARNDAYS").getNumericValue();
 	}
 
 	/*

@@ -60,6 +60,9 @@ Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) 
 Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES ('SERVICECODE',null,null,'PAT','Tjenestekode, f.eks. PSA');
 Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES ('SERVICEEDITION',null,null,'1','Tjenesteutgavekoden som meldingen gjelder for');
 
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES ('MAILNOTICEDAYS',null,null,'7','Antall dager mellom melding sendt til Altinn og at infomail blir sendt.');
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES ('MAILWARNDAYS',null,null,'14','Antall dager mellom melding sendt til Altinn og at varselsmail blir sendt.');
+
 -- QUARTZ values
 
 DELETE FROM QRTZ_TRIGGER_LISTENERS;

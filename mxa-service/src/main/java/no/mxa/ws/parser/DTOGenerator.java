@@ -23,26 +23,39 @@ package no.mxa.ws.parser;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import no.mxa.UniversalConstants;
 import no.mxa.dto.AttachmentDTO;
 import no.mxa.dto.ContactInfoDTO;
 import no.mxa.dto.LogDTO;
 import no.mxa.dto.MessageDTO;
+import no.mxa.service.KeyValues;
+import no.mxa.utils.DateUtils;
 
 /**
- * Class that receives messages with attachments and contact info to be returned as DTO objects
+ * Class that receives messages with attachments and contact info to be returned
+ * as DTO objects
  */
 public class DTOGenerator {
+
+	private final KeyValues keyValues;
+
+	@Inject
+	public DTOGenerator(KeyValues keyValues) {
+		this.keyValues = keyValues;
+	}
+
 	/**
 	 * 
 	 * @param inputMessage
 	 *            The message returned from the xml parser
-	 * @return messageDTO The message DTO object, containing attachments and contact info
+	 * @return messageDTO The message DTO object, containing attachments and
+	 *         contact info
 	 */
 	public MessageDTO generateMessageDTO(Message inputMessage) {
 		Attachment attachment;
@@ -69,11 +82,13 @@ public class DTOGenerator {
 
 		// Extracts the attachment objects
 		if (inputAttachments != null) {
-			for (Iterator<Attachment> itAtt = inputAttachments.iterator(); itAtt.hasNext();) {
+			for (Iterator<Attachment> itAtt = inputAttachments.iterator(); itAtt
+					.hasNext();) {
 				attachment = itAtt.next();
 				attachmentDTO = new AttachmentDTO();
 
-				// Set attachmentDTO values based on the incoming attachment values
+				// Set attachmentDTO values based on the incoming attachment
+				// values
 				attachmentDTO.setAttachment(attachment.getAttachment());
 				attachmentDTO.setFileName(attachment.getFilename());
 				attachmentDTO.setMimeType(attachment.getMimeType());
@@ -89,11 +104,13 @@ public class DTOGenerator {
 		}
 		// Extracts the contact info objects
 		if (inputContactInfo != null) {
-			for (Iterator<ContactInfo> itCont = inputContactInfo.iterator(); itCont.hasNext();) {
+			for (Iterator<ContactInfo> itCont = inputContactInfo.iterator(); itCont
+					.hasNext();) {
 				contactInfo = itCont.next();
 				contactInfoDTO = new ContactInfoDTO();
 
-				// Set the contactInfoDTO values based on the incoming contactInfo values
+				// Set the contactInfoDTO values based on the incoming
+				// contactInfo values
 				contactInfoDTO.setAddress(contactInfo.getAddress());
 				contactInfoDTO.setType(contactInfo.getType());
 
@@ -122,8 +139,10 @@ public class DTOGenerator {
 		messageDTO.setSendingSystem(inputMessage.getSendingSystem());
 		messageDTO.setSentAltinn(UniversalConstants.MSG_SENTALTINN_FALSE);
 		messageDTO.setMessageStatus(UniversalConstants.MSG_STATUS_RECEIVED);
-		messageDTO.setReadDeadline(getFutureDate(new Date(), 7));
-		messageDTO.setOverdueNoticeSent(UniversalConstants.MSG_OVERDUENOTICE_FALSE);
+		messageDTO.setReadDeadline(DateUtils.getFutureDate(new Date(),
+				keyValues.getMailNoticeDays()));
+		messageDTO
+				.setOverdueNoticeSent(UniversalConstants.MSG_OVERDUENOTICE_FALSE);
 		messageDTO.setAttachments(attachmentsToInclude);
 		messageDTO.setContactInfo(contactInfoToInclude);
 
@@ -156,12 +175,5 @@ public class DTOGenerator {
 
 		// Returns a log DTO
 		return logDTO;
-	}
-
-	private Date getFutureDate(Date readDeadline, int daysToAdd) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(readDeadline);
-		calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
-		return calendar.getTime();
 	}
 }

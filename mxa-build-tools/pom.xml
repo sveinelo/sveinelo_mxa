@@ -2,9 +2,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>mxa-build-tools</artifactId>
 	<name>Build tools</name>
-	<parent>
-		<groupId>no.mxa</groupId>
-		<artifactId>mxa</artifactId>
-		<version>2.15-SNAPSHOT</version>
-	</parent>
+	<version>2.12</version>
+	<groupId>no.mxa</groupId>
 </project>

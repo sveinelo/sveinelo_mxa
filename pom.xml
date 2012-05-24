@@ -110,12 +110,6 @@
 			</dependency>
 			<dependency>
 				<groupId>no.mxa</groupId>
-				<artifactId>mxa-build-tools</artifactId>
-				<version>${project.version}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>no.mxa</groupId>
 				<artifactId>mxa-repository</artifactId>
 				<version>${project.version}</version>
 				<scope>runtime</scope>

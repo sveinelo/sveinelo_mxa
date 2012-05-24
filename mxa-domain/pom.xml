@@ -40,9 +40,6 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- End test dependencies -->
-		<dependency>
-			<groupId>no.mxa</groupId>
-			<artifactId>mxa-build-tools</artifactId>
-		</dependency>
+		
 	</dependencies>
 </project>

@@ -13,6 +13,10 @@
 		<!-- Internal dependencies -->
 		<dependency>
 			<groupId>no.mxa</groupId>
+			<artifactId>mxa-build-tools</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>no.mxa</groupId>
 			<artifactId>mxa-domain</artifactId>
 		</dependency>
 		<!-- End internal dependencies -->

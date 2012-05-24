@@ -71,7 +71,9 @@ public class ReceiptXMLProcessorImpl implements ReceiptXMLProcessor {
 				// If we can decode the XML with the adapter, stop processing with other adapters.
 				break;
 			} catch (MarshalException | ValidationException e) {
-				LOGGER.debug("The Message cannot be decoded with the {} adapter", new Object[] { adapter.getClass().getName(), e });
+				LOGGER.debug("The Message cannot be decoded with the {} adapter", new Object[] { adapter.getClass().getName(),
+						e });
+				LOGGER.trace("Problem while decoding", e);
 			}
 		}
 		if (!processed) {
@@ -81,8 +83,9 @@ public class ReceiptXMLProcessorImpl implements ReceiptXMLProcessor {
 					UniversalConstants.RCT_PROCESS_FILE_FAILED);
 			logService.saveLog(logEntry);
 		} else {
-			if (LOGGER.isInfoEnabled())
+			if (LOGGER.isInfoEnabled()) {
 				LOGGER.info("Processed Message: '{}'...", xml.substring(0, 50));
+			}
 		}
 		return processed;
 	}
@@ -118,13 +121,15 @@ public class ReceiptXMLProcessorImpl implements ReceiptXMLProcessor {
 
 	private void persistLogEntryWithMessageIdZero(LogEntry tempLog) throws InvalidLogEntryTypeException {
 		// The Confirmation (NB! not Confirmed) attribute did NOT have a messageReference.
-		if (LOGGER.isErrorEnabled())
+		if (LOGGER.isErrorEnabled()) {
 			LOGGER.error("LogEntry does not have a messageReference TYPE:" + tempLog.getType() + " VALUE: "
 					+ tempLog.toLogEntryMessage() + " messageReference: " + tempLog.getMessageReference());
+		}
 		LogDTO logDTO = logGenerator.generateLog(tempLog.toLogEntryMessage(), UniversalConstants.RCT_PROCESS_NO_MSG_REF);
 		logService.saveLog(logDTO);
-		if (LOGGER.isDebugEnabled())
+		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Log entry persisted with messageId=0.");
+		}
 	}
 
 }

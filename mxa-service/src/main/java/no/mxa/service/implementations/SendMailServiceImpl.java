@@ -50,8 +50,8 @@ import no.mxa.service.SendMailService;
  */
 public class SendMailServiceImpl implements SendMailService {
 
-	private KeyValues keyValues;
-	private AttachmentService attachmentService;
+	private final KeyValues keyValues;
+	private final AttachmentService attachmentService;
 
 	@Inject
 	public SendMailServiceImpl(KeyValues keyValues, AttachmentService attachmentService) {
@@ -105,7 +105,7 @@ public class SendMailServiceImpl implements SendMailService {
 				BodyPart bp = new MimeBodyPart();
 				byte[] attachmentData = attachmentService.getAttachmentAsByteArray(attachment.getId());
 				if (attachment.getMimeType().equals("text/plain")) {
-					bp.setContent(new String(attachmentData), attachment.getMimeType());
+					bp.setContent(String.valueOf(attachmentData), attachment.getMimeType());
 				} else {
 					bp.setContent(attachmentData, attachment.getMimeType());
 				}
@@ -128,6 +128,7 @@ public class SendMailServiceImpl implements SendMailService {
 	 */
 	class SMTPAuthenticator extends javax.mail.Authenticator {
 
+		@Override
 		public PasswordAuthentication getPasswordAuthentication() {
 			return new PasswordAuthentication(keyValues.getSmtpUser(), keyValues.getSmtpPassword());
 		}

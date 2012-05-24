@@ -27,21 +27,24 @@ public abstract class AbstractMessageAdapter implements MessageAdapter {
 
 	@Override
 	public final LogType getLogType() {
-		if (isConfirmed())
+		if (isConfirmed()) {
 			return LogType.MSG_CONFIRMED;
-		if (isRead())
+		}
+		if (isRead()) {
 			return LogType.MSG_READ;
+		}
 		return null;
 	}
 
 	public String getTypeString() {
 		String type;
-		if (isConfirmed())
+		if (isConfirmed()) {
 			type = "Confirmed";
-		else if (isRead())
+		} else if (isRead()) {
 			type = "Read";
-		else
+		} else {
 			type = null;
+		}
 		return type;
 	}
 

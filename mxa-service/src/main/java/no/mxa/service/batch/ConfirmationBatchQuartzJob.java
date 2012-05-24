@@ -41,18 +41,15 @@ public class ConfirmationBatchQuartzJob extends ApplicationContextQuartzJobBean 
 	 */
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-		if (LOGGER.isDebugEnabled())
-			LOGGER.debug("start");
+		LOGGER.debug("start");
 		try {
 			ApplicationContext appContext = getApplicationContext(context, APPLICATION_CONTEXT_KEY);
 			ReceiptProcessor receiptProcessor = (ReceiptProcessor) appContext.getBean("receiptProcessor");
 			receiptProcessor.process();
 		} catch (SchedulerException e) {
-			if (LOGGER.isErrorEnabled())
-				LOGGER.error("Unable to get applicationcontext when initializing Job.", e);
+			LOGGER.error("Unable to get applicationcontext when initializing Job.", e);
 		} finally {
-			if (LOGGER.isDebugEnabled())
-				LOGGER.debug("stop");
+			LOGGER.debug("stop");
 		}
 
 	}

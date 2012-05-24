@@ -192,51 +192,58 @@ public class LogEntryBuilder {
 	}
 
 	public LogEntryBuilder setMessageReference(String correspondenceReference) {
-		if (state == State.BUILD)
+		if (state == State.BUILD) {
 			throw new IllegalLogEntryStateException();
+		}
 		logEntry.setMessageReference(correspondenceReference);
 		return this;
 	}
 
 	public LogEntryBuilder setShortName(String string) {
-		if (state == State.BUILD)
+		if (state == State.BUILD) {
 			throw new IllegalLogEntryStateException();
+		}
 		logEntry.setShortName(string);
 		return this;
 	}
 
 	public LogEntryBuilder setReadDateTime(String format) {
-		if (state == State.BUILD)
+		if (state == State.BUILD) {
 			throw new IllegalLogEntryStateException();
+		}
 		logEntry.setReadDateTime(format);
 		return this;
 	}
 
 	public LogEntryBuilder setConfirmedRoleList(String confirmedRoleList) {
-		if (state == State.BUILD)
+		if (state == State.BUILD) {
 			throw new IllegalLogEntryStateException();
+		}
 		logEntry.setConfirmedRoleList(confirmedRoleList);
 		return this;
 	}
 
 	public LogEntryBuilder setConfirmedDateTime(String confirmedDateTime) {
-		if (state == State.BUILD)
+		if (state == State.BUILD) {
 			throw new IllegalLogEntryStateException();
+		}
 		logEntry.setConfirmedDateTime(confirmedDateTime);
 		return this;
 	}
 
 	public LogEntryBuilder setParticipantId(String userSSN) {
-		if (state == State.BUILD)
+		if (state == State.BUILD) {
 			throw new IllegalLogEntryStateException();
+		}
 		logEntry.setParticipantId(userSSN);
 		return this;
 
 	}
 
 	public LogEntryBuilder setLoginMethod(String loginMethod) {
-		if (state == State.BUILD)
+		if (state == State.BUILD) {
 			throw new IllegalLogEntryStateException();
+		}
 		logEntry.setLoginMethod(loginMethod);
 		return this;
 

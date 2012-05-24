@@ -46,11 +46,9 @@ public class SendDeviationNoticeAndWarnQuartzJob extends ApplicationContextQuart
 					.getBean("sendNoticesAndWarnings");
 			sendNoticesAndWarnings.start();
 		} catch (JobExecutionException e) {
-			if (LOGGER.isErrorEnabled())
-				LOGGER.error("Unable to get applicationcontext when initializing Job.", e);
+			LOGGER.error("Unable to get applicationcontext when initializing Job.", e);
 		} catch (Exception e1) {
-			if (LOGGER.isErrorEnabled())
-				LOGGER.error("Unable to execute job.", e1);
+			LOGGER.error("Unable to execute job.", e1);
 			return;
 		}
 	}

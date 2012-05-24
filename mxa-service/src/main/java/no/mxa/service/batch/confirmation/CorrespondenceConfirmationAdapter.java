@@ -80,8 +80,7 @@ public class CorrespondenceConfirmationAdapter extends AbstractReceiptAdapter {
 				logBuilder.setLoginMethod(Integer.valueOf(authenticationMethod).toString());
 
 			}
-			if (LOGGER.isDebugEnabled())
-				LOGGER.debug(logBuilder.toString());
+			LOGGER.debug("{}", logBuilder);
 			return logBuilder.build();
 		}
 

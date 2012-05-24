@@ -65,9 +65,7 @@ public final class ReceiptProcessor {
 
 	void processXML(Map<String, String> receipts) {
 		for (Entry<String, String> receipt : receipts.entrySet()) {
-			boolean success = receiptXMLProcessor.process(receipt.getValue(), receipt.getKey());
-			// TODO: Reciept, what to do if processing fails? At this point, the content exist in memory. Ftp-file-handling is
-			// over...
+			receiptXMLProcessor.process(receipt.getValue(), receipt.getKey());
 		}
 	}
 

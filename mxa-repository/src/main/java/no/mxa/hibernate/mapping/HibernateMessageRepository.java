@@ -44,6 +44,9 @@ import org.hibernate.criterion.Restrictions;
  */
 public class HibernateMessageRepository extends BaseHibernateRepository<MessageDTO> implements MessageRepository {
 
+	private static final String SENT_ALTINN_DATE = "sentAltinnDate";
+	private static final String MESSAGE_STATUS = "messageStatus";
+	private static final String UNCHECKED = "unchecked";
 	private static final Integer MAX_WARN_MESSAGE_STATUS = 41;
 
 	/**
@@ -58,18 +61,19 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 	/**
 	 * @return class name
 	 */
+	@Override
 	public String getDtoClassName() {
 		return MessageDTO.class.getName();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(UNCHECKED)
 	@Override
 	public List<MessageDTO> findByExample(MessageDTO instance) {
 		return getSessionFactory().getCurrentSession().createCriteria(getDtoClassName()).add(Example.create(instance))
-				.addOrder(Order.desc("sentAltinnDate")).setMaxResults(100).list();
+				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(100).list();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(UNCHECKED)
 	@Override
 	public List<MessageDTO> findByProperty(String propertyName, Object value) {
 		String queryString = "from " + getDtoClassName() + " as model where model." + propertyName + "= ?"
@@ -79,24 +83,26 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 		return queryObject.setMaxResults(100).list();
 	}
 
-	@SuppressWarnings({ "unchecked" })
+	@Override
+	@SuppressWarnings({ UNCHECKED })
 	public List<MessageDTO> findDeviations(Date presentDate) {
 		Criteria deviationsCriteria = (getSessionFactory().getCurrentSession().createCriteria(this.getDtoClassName()));
 
-		Criterion notFailed = Restrictions.ne("messageStatus", UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED);
-		Criterion notRead = Restrictions.ne("messageStatus", UniversalConstants.MSG_STATUS_READ_IN_ALTINN);
-		Criterion notConfirmed = Restrictions.lt("messageStatus", UniversalConstants.MSG_STATUS_CONFIRMED_IN_ALTINN);
+		Criterion notFailed = Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED);
+		Criterion notRead = Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_READ_IN_ALTINN);
+		Criterion notConfirmed = Restrictions.lt(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_CONFIRMED_IN_ALTINN);
 		Criterion lessThanPresentDate = Restrictions.lt("readDeadline", presentDate);
-		Criterion failed = Restrictions.eq("messageStatus", UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED);
+		Criterion failed = Restrictions.eq(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED);
 
 		List<MessageDTO> messagesWithDeviations = deviationsCriteria
 				.add(Restrictions.or(Restrictions.and(Restrictions.and(Restrictions.and(notRead, notFailed), notConfirmed),
-						lessThanPresentDate), failed)).addOrder(Order.desc("sentAltinnDate")).setMaxResults(100).list();
+						lessThanPresentDate), failed)).addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(100).list();
 
 		return messagesWithDeviations;
 	}
 
-	@SuppressWarnings("unchecked")
+	@Override
+	@SuppressWarnings(UNCHECKED)
 	public List<MessageDTO> findByCriteriaFromGUI(MessageDTO criteria, Date fromDate, Date toDate, String caseDescription,
 			String messageReference) {
 		Criteria criteriaToBuild = buildCriteria(criteria, caseDescription, messageReference);
@@ -106,7 +112,7 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 
 		// Return different lists based on input values
 		if (fromDate == null && toDate == null) {
-			returnList = criteriaToBuild.addOrder(Order.desc("sentAltinnDate")).setMaxResults(100).list();
+			returnList = criteriaToBuild.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(100).list();
 		} else if (fromDate != null && toDate == null) {
 			returnList = addDateRestrictionsOnFromDateAndReturnList(criteriaToBuild, fromDate.getTime());
 		} else if (fromDate == null && toDate != null) {
@@ -121,25 +127,25 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(UNCHECKED)
 	public List<MessageDTO> findNoticeMessages(Date presentDate) {
 		return (getSessionFactory().getCurrentSession().createCriteria(this.getDtoClassName())
 				.add(Restrictions.eq("overdueNoticeSent", UniversalConstants.MSG_OVERDUENOTICE_FALSE))
 				.add(Restrictions.lt("readDeadline", presentDate))
-				.add(Restrictions.ne("messageStatus", UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED))
-				.add(Restrictions.ne("messageStatus", UniversalConstants.MSG_STATUS_READ_IN_ALTINN)).add(Restrictions.lt(
-				"messageStatus", MAX_WARN_MESSAGE_STATUS))).list();
+				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED))
+				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_READ_IN_ALTINN)).add(Restrictions.lt(
+				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).list();
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(UNCHECKED)
 	public List<MessageDTO> findWarnMessages(Date presentDate) {
 		return (getSessionFactory().getCurrentSession().createCriteria(this.getDtoClassName())
 				.add(Restrictions.eq("overdueNoticeSent", UniversalConstants.MSG_OVERDUENOTICE_TRUE))
 				.add(Restrictions.lt("readDeadline", presentDate))
-				.add(Restrictions.ne("messageStatus", UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED))
-				.add(Restrictions.ne("messageStatus", UniversalConstants.MSG_STATUS_READ_IN_ALTINN)).add(Restrictions.lt(
-				"messageStatus", MAX_WARN_MESSAGE_STATUS))).list();
+				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED))
+				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_READ_IN_ALTINN)).add(Restrictions.lt(
+				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).list();
 	}
 
 	private Criteria buildCriteria(MessageDTO criteria, String caseDescription, String messageReference) {
@@ -156,23 +162,23 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 		return criteriaToBuild;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(UNCHECKED)
 	private List<MessageDTO> addDateRestrictionsOnFromDateAndReturnList(Criteria criteria, Long fromDateTime) {
-		return criteria.add(Restrictions.gt("sentAltinnDate", new Timestamp(fromDateTime)))
-				.addOrder(Order.desc("sentAltinnDate")).setMaxResults(100).list();
+		return criteria.add(Restrictions.gt(SENT_ALTINN_DATE, new Timestamp(fromDateTime)))
+				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(100).list();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(UNCHECKED)
 	private List<MessageDTO> addDateRestrictionsOnToDateAndReturnList(Criteria criteria, Long toDateTime) {
-		return criteria.add(Restrictions.lt("sentAltinnDate", new Timestamp(toDateTime)))
-				.addOrder(Order.desc("sentAltinnDate")).setMaxResults(100).list();
+		return criteria.add(Restrictions.lt(SENT_ALTINN_DATE, new Timestamp(toDateTime)))
+				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(100).list();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(UNCHECKED)
 	private List<MessageDTO> addDateRestrictionsOnFromDateAndToDateAndReturnList(Criteria criteria, Long fromDateTime,
 			Long toDateTime) {
-		return criteria.add(Restrictions.between("sentAltinnDate", new Timestamp(fromDateTime), new Timestamp(toDateTime)))
-				.addOrder(Order.desc("sentAltinnDate")).setMaxResults(100).list();
+		return criteria.add(Restrictions.between(SENT_ALTINN_DATE, new Timestamp(fromDateTime), new Timestamp(toDateTime)))
+				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(100).list();
 	}
 
 }

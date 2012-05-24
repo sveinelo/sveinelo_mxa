@@ -29,15 +29,16 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-public class DateUtils {
+public final class DateUtils {
+	private DateUtils() {
+	}
 
 	/**
 	 * @param readDeadline
 	 * @param daysToAdd
 	 * @return readDeadline+daysToAdd
 	 */
-	public static Date getFutureDate(final Date readDeadline,
-			final int daysToAdd) {
+	public static Date getFutureDate(final Date readDeadline, final int daysToAdd) {
 		final Calendar calendar = Calendar.getInstance();
 		calendar.setTime(readDeadline);
 		calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
@@ -56,17 +57,14 @@ public class DateUtils {
 	 * 
 	 * @return XMLGregorianCalender
 	 */
-	public static XMLGregorianCalendar getFutureDate(int field, int number,
-			int addedStartDays) throws DatatypeConfigurationException {
+	public static XMLGregorianCalendar getFutureDate(int field, int number, int addedStartDays)
+			throws DatatypeConfigurationException {
 		GregorianCalendar today = (GregorianCalendar) Calendar.getInstance();
 		today.add(Calendar.DAY_OF_MONTH, addedStartDays);
 		today.add(field, number);
-		XMLGregorianCalendar cal = DatatypeFactory.newInstance()
-				.newXMLGregorianCalendar(
-						new GregorianCalendar(today.get(Calendar.YEAR), today
-								.get(Calendar.MONTH), today
-								.get(Calendar.DAY_OF_MONTH)));
-	
+		XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(
+				new GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)));
+
 		return cal;
 	}
 

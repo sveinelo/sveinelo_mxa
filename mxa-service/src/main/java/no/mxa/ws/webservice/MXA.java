@@ -41,10 +41,10 @@ import org.slf4j.LoggerFactory;
 public class MXA implements IMXA {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MXA.class);
 
-	private Parser parser;
-	private DTOGenerator dtoGenerator;
-	private MessageService messageService;
-	private LogGenerator logGenerator;
+	private final Parser parser;
+	private final DTOGenerator dtoGenerator;
+	private final MessageService messageService;
+	private final LogGenerator logGenerator;
 
 	@Inject
 	public MXA(Parser parser, DTOGenerator dtoGenerator, MessageService messageService, LogGenerator logGenerator) {
@@ -58,8 +58,9 @@ public class MXA implements IMXA {
 	 * 1 - Validate message 2 - Parse message 3 - Save message 4 - Return return code based on steps 1 - 3
 	 */
 	@Override
-	public int submitMessage(String message) {
-		assert (message != null) : "Message may not be null.";
+	public int submitMessage(final String msg) {
+		assert (msg != null) : "Message may not be null.";
+		String message = msg;
 		int returnCode;
 		boolean saved;
 		returnCode = -1;

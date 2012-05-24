@@ -46,6 +46,7 @@ import org.hibernate.criterion.Example;
  */
 public abstract class BaseHibernateRepository<T> implements IBaseHibernateRepository<T> {
 
+	private static final String UNCHECKED = "unchecked";
 	/**
 	 * The session factory used by this instance.
 	 */
@@ -63,17 +64,17 @@ public abstract class BaseHibernateRepository<T> implements IBaseHibernateReposi
 
 	public abstract String getDtoClassName();
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(UNCHECKED)
 	public T findById(Serializable id) {
 		return (T) getSessionFactory().getCurrentSession().get(getDtoClassName(), id);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(UNCHECKED)
 	public List<T> findByExample(T instance) {
 		return getSessionFactory().getCurrentSession().createCriteria(getDtoClassName()).add(Example.create(instance)).list();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(UNCHECKED)
 	public List<T> findByProperty(String propertyName, Object value) {
 		String queryString = "from " + getDtoClassName() + " as model where model." + propertyName + "= ?";
 		Query queryObject = getSessionFactory().getCurrentSession().createQuery(queryString);
@@ -101,7 +102,7 @@ public abstract class BaseHibernateRepository<T> implements IBaseHibernateReposi
 		getSessionFactory().getCurrentSession().buildLockRequest(LockOptions.NONE).lock(instance);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(UNCHECKED)
 	public T merge(final T detachedInstance) {
 		return (T) getSessionFactory().getCurrentSession().merge(detachedInstance);
 	}

@@ -44,23 +44,19 @@ public class CheckNewMessagesQuartzJob extends ApplicationContextQuartzJobBean {
 	 */
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-		if (LOGGER.isDebugEnabled())
-			LOGGER.debug("start");
+		LOGGER.debug("start");
 		// Get the application context beans
 		try {
 			ApplicationContext appContext = getApplicationContext(context, APPLICATION_CONTEXT_KEY);
 			messageSender = (MessageSender) appContext.getBean("messageSender");
 		} catch (Exception e1) {
-			if (LOGGER.isErrorEnabled())
-				LOGGER.error("Unable to get applicationcontext when initializing Job. Exception:", e1);
+			LOGGER.error("Unable to get applicationcontext when initializing Job. Exception:", e1);
 			return;
 		}
 		// Send all unsent messages to Altinn
 		String result = messageSender.sendMessages();
-		if (LOGGER.isInfoEnabled())
-			LOGGER.info(result);
-		if (LOGGER.isDebugEnabled())
-			LOGGER.debug("stop");
+		LOGGER.info(result);
+		LOGGER.debug("stop");
 	}
 
 }

@@ -139,9 +139,10 @@ public class LogGeneratorImpl implements LogGenerator {
 	@Override
 	public LogDTO generateLog(String logEntryMessage, LogType logType, String messageReference)
 			throws NotUniqueMessageException {
-		if (logType != null)
+		if (logType != null) {
 			return generateLog(logEntryMessage, logType.toString(), messageReference);
-		else
+		} else {
 			return generateLog(logEntryMessage, "", messageReference);
+		}
 	}
 }

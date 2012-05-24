@@ -40,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AttachmentServiceImpl implements AttachmentService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AttachmentServiceImpl.class);
 
-	private AttachmentRepository attachmentRepository;
+	private final AttachmentRepository attachmentRepository;
 
 	@Inject
 	public AttachmentServiceImpl(AttachmentRepository attachmentRepository) {
@@ -62,12 +62,10 @@ public class AttachmentServiceImpl implements AttachmentService {
 	@Transactional
 	@Override
 	public byte[] getAttachmentAsByteArray(Long id) throws SQLException {
-		if (LOGGER.isDebugEnabled())
-			LOGGER.debug("Get attachmentDTO");
+		LOGGER.debug("Get attachmentDTO");
 		AttachmentDTO attachmentDTO = searchById(id);
 
-		if (LOGGER.isDebugEnabled())
-			LOGGER.debug("Get attachmentClob");
+		LOGGER.debug("Get attachmentClob");
 		Clob attachmentClob = attachmentDTO.getAttachment();
 
 		int length = (int) attachmentClob.length();

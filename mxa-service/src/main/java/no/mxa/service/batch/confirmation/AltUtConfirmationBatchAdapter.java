@@ -81,8 +81,7 @@ public class AltUtConfirmationBatchAdapter extends AbstractReceiptAdapter {
 				String loginMethod = confirmed.getLoginMethod().value();
 				builder.setLoginMethod(loginMethod);
 			}
-			if (LOGGER.isDebugEnabled())
-				LOGGER.debug(builder.toString());
+			LOGGER.debug("{}", builder);
 			return builder.build();
 		}
 

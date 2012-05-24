@@ -33,8 +33,8 @@ import org.slf4j.LoggerFactory;
 public class SendNoticesAndWarningsImpl implements SendNoticesAndWarnings {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SendNoticesAndWarningsImpl.class);
 
-	private MessageService messageService;
-	private SendNoticeOrWarningService noticeOrWarningService;
+	private final MessageService messageService;
+	private final SendNoticeOrWarningService noticeOrWarningService;
 
 	@Inject
 	public SendNoticesAndWarningsImpl(MessageService messageService, SendNoticeOrWarningService noticeOrWarningService) {
@@ -44,8 +44,7 @@ public class SendNoticesAndWarningsImpl implements SendNoticesAndWarnings {
 
 	@Override
 	public void start() {
-		if (LOGGER.isDebugEnabled())
-			LOGGER.debug("start");
+		LOGGER.debug("start");
 
 		for (MessageDTO message : messageService.searchNoticeMessages()) {
 			noticeOrWarningService.sendNoticeMail(message);
@@ -55,7 +54,6 @@ public class SendNoticesAndWarningsImpl implements SendNoticesAndWarnings {
 			noticeOrWarningService.sendWarnMail(message);
 		}
 
-		if (LOGGER.isDebugEnabled())
-			LOGGER.debug("stop");
+		LOGGER.debug("stop");
 	}
 }

@@ -37,8 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SoapLoggingHandler implements SOAPHandler<SOAPMessageContext> {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(SoapLoggingHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SoapLoggingHandler.class);
 	private boolean throwRuntimeExceptions = false;
 
 	@Override

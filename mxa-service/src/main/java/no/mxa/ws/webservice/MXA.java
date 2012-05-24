@@ -58,6 +58,7 @@ public class MXA implements IMXA {
 	 * 1 - Validate message 2 - Parse message 3 - Save message 4 - Return return code based on steps 1 - 3
 	 */
 	@Override
+	// TODO: Refactor this method.
 	public int submitMessage(final String msg) {
 		assert (msg != null) : "Message may not be null.";
 		String message = msg;
@@ -69,70 +70,74 @@ public class MXA implements IMXA {
 		MessageDTO messageDTO = null;
 		parsedMessage = null;
 		saved = false;
-
-		if (LOGGER.isTraceEnabled()) {
-			writeXMLfile(message);
-		}
-
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("submitMessage start");
-		}
-
-		// Remove Byte Order Mark from XML if present. The XML-parser fails if BOM is present.
-		if (message.indexOf("<") > 0 && message.indexOf("<") < 4) {
-			message = message.substring(message.indexOf("<"));
-		}
-
-		// Run the XML validation
-		validationString = parser.validateDocument(message);
-
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Validation String: " + validationString);
-		}
-
-		// If validation is OK, run the XML parsing
-		if (validationString.equals("OK")) {
-			parsedMessage = parser.parseDocument(message);
-		} else {
-			returnCode = UniversalConstants.WEB_SERVICE_MESSAGE_VALIDATION_ERROR;
-
-			// Save log related to message parsing error
-			LogDTO validationErrorLog = null;
-			validationErrorLog = logGenerator.generateLog(UniversalConstants.MSG_PARSE_ERROR_DESCRIPTION,
-					UniversalConstants.MSG_PARSE_ERROR);
-			logGenerator.saveLog(validationErrorLog);
-		}
-
-		// If parsing is OK, run the repository save
-		if (parsedMessage != null) {
-			LOGGER.debug("Save message");
-			messageDTO = dtoGenerator.generateMessageDTO(parsedMessage);
-			try {
-				messageService.saveMessage(messageDTO);
-				saved = true;
-			} catch (RuntimeException re) {
-				saved = false;
-				LOGGER.debug("Saving message failed: ", re);
+		try {
+			if (LOGGER.isTraceEnabled()) {
+				writeXMLfile(message);
 			}
-		} else {
-			returnCode = UniversalConstants.WEB_SERVICE_MESSAGE_VALIDATION_ERROR;
-		}
 
-		if (saved) {
-			returnCode = UniversalConstants.WEB_SERVICE_MESSAGE_SAVED;
-		} else if (!saved && returnCode == -1) {
-			// If saving is not OK, return 1
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("submitMessage start");
+			}
+
+			// Remove Byte Order Mark from XML if present. The XML-parser fails if BOM is present.
+			if (message.indexOf("<") > 0 && message.indexOf("<") < 4) {
+				message = message.substring(message.indexOf("<"));
+			}
+
+			// Run the XML validation
+			validationString = parser.validateDocument(message);
+
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("Validation String: " + validationString);
+			}
+
+			// If validation is OK, run the XML parsing
+			if (validationString.equals("OK")) {
+				parsedMessage = parser.parseDocument(message);
+			} else {
+				returnCode = UniversalConstants.WEB_SERVICE_MESSAGE_VALIDATION_ERROR;
+
+				// Save log related to message parsing error
+				LogDTO validationErrorLog = null;
+				validationErrorLog = logGenerator.generateLog(UniversalConstants.MSG_PARSE_ERROR_DESCRIPTION,
+						UniversalConstants.MSG_PARSE_ERROR);
+				logGenerator.saveLog(validationErrorLog);
+			}
+
+			// If parsing is OK, run the repository save
+			if (parsedMessage != null) {
+				LOGGER.debug("Save message");
+				messageDTO = dtoGenerator.generateMessageDTO(parsedMessage);
+				try {
+					messageService.saveMessage(messageDTO);
+					saved = true;
+				} catch (RuntimeException re) {
+					saved = false;
+					LOGGER.debug("Saving message failed: ", re);
+				}
+			} else {
+				returnCode = UniversalConstants.WEB_SERVICE_MESSAGE_VALIDATION_ERROR;
+			}
+
+			if (saved) {
+				returnCode = UniversalConstants.WEB_SERVICE_MESSAGE_SAVED;
+			} else if (!saved && returnCode == -1) {
+				// If saving is not OK, return 1
+				returnCode = UniversalConstants.WEB_SERVICE_MESSAGE_SAVING_ERROR;
+
+				// Save log related to message parsing error
+				LogDTO saveErrorLog = null;
+				saveErrorLog = logGenerator.generateLog(UniversalConstants.MSG_SAVE_ERROR_DESCRIPTION,
+						UniversalConstants.MSG_SAVE_ERROR);
+				logGenerator.saveLog(saveErrorLog);
+			}
+
+			// Else return 2
+		} catch (RuntimeException re) {
+			// Important to never let any exceptions be visible to the client.
+			LOGGER.error("Failed", re);
 			returnCode = UniversalConstants.WEB_SERVICE_MESSAGE_SAVING_ERROR;
-
-			// Save log related to message parsing error
-			LogDTO saveErrorLog = null;
-			saveErrorLog = logGenerator.generateLog(UniversalConstants.MSG_SAVE_ERROR_DESCRIPTION,
-					UniversalConstants.MSG_SAVE_ERROR);
-			logGenerator.saveLog(saveErrorLog);
 		}
-
-		// Else return 2
-
 		return returnCode;
 	}
 

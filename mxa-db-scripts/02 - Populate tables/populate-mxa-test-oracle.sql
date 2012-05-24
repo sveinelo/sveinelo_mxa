@@ -59,8 +59,8 @@ Administrator MXA
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (29,'NOTIFICATIONTYPE',null,null,'Correspondence','NotificationType i Correspondence');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (30,'SERVICECODE',null,null,'PAT','Tjenestekode, f.eks. PSA');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (31,'SERVICEEDITION',null,null,'1','Tjenesteutgavekoden som meldingen gjelder for');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (32,'MAILNOTICEDAYS',null,null,'7','Antall dager mellom melding sendt til Altinn og at infomail blir sendt.');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (33,'MAILWARNDAYS',null,null,'14','Antall dager mellom melding sendt til Altinn og at varselsmail blir sendt.');
+Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (32,'MAILNOTICEDAYS',null,7,null,'Antall dager mellom melding sendt til Altinn og at infomail blir sendt.');
+Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (33,'MAILWARNDAYS',null,14,null,'Antall dager mellom melding sendt til Altinn og at varselsmail blir sendt.');
 
 -- QUARTZ values
 DELETE FROM QRTZ_CRON_TRIGGERS CASCADE;

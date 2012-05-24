@@ -70,7 +70,6 @@ public class AttachmentServiceImpl implements AttachmentService {
 
 		int length = (int) attachmentClob.length();
 		String attachmentClobAsString = attachmentClob.getSubString(1L, length);
-		byte[] attachmentClobAsByteArray = attachmentClobAsString.getBytes();
-		return decodeBase64(attachmentClobAsByteArray);
+		return decodeBase64(attachmentClobAsString);
 	}
 }

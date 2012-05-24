@@ -105,7 +105,7 @@ public class SendMailServiceImpl implements SendMailService {
 				BodyPart bp = new MimeBodyPart();
 				byte[] attachmentData = attachmentService.getAttachmentAsByteArray(attachment.getId());
 				if (attachment.getMimeType().equals("text/plain")) {
-					bp.setContent(String.valueOf(attachmentData), attachment.getMimeType());
+					bp.setContent(new String(attachmentData), attachment.getMimeType());
 				} else {
 					bp.setContent(attachmentData, attachment.getMimeType());
 				}

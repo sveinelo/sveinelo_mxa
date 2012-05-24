@@ -4,7 +4,7 @@
 	<groupId>no.mxa</groupId>
 	<artifactId>mxa</artifactId>
 	<packaging>pom</packaging>
-	<version>2.14</version>
+	<version>2.15-SNAPSHOT</version>
 	<name>Message Exchange Altinn</name>
 	<description>Message Exchange Altinn.</description>
 	<inceptionYear>2009</inceptionYear>
@@ -13,9 +13,9 @@
 		<url>http://ut-006.patentstyret.no:8080/jenkins/</url>
 	</ciManagement>
 	<scm>
-		<connection>scm:svn:http://ut-006.patentstyret.no/svn/altut/tags/mxa-2.14</connection>
-		<developerConnection>scm:svn:http://ut-006.patentstyret.no/svn/altut/tags/mxa-2.14</developerConnection>
-		<url>http://ut-006.patentstyret.no/svn/altut/tags/mxa-2.14</url>
+		<connection>scm:svn:http://ut-006.patentstyret.no/svn/altut/trunk/</connection>
+		<developerConnection>scm:svn:http://ut-006.patentstyret.no/svn/altut/trunk/</developerConnection>
+		<url>http://ut-006.patentstyret.no/svn/altut/trunk/</url>
 	</scm>
 	<modules>
 		<module>mxa-domain</module>

@@ -38,8 +38,7 @@ import no.mxa.service.KeyValues;
 import no.mxa.utils.DateUtils;
 
 /**
- * Class that receives messages with attachments and contact info to be returned
- * as DTO objects
+ * Class that receives messages with attachments and contact info to be returned as DTO objects
  */
 public class DTOGenerator {
 
@@ -54,10 +53,10 @@ public class DTOGenerator {
 	 * 
 	 * @param inputMessage
 	 *            The message returned from the xml parser
-	 * @return messageDTO The message DTO object, containing attachments and
-	 *         contact info
+	 * @return messageDTO The message DTO object, containing attachments and contact info
 	 */
 	public MessageDTO generateMessageDTO(Message inputMessage) {
+		assert (inputMessage != null) : "Input should not be null";
 		Attachment attachment;
 		ContactInfo contactInfo;
 		List<Attachment> inputAttachments;
@@ -82,8 +81,7 @@ public class DTOGenerator {
 
 		// Extracts the attachment objects
 		if (inputAttachments != null) {
-			for (Iterator<Attachment> itAtt = inputAttachments.iterator(); itAtt
-					.hasNext();) {
+			for (Iterator<Attachment> itAtt = inputAttachments.iterator(); itAtt.hasNext();) {
 				attachment = itAtt.next();
 				attachmentDTO = new AttachmentDTO();
 
@@ -104,8 +102,7 @@ public class DTOGenerator {
 		}
 		// Extracts the contact info objects
 		if (inputContactInfo != null) {
-			for (Iterator<ContactInfo> itCont = inputContactInfo.iterator(); itCont
-					.hasNext();) {
+			for (Iterator<ContactInfo> itCont = inputContactInfo.iterator(); itCont.hasNext();) {
 				contactInfo = itCont.next();
 				contactInfoDTO = new ContactInfoDTO();
 
@@ -139,10 +136,8 @@ public class DTOGenerator {
 		messageDTO.setSendingSystem(inputMessage.getSendingSystem());
 		messageDTO.setSentAltinn(UniversalConstants.MSG_SENTALTINN_FALSE);
 		messageDTO.setMessageStatus(UniversalConstants.MSG_STATUS_RECEIVED);
-		messageDTO.setReadDeadline(DateUtils.getFutureDate(new Date(),
-				keyValues.getMailNoticeDays()));
-		messageDTO
-				.setOverdueNoticeSent(UniversalConstants.MSG_OVERDUENOTICE_FALSE);
+		messageDTO.setReadDeadline(DateUtils.getFutureDate(new Date(), keyValues.getMailNoticeDays()));
+		messageDTO.setOverdueNoticeSent(UniversalConstants.MSG_OVERDUENOTICE_FALSE);
 		messageDTO.setAttachments(attachmentsToInclude);
 		messageDTO.setContactInfo(contactInfoToInclude);
 

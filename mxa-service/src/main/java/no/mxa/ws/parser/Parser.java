@@ -64,7 +64,7 @@ public class Parser extends DefaultHandler {
 	private InputSource document;
 	private static String returnMessage = "OK";
 	private StringBuilder stringBuilder;
-	private Resource schema;
+	private final Resource schema;
 
 	public Parser(Resource schema) {
 		this.schema = schema;
@@ -97,6 +97,7 @@ public class Parser extends DefaultHandler {
 
 			return returnMessage;
 		} catch (SAXException e) {
+<<<<<<< HEAD
 			if (LOGGER.isTraceEnabled()) {
 				LOGGER.trace("SAXException: " + e.getMessage());
 				e.printStackTrace();
@@ -113,6 +114,15 @@ public class Parser extends DefaultHandler {
 				LOGGER.trace("ParserConfigurationException: " + e.getMessage());
 				e.printStackTrace();
 			}
+=======
+			LOGGER.debug("Problem validating document.", e);
+			return "SAXException: " + e.getMessage();
+		} catch (IOException e) {
+			LOGGER.debug("IOException while validating document.", e);
+			return "IOException: " + e.getMessage();
+		} catch (ParserConfigurationException e) {
+			LOGGER.debug("ParserConfigurationException: ", e);
+>>>>>>> Improved the test of the parser
 			return "ParerConfigurationException: " + e.getMessage();
 		}
 	}
@@ -124,14 +134,17 @@ public class Parser extends DefaultHandler {
 	 */
 	private static class MyErrorHandler extends DefaultHandler {
 
+		@Override
 		public void warning(SAXParseException e) throws SAXException {
 			returnMessage = "Warning: " + e.getMessage();
 		}
 
+		@Override
 		public void error(SAXParseException e) throws SAXException {
 			returnMessage = "Error: " + e.getMessage();
 		}
 
+		@Override
 		public void fatalError(SAXParseException e) throws SAXException {
 			returnMessage = "Fatal error: " + e.getMessage();
 		}
@@ -159,6 +172,7 @@ public class Parser extends DefaultHandler {
 			sp.parse(document, this);
 			return tempMessage;
 		} catch (SAXException e) {
+<<<<<<< HEAD
 			if (LOGGER.isTraceEnabled()) {
 				LOGGER.trace("SAXException: " + e.getMessage());
 				e.printStackTrace();
@@ -175,6 +189,15 @@ public class Parser extends DefaultHandler {
 				LOGGER.trace("ParserConfigurationException: " + e.getMessage());
 				e.printStackTrace();
 			}
+=======
+			LOGGER.debug("Error parsing document.", e);
+			return null;
+		} catch (IOException e) {
+			LOGGER.debug("Error parsing document.", e);
+			return null;
+		} catch (ParserConfigurationException e) {
+			LOGGER.debug("Error parsing document.", e);
+>>>>>>> Improved the test of the parser
 			return null;
 		}
 	}
@@ -183,13 +206,19 @@ public class Parser extends DefaultHandler {
 	 * 
 	 * Sets the Message and Attachment elements when start tags of those types are encountered in the xml
 	 */
+	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		// reset
+<<<<<<< HEAD
 		if (LOGGER.isTraceEnabled()) {
 			LOGGER.trace("Start element:" + qName);
 		}
+=======
+		LOGGER.debug("Start element:{}", qName);
+>>>>>>> Improved the test of the parser
 		tempVal = "";
-		tempQName = qName; // qName is the element that is currently being parsed
+		tempQName = qName; // qName is the element that is currently being
+							// parsed
 		stringBuilder = new StringBuilder();
 
 		if (qName.equalsIgnoreCase("Message")) {
@@ -214,11 +243,18 @@ public class Parser extends DefaultHandler {
 	 * 
 	 * The sequence of characters currently being read by the parser
 	 */
+	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
+<<<<<<< HEAD
 		if (LOGGER.isTraceEnabled()) {
 			LOGGER.trace("Character element:" + tempQName);
 		}
 		// In the case of attachment elements the character sequence might not be long enough to cover the entire
+=======
+		LOGGER.debug("Character element: {}", tempQName);
+		// In the case of attachment elements the character sequence might not
+		// be long enough to cover the entire
+>>>>>>> Improved the test of the parser
 		// elements, hence the need to append the sequence to a CharArrayWriter
 
 		if (tempQName.equalsIgnoreCase("Attachment") && (tempFil != null)) {
@@ -233,10 +269,15 @@ public class Parser extends DefaultHandler {
 	 * 
 	 * Sets the various message elements when an end tag of a particular element is encountered
 	 */
+	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
+<<<<<<< HEAD
 		if (LOGGER.isTraceEnabled()) {
 			LOGGER.trace("End element:" + qName);
 		}
+=======
+		LOGGER.debug("End element:{}", qName);
+>>>>>>> Improved the test of the parser
 		tempQName = qName; // qName is the element currently being parsed
 
 		if (qName.equalsIgnoreCase("Idproc")) {
@@ -256,9 +297,13 @@ public class Parser extends DefaultHandler {
 		} else if (qName.equalsIgnoreCase("Attachment")) {
 			tempAttachment.setAttachment(tempFil.toCharArray());
 			attachments.add(tempAttachment);
+<<<<<<< HEAD
 			if (LOGGER.isTraceEnabled()) {
 				LOGGER.trace("Attachment:" + tempFil.toString());
 			}
+=======
+			LOGGER.debug("Attachment: {}", tempFil);
+>>>>>>> Improved the test of the parser
 		} else if (qName.equalsIgnoreCase("SMSPhoneNumber")) {
 			tempContactInfo = new ContactInfo();
 			tempContactInfo.setType(UniversalConstants.CONTACTINFOTYPE_SMS);

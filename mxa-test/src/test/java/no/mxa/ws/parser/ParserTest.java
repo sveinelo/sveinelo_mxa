@@ -23,9 +23,9 @@ package no.mxa.ws.parser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -53,8 +53,7 @@ public class ParserTest extends SpringBasedTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ClassPathResource classPathResource = new ClassPathResource(
-				"agency_to_mxa/SANTMXA_eksempel.xml");
+		ClassPathResource classPathResource = new ClassPathResource("agency_to_mxa/SANTMXA_eksempel.xml");
 		InputStream is = classPathResource.getInputStream();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		StringBuilder sb = new StringBuilder();
@@ -63,14 +62,8 @@ public class ParserTest extends SpringBasedTest {
 			while ((line = reader.readLine()) != null) {
 				sb.append(line + "\n");
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
 		} finally {
-			try {
-				is.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			is.close();
 		}
 		xmlString = sb.toString();
 	}
@@ -78,10 +71,8 @@ public class ParserTest extends SpringBasedTest {
 	@Before
 	public void setupDB() {
 		TestDataHelper testDataHelper = new TestDataHelper(getDataSource());
-		testDataHelper.insertKeyvalue(new KeyValuesDTO("MAILWARNDAYS", null,
-				14, null, null));
-		testDataHelper.insertKeyvalue(new KeyValuesDTO("MAILNOTICEDAYS", null,
-				7, null, null));
+		testDataHelper.insertKeyvalue(new KeyValuesDTO("MAILWARNDAYS", null, 14, null, null));
+		testDataHelper.insertKeyvalue(new KeyValuesDTO("MAILNOTICEDAYS", null, 7, null, null));
 	}
 
 	@Test
@@ -98,6 +89,12 @@ public class ParserTest extends SpringBasedTest {
 
 		assertNotNull(messageDTO.getAltinnArchive());
 		assertNotNull(message.getIdproc());
+	}
+
+	@Test
+	public void testEmptyDocumentParse() {
+		Message message = parser.parseDocument("");
+		assertNull(message);
 	}
 
 }

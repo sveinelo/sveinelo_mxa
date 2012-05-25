@@ -21,10 +21,6 @@
  */
 package no.mxa.ws.parser;
 
-import java.sql.Clob;
-
-import org.hibernate.Hibernate;
-
 /**
  * Class for storing attachments
  */
@@ -33,17 +29,16 @@ public class Attachment {
 	private String filename;
 	private String name;
 	private String mimeType;
-	private char[] attachment;
+	private String base64EncodedString;
 
 	public Attachment() {
-
 	}
 
-	public Attachment(String filename, String name, String mimeType) {
+	public Attachment(String filename, String name, String mimeType, String base64EncodedString) {
 		this.filename = filename;
 		this.name = name;
 		this.mimeType = mimeType;
-
+		this.base64EncodedString = base64EncodedString;
 	}
 
 	public String getFilename() {
@@ -70,12 +65,12 @@ public class Attachment {
 		this.mimeType = mimeType;
 	}
 
-	public Clob getAttachment() {
-		return Hibernate.createClob(String.valueOf(this.attachment));
+	public String getBase64EncodedString() {
+		return base64EncodedString;
 	}
 
-	public void setAttachment(char[] attachment) {
-		this.attachment = attachment;
+	public void setBase64EncodedString(String base64EncodedString) {
+		this.base64EncodedString = base64EncodedString;
 	}
 
 }

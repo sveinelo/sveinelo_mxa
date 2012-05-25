@@ -26,14 +26,11 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.fail;
 
 import java.net.MalformedURLException;
-import java.sql.Clob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.sql.rowset.serial.SerialClob;
-import javax.sql.rowset.serial.SerialException;
 
 import no.mxa.altinn.ws.AltinnFault;
 import no.mxa.altinn.ws.ICorrespondenceAgencyExternalBasic;
@@ -77,8 +74,8 @@ public class AltinnWsTest extends SpringBasedTest {
 	}
 
 	@Test
-	public void shouldSendAMessageToAltinnTest() throws MalformedURLException, CorrespondenceBuilderException, SerialException,
-			SQLException, ICorrespondenceAgencyExternalBasicInsertCorrespondenceBasicAltinnFaultFaultFaultMessage {
+	public void shouldSendAMessageToAltinnTest() throws MalformedURLException, CorrespondenceBuilderException,
+			ICorrespondenceAgencyExternalBasicInsertCorrespondenceBasicAltinnFaultFaultFaultMessage {
 		MessageDTO message = new MessageDTO();
 		message.setMessageReference("REF001");
 		// TODO: ParticipantId is primary used by Patentstyret!
@@ -89,13 +86,11 @@ public class AltinnWsTest extends SpringBasedTest {
 		message.setMessageSummary("Altinn Ws Test Summary in Altut or Body in Correspondence.");
 		List<AttachmentDTO> attachments = new ArrayList<>();
 		String string = "TVhBLWRva3VtZW50IHRpbCBBbHR1dC4K"; // Content "MXA-dokument til Altut."
-		char[] content = string.toCharArray();
-		Clob attachment = new SerialClob(content);
 		String mimeType = "application/txt";
 		String fileName = "mxa_dokument_til_altinn_ii.txt";
 		String name = "Visningsnavn for dokumentet, æøå.";
 		String attachmentAsString = string;
-		AttachmentDTO attachement = new AttachmentDTO(attachment, mimeType, fileName, name, attachmentAsString);
+		AttachmentDTO attachement = new AttachmentDTO(mimeType, fileName, name, attachmentAsString);
 		attachments.add(attachement);
 		message.setAttachments(attachments);
 

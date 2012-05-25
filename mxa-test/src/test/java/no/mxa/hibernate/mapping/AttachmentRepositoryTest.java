@@ -128,10 +128,8 @@ public class AttachmentRepositoryTest extends SpringBasedTest {
 	@Test
 	public void testFindClob() throws SQLException {
 		result = repository.findById(existingId);
-		int length = (int) result.getAttachment().length();
-		String clobValue = result.getAttachment().getSubString(1L, length);
 
-		assertThat(clobValue, is(notNullValue()));
+		assertThat(result.getBase64EncodedAttachement(), is(notNullValue()));
 	}
 
 }

@@ -21,12 +21,8 @@
  */
 package no.mxa.altinn.ws.api;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.sql.rowset.serial.SerialClob;
-import javax.sql.rowset.serial.SerialException;
 
 import no.mxa.dto.AttachmentDTO;
 import no.mxa.dto.ContactInfoDTO;
@@ -38,7 +34,7 @@ import no.mxa.dto.MessageDTO;
  */
 public class MockedMessageDTOBuilder {
 
-	protected MessageDTO buildMessage() throws SerialException, SQLException {
+	protected MessageDTO buildMessage() {
 		MessageDTO message = new MessageDTO();
 		message.setParticipantId(getParticipantId());
 		message.setMessageHeader(getMessageHeader());
@@ -60,12 +56,10 @@ public class MockedMessageDTOBuilder {
 		return message;
 	}
 
-	private AttachmentDTO buildAttachment(String fileName) throws SerialException, SQLException {
+	private AttachmentDTO buildAttachment(String fileName) {
 		AttachmentDTO attachment = new AttachmentDTO();
 		attachment.setFileName(fileName);
-		char[] clob = "TVhBLWRva3VtZW50IHRpbCBBbHR1dC4K".toCharArray();
-		attachment.setAttachment(new SerialClob(clob));
-		attachment.setAttachmentAsString(attachment.getAttachment().getSubString(1, clob.length));
+		attachment.setBase64EncodedAttachement("TVhBLWRva3VtZW50IHRpbCBBbHR1dC4K");
 		attachment.setName(getName());
 
 		return attachment;
@@ -134,7 +128,7 @@ public class MockedMessageDTOBuilder {
 	protected String getServiceCode() {
 		return "SER";
 	}
-	
+
 	protected String getServiceEdition() {
 		return "1";
 	}

@@ -23,8 +23,6 @@ package no.mxa.service.implementations;
 
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 
-import java.sql.Clob;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -61,15 +59,9 @@ public class AttachmentServiceImpl implements AttachmentService {
 
 	@Transactional
 	@Override
-	public byte[] getAttachmentAsByteArray(Long id) throws SQLException {
+	public byte[] getAttachmentAsByteArray(Long id) {
 		LOGGER.debug("Get attachmentDTO");
 		AttachmentDTO attachmentDTO = searchById(id);
-
-		LOGGER.debug("Get attachmentClob");
-		Clob attachmentClob = attachmentDTO.getAttachment();
-
-		int length = (int) attachmentClob.length();
-		String attachmentClobAsString = attachmentClob.getSubString(1L, length);
-		return decodeBase64(attachmentClobAsString);
+		return decodeBase64(attachmentDTO.getBase64EncodedAttachement());
 	}
 }

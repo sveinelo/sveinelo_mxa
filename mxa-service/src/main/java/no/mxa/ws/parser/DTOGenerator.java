@@ -85,9 +85,8 @@ public class DTOGenerator {
 				attachment = itAtt.next();
 				attachmentDTO = new AttachmentDTO();
 
-				// Set attachmentDTO values based on the incoming attachment
-				// values
-				attachmentDTO.setAttachment(attachment.getAttachment());
+				// Set attachmentDTO values based on the incoming attachment values
+				attachmentDTO.setBase64EncodedAttachement(attachment.getBase64EncodedString());
 				attachmentDTO.setFileName(attachment.getFilename());
 				attachmentDTO.setMimeType(attachment.getMimeType());
 				attachmentDTO.setName(attachment.getName());

@@ -23,8 +23,6 @@ package no.mxa.altinn.ws.api;
 
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 
-import java.sql.Clob;
-import java.sql.SQLException;
 import java.util.Calendar;
 
 import javax.xml.bind.JAXBElement;
@@ -269,23 +267,12 @@ public class CorrespondenceBuilder {
 
 	/**
 	 * Correspondences.Correspondence.Content.Attachments.BinaryAttachments. BinaryAttachment.Data
-	 * 
-	 * @throws CorrespondenceBuilderException
 	 */
-	private JAXBElement<byte[]> getBinaryAttachmentData(AttachmentDTO attachment) throws CorrespondenceBuilderException {
+	private JAXBElement<byte[]> getBinaryAttachmentData(AttachmentDTO attachment) {
 		JAXBElement<byte[]> binaryAttachmentData = null;
-
-		try {
-			Clob clob = attachment.getAttachment();
-			String attachementAsString = clob.getSubString(1L, (int) clob.length());
-			// TODO: Attachement, lite effektivt å decode base64 strengen fra databasen her, da den blir serializert til base64
-			// igjen i object->xml jaxb marshalling, men dette vil hindre at vi sender en base64 encoded base64 streng. mao.
-			// dobbelt encoded.
-			binaryAttachmentData = objectFactory.createBinaryAttachmentV2Data(decodeBase64(attachementAsString));
-		} catch (SQLException e) {
-			throw new CorrespondenceBuilderException("Sending av melding feilet. Henting av vedlegg fra databasen feilet", e);
-		}
-
+		String base64EncodedAttachement = attachment.getBase64EncodedAttachement();
+		byte[] decodedattachment = decodeBase64(base64EncodedAttachement);
+		binaryAttachmentData = objectFactory.createBinaryAttachmentV2Data(decodedattachment);
 		return binaryAttachmentData;
 	}
 

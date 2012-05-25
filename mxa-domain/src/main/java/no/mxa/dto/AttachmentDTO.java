@@ -22,13 +22,11 @@
 package no.mxa.dto;
 
 import java.io.Serializable;
-import java.sql.Clob;
 
 /**
  * DTO class which handles database mappings related to message attachments to be stored in the repository
  */
 public class AttachmentDTO implements Serializable {
-
 	/**
 	 * Unique generated version number
 	 */
@@ -39,12 +37,10 @@ public class AttachmentDTO implements Serializable {
 	 */
 	private Long id;
 	private MessageDTO message;
-	// TODO Clob, remove this field, and only use attachmentAsString. Map java.lang.String to database Clob field
-	private Clob attachment;
 	private String mimeType;
 	private String fileName;
 	private String name;
-	private String attachmentAsString;
+	private String base64EncodedAttachement;
 
 	/**
 	 * Default constructor
@@ -56,23 +52,20 @@ public class AttachmentDTO implements Serializable {
 	/**
 	 * Constructor which takes message attachment content as parameters
 	 * 
-	 * @param attachment
-	 *            The base64 encoded attachment
 	 * @param mimeType
 	 *            The attachment mime type
 	 * @param fileName
 	 *            The attachment file name
 	 * @param name
 	 *            The attachment name
-	 * @param attachmentAsString
-	 *            The CLOB as a String object
+	 * @param base64EncodedAttachement
+	 *            base64 encoded string
 	 */
-	public AttachmentDTO(Clob attachment, String mimeType, String fileName, String name, String attachmentAsString) {
-		this.attachment = attachment;
+	public AttachmentDTO(String mimeType, String fileName, String name, String base64EncodedAttachement) {
 		this.mimeType = mimeType;
 		this.fileName = fileName;
 		this.name = name;
-		this.attachmentAsString = attachmentAsString;
+		this.base64EncodedAttachement = base64EncodedAttachement;
 	}
 
 	/**
@@ -111,25 +104,6 @@ public class AttachmentDTO implements Serializable {
 	 */
 	public void setMessage(MessageDTO message) {
 		this.message = message;
-	}
-
-	/**
-	 * Getter method for attachment
-	 * 
-	 * @return: attachment
-	 */
-	public Clob getAttachment() {
-		return attachment;
-	}
-
-	/**
-	 * Setter method for attachment
-	 * 
-	 * @param attachment
-	 *            : The attachment as a Clob object
-	 */
-	public void setAttachment(Clob attachment) {
-		this.attachment = attachment;
 	}
 
 	/**
@@ -190,22 +164,23 @@ public class AttachmentDTO implements Serializable {
 	}
 
 	/**
-	 * Getter method for attachmentAsString
+	 * Getter method for base64EncodedAttachement
 	 * 
-	 * @return: attachmentAsString
+	 * @return : base64 encoded binary data
 	 */
-	public String getAttachmentAsString() {
-		assert (attachmentAsString != null) : "attachmentAsString may not be null here";
-		return attachmentAsString;
+	public String getBase64EncodedAttachement() {
+		return base64EncodedAttachement;
 	}
 
 	/**
-	 * Setter method for attachmentAsString
+	 * Setter method for base64EncodedAttachement
 	 * 
-	 * @param attachmentAsString
-	 *            : The CLOB object as a string
+	 * The input string is expected to a base64 encoded file.
+	 * 
+	 * @param base64EncodedAttachement
 	 */
-	public void setAttachmentAsString(String attachmentAsString) {
-		this.attachmentAsString = attachmentAsString;
+	public void setBase64EncodedAttachement(String base64EncodedAttachement) {
+		this.base64EncodedAttachement = base64EncodedAttachement;
 	}
+
 }

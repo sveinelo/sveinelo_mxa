@@ -29,13 +29,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringWriter;
-import java.sql.Clob;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -148,14 +145,11 @@ public class EnhancedParserTest {
 		assertTrue("Number of Attachements were different from one.", attachmentList.size() == 1);
 		for (Attachment attachment : attachmentList) {
 
-			assertNotNull(attachment.getAttachment());
+			assertNotNull(attachment.getBase64EncodedString());
 
-			Clob actualClob = attachment.getAttachment();
-			StringWriter sw = new StringWriter();
+			String base64EncodedString = attachment.getBase64EncodedString();
 
-			IOUtils.copy(actualClob.getCharacterStream(), sw);
-
-			assertEquals("attachement content should match input", "TVhBLWRva3VtZW50IHRpbCBBbHR1dC4K", sw.toString());
+			assertEquals("attachement content should match input", "TVhBLWRva3VtZW50IHRpbCBBbHR1dC4K", base64EncodedString);
 
 			assertEquals("filename.txt", attachment.getFilename());
 			assertEquals("text/plain", attachment.getMimeType());

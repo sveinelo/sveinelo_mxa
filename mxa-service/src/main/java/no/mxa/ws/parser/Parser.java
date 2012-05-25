@@ -239,7 +239,8 @@ public class Parser extends DefaultHandler {
 		} else if (qName.equalsIgnoreCase("MessageSummery")) {
 			tempMessage.setContentMessageSummary(tempVal);
 		} else if (qName.equalsIgnoreCase("Attachment")) {
-			tempAttachment.setAttachment(tempFil.toCharArray());
+			String base64EncodedString = new String(tempFil.toCharArray());
+			tempAttachment.setBase64EncodedString(base64EncodedString);
 			attachments.add(tempAttachment);
 			LOGGER.trace("Attachment: {}", tempFil);
 		} else if (qName.equalsIgnoreCase("SMSPhoneNumber")) {
@@ -258,5 +259,4 @@ public class Parser extends DefaultHandler {
 			tempMessage.setContactInfo(contactInfo);
 		}
 	}
-
 }

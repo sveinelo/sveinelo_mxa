@@ -23,7 +23,7 @@
 		<many-to-one name="message" class="no.mxa.dto.MessageDTO"
 			column="MESSAGEID" not-null="true" />
 		<property name="base64EncodedAttachement" type="java.lang.String" not-null="true">
-			<column name="ATTACHMENT" not-null="true" />
+			<column name="ATTACHMENT" not-null="true" sql-type="clob" />
 		</property>
 		<property name="mimeType" type="java.lang.String" not-null="true">
 			<column name="MIMETYPE" length="255" not-null="true" />

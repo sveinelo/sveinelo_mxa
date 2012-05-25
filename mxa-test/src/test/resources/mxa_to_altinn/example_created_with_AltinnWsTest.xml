@@ -1,0 +1,46 @@
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+	<S:Body>
+		<ns5:InsertCorrespondenceBasicV2 xmlns="http://www.altinn.no/services/2009/10"
+			xmlns:ns10="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:ns11="http://schemas.altinn.no/serviceengine/formsengine/2009/10"
+			xmlns:ns12="http://schemas.altinn.no/services/Intermediary/Shipment/2009/10" xmlns:ns13="http://schemas.altinn.no/services/ServiceEngine/Subscription/2009/10"
+			xmlns:ns2="http://www.altinn.no/services/ServiceEngine/ReporteeElementList/2010/10" xmlns:ns3="http://schemas.altinn.no/services/ServiceEngine/Notification/2009/10"
+			xmlns:ns4="http://schemas.altinn.no/services/Intermediary/Receipt/2009/10" xmlns:ns5="http://www.altinn.no/services/ServiceEngine/Correspondence/2009/10"
+			xmlns:ns6="http://schemas.altinn.no/services/ServiceEngine/Correspondence/2009/10" xmlns:ns7="http://www.altinn.no/services/ServiceEngine/ReporteeElementList/2009/10"
+			xmlns:ns8="http://schemas.altinn.no/services/ServiceEngine/Correspondence/2010/10" xmlns:ns9="http://www.altinn.no/services/common/fault/2009/10">
+			<ns5:systemUserName>PAT</ns5:systemUserName>
+			<ns5:systemPassword>Wrong Password</ns5:systemPassword>
+			<ns5:SystemUserCode>PAT</ns5:SystemUserCode>
+			<ns5:ExternalShipmentReference>REF001</ns5:ExternalShipmentReference>
+			<ns5:Correspondence>
+				<ns8:ServiceCode>PAT</ns8:ServiceCode>
+				<ns8:ServiceEdition>1</ns8:ServiceEdition>
+				<ns8:Reportee>910013874</ns8:Reportee>
+				<ns8:Content>
+					<ns8:LanguageCode>1044</ns8:LanguageCode>
+					<ns8:MessageTitle>Svein Erik - V2 - Vedlegg</ns8:MessageTitle>
+					<ns8:MessageBody>Dette er en test av vedlegg.</ns8:MessageBody>
+					<ns8:Attachments>
+						<ns8:BinaryAttachments>
+							<ns2:BinaryAttachmentV2>
+								<ns2:FileName>langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn_langt_filnavn.txt
+								</ns2:FileName>
+								<ns2:Name>Dette skal være enn veldig langt VISNINGSNAVN på over fem hundre tegn. Dette for å teste lengden på
+									filnavn i Altinn 2 Correspondence formatat.Dette skal være enn veldig langt filnavn på over fem hundre tegn.
+									Dette for å teste lengden på filnavn i Altinn 2 Correspondence formatat.Dette skal være enn veldig langt
+									filnavn på over fem hundre tegn. Dette for å teste lengden på filnavn i Altinn 2 Correspondence formatat.Dette
+									skal være enn veldig langt filnavn på over fem hundre tegn. Dette for å teste lengden på filnavn i Altinn 2
+									Correspondence formatat.Dette skal være enn veldig langt filnavn på over fem hundre tegn. Dette for å teste
+									lengden på filnavn i Altinn 2 Correspondence formatat.</ns2:Name>
+								<ns2:Data>TVhBLWRva3VtZW50IHRpbCBBbHR1dC4K</ns2:Data>
+							</ns2:BinaryAttachmentV2>
+						</ns8:BinaryAttachments>
+					</ns8:Attachments>
+				</ns8:Content>
+				<ns8:AllowSystemDeleteDateTime>2017-05-25T00:00:00.000+02:00</ns8:AllowSystemDeleteDateTime>
+				<ns8:DueDateTime>2012-06-01T00:00:00.000+02:00</ns8:DueDateTime>
+				<ns8:ArchiveReference xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" />
+				<ns6:Notifications />
+			</ns5:Correspondence>
+		</ns5:InsertCorrespondenceBasicV2>
+	</S:Body>
+</S:Envelope>

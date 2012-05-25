@@ -37,6 +37,7 @@ import javax.sql.rowset.serial.SerialException;
 
 import no.mxa.altinn.ws.AltinnFault;
 import no.mxa.altinn.ws.ICorrespondenceAgencyExternalBasic;
+import no.mxa.altinn.ws.ICorrespondenceAgencyExternalBasicInsertCorrespondenceBasicAltinnFaultFaultFaultMessage;
 import no.mxa.altinn.ws.ICorrespondenceAgencyExternalBasicInsertCorrespondenceBasicV2AltinnFaultFaultFaultMessage;
 import no.mxa.altinn.ws.ICorrespondenceAgencyExternalBasicTestAltinnFaultFaultFaultMessage;
 import no.mxa.altinn.ws.ReceiptExternal;
@@ -48,7 +49,6 @@ import no.mxa.dto.MessageDTO;
 import no.mxa.test.support.SpringBasedTest;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
@@ -61,6 +61,7 @@ public class AltinnWsTest extends SpringBasedTest {
 
 	@Before
 	public void setup() {
+		emptyAllDomainTables();
 		SimpleJdbcTemplate template = getSimpleJdbcTemplate();
 		String keyvaluesQuery = "INSERT INTO KEYVALUES (ID, KEY_NAME, DATEVALUE, NUMERICVALUE, STRINGVALUE, DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?)";
 		template.update(keyvaluesQuery, 1L, "GOVORGAN", null, null, "PAT", "Description");
@@ -71,28 +72,28 @@ public class AltinnWsTest extends SpringBasedTest {
 	}
 
 	@Test
-	@Ignore("Need to fix test-setup")
-	public void testName() throws ICorrespondenceAgencyExternalBasicTestAltinnFaultFaultFaultMessage {
+	public void ping() throws ICorrespondenceAgencyExternalBasicTestAltinnFaultFaultFaultMessage {
 		port.test();
 	}
 
 	@Test
 	public void shouldSendAMessageToAltinnTest() throws MalformedURLException, CorrespondenceBuilderException, SerialException,
-			SQLException {
+			SQLException, ICorrespondenceAgencyExternalBasicInsertCorrespondenceBasicAltinnFaultFaultFaultMessage {
 		MessageDTO message = new MessageDTO();
 		message.setMessageReference("REF001");
+		// TODO: ParticipantId is primary used by Patentstyret!
 		message.setParticipantId("910013874");
 		message.setCaseOfficer("Test Case Officer");
 		message.setCaseDescription("Test Case Description");
-		message.setMessageHeader("VM&nbsp;200900061,Main test altut,Deres ref&nbsp;E29723/soi/test");
-		message.setMessageSummary("Må besvares innen:2009.06.01<br />Saksnummer:VM&nbsp;200900061&nbsp;<br />Brevtype:Main test altut<br />Deres ref:E29723/soi/test<br />Status:01000&nbsp;Under behandling&nbsp;Mottatt<br />Tittel:test sans player<br />Saksbehandler:soi");
+		message.setMessageHeader("AltinnWsTestHeader");
+		message.setMessageSummary("Altinn Ws Test Summary in Altut or Body in Correspondence.");
 		List<AttachmentDTO> attachments = new ArrayList<>();
-		String string = "originalBase64encodedStreng";
+		String string = "TVhBLWRva3VtZW50IHRpbCBBbHR1dC4K"; // Content "MXA-dokument til Altut."
 		char[] content = string.toCharArray();
 		Clob attachment = new SerialClob(content);
 		String mimeType = "application/txt";
-		String fileName = "filnavn";
-		String name = "visningsnavn";
+		String fileName = "mxa_dokument_til_altinn_ii.txt";
+		String name = "Visningsnavn for dokumentet, æøå.";
 		String attachmentAsString = string;
 		AttachmentDTO attachement = new AttachmentDTO(attachment, mimeType, fileName, name, attachmentAsString);
 		attachments.add(attachement);

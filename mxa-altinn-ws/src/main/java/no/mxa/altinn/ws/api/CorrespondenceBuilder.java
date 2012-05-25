@@ -250,21 +250,21 @@ public class CorrespondenceBuilder {
 	/** Correspondences.Correspondence.Content.Attachments.BinaryAttachments */
 	private JAXBElement<BinaryAttachmentExternalBEV2List> getBinaryAttachmentExternalBEV2List(
 			BinaryAttachmentExternalBEV2List binaryAttachmentExternalBEV2List) {
-		return objectFactory.createBinaryAttachmentExternalBEV2List(binaryAttachmentExternalBEV2List);
+		return objectFactory.createAttachmentsV2BinaryAttachments(binaryAttachmentExternalBEV2List);
 	}
 
 	/**
 	 * Correspondences.Correspondence.Content.Attachments.BinaryAttachments. BinaryAttachment.FileName
 	 */
 	private JAXBElement<String> getBinaryAttachmentFileName(AttachmentDTO attachment) {
-		return objectFactory.createBinaryAttachmentFileName(attachment.getFileName());
+		return objectFactory.createBinaryAttachmentV2FileName(attachment.getFileName());
 	}
 
 	/**
 	 * Correspondences.Correspondence.Content.Attachments.BinaryAttachments. BinaryAttachment.Name
 	 */
 	private JAXBElement<String> getBinaryAttachmentName(AttachmentDTO attachment) {
-		return objectFactory.createBinaryAttachmentName(attachment.getName());
+		return objectFactory.createBinaryAttachmentV2Name(attachment.getName());
 	}
 
 	/**

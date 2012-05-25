@@ -1,0 +1,36 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:m0="http://schemas.altinn.no/services/ServiceEngine/Correspondence/2010/10" xmlns:m1="http://www.altinn.no/services/ServiceEngine/ReporteeElementList/2010/10"
+	xmlns:m2="http://schemas.altinn.no/services/ServiceEngine/Correspondence/2009/10" xmlns:m3="http://schemas.altinn.no/services/ServiceEngine/Notification/2009/10">
+	<SOAP-ENV:Body>
+		<m:InsertCorrespondenceBasicV2 xmlns:m="http://www.altinn.no/services/ServiceEngine/Correspondence/2009/10">
+			<m:systemUserName>PAT</m:systemUserName>
+			<m:systemPassword>WrongPassword</m:systemPassword>
+			<m:SystemUserCode>PAT</m:SystemUserCode>
+			<m:ExternalShipmentReference>REF001</m:ExternalShipmentReference>
+			<m:Correspondence>
+				<m0:ServiceCode>PAT</m0:ServiceCode>
+				<m0:ServiceEdition>1</m0:ServiceEdition>
+				<m0:Reportee>910013874</m0:Reportee>
+				<m0:Content>
+					<m0:LanguageCode>1044</m0:LanguageCode>
+					<m0:MessageTitle>Svein Erik SOAPui - XMLSpy</m0:MessageTitle>
+					<m0:MessageBody>Er det vår autogenererte kode som lager funky business mon to?</m0:MessageBody>
+					<m0:Attachments>
+						<m0:BinaryAttachments>
+							<m1:BinaryAttachmentV2>
+								<m1:DestinationType>Default</m1:DestinationType>
+								<m1:FunctionType>Unspecified</m1:FunctionType>
+								<m1:FileName>filname.txt</m1:FileName>
+								<m1:Name>filename</m1:Name>
+								<m1:Encrypted>false</m1:Encrypted>
+								<m1:Data>TVhBLWRva3VtZW50IHRpbCBBbHR1dC4K</m1:Data>
+								<m1:SendersReference>String</m1:SendersReference>
+							</m1:BinaryAttachmentV2>
+						</m0:BinaryAttachments>
+					</m0:Attachments>
+				</m0:Content>
+			</m:Correspondence>
+		</m:InsertCorrespondenceBasicV2>
+	</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

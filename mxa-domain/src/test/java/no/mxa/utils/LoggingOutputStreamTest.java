@@ -24,9 +24,13 @@ package no.mxa.utils;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.only;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import no.mxa.utils.LoggingOutputStream.Level;
 
@@ -48,14 +52,46 @@ public class LoggingOutputStreamTest {
 	public void setUp() throws Exception {
 	}
 
+	@Test
+	public void shouldSuppressBlankLines() {
+		try (LoggingOutputStream los = new LoggingOutputStream(logger, Level.INFO); PrintStream out = new PrintStream(los);) {
+			out.println("Test");
+			out.flush();
+			out.println();
+			out.flush();
+			out.print("\r");
+			out.flush();
+			out.print("\n");
+			out.flush();
+			out.print("\rTTT");
+			out.flush();
+		}
+		ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+		verify(logger, times(2)).info(captor.capture());
+		List<String> expected = new ArrayList<>();
+		expected.add("Test" + System.lineSeparator());
+		expected.add("\rTTT");
+		assertEquals(expected, captor.getAllValues());
+
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testWrongInit1() {
-		new LoggingOutputStream(null, null);
+		new LoggingOutputStream(null, null).close();
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testWrongInit2() {
-		new LoggingOutputStream(logger, null);
+		try (LoggingOutputStream loggingOutputStream = new LoggingOutputStream(logger, null);) {
+			// Nothing to do here
+		}
+	}
+
+	@Test(expected = IOException.class)
+	public void shouldFailOnClosedStream() throws IOException {
+		LoggingOutputStream loggingOutputStream = new LoggingOutputStream(logger, Level.ERROR);
+		loggingOutputStream.close();
+		loggingOutputStream.write("Test".getBytes());
 	}
 
 	@Test

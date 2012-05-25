@@ -81,14 +81,14 @@ public class CorrespondenceBuilderTest {
 		assertThat(insertCorrespondenceV2.getServiceCode().getValue(), is(mockedMessageDtoBuilder.getGovOrgan()));
 		assertThat(insertCorrespondenceV2.getServiceEdition().getValue(), is(mockedMessageDtoBuilder.getServiceEdition()));
 		assertThat(insertCorrespondenceV2.getReportee().getValue(), is(mockedMessageDtoBuilder.getParticipantId()));
-		assertThat(insertCorrespondenceV2.getDueDateTime().getYear(), is(new DateTime().getYear()));
-		assertThat(insertCorrespondenceV2.getDueDateTime().getMonth(), is(new DateTime().getMonthOfYear()));
-		assertThat(insertCorrespondenceV2.getDueDateTime().getDay(), is(new DateTime().getDayOfMonth() + 7));
-		assertThat(insertCorrespondenceV2.getAllowSystemDeleteDateTime().getValue().getYear(), is(new DateTime().getYear() + 5));
-		assertThat(insertCorrespondenceV2.getAllowSystemDeleteDateTime().getValue().getMonth(),
-				is(new DateTime().getMonthOfYear()));
-		assertThat(insertCorrespondenceV2.getAllowSystemDeleteDateTime().getValue().getDay(),
-				is(new DateTime().getDayOfMonth()));
+		DateTime todayPlus7Days = new DateTime().plusDays(7);
+		assertThat(insertCorrespondenceV2.getDueDateTime().getYear(), is(todayPlus7Days.getYear()));
+		assertThat(insertCorrespondenceV2.getDueDateTime().getMonth(), is(todayPlus7Days.getMonthOfYear()));
+		assertThat(insertCorrespondenceV2.getDueDateTime().getDay(), is(todayPlus7Days.getDayOfMonth()));
+		DateTime todayPlus5Years = new DateTime().plusYears(5);
+		assertThat(insertCorrespondenceV2.getAllowSystemDeleteDateTime().getValue().getYear(), is(todayPlus5Years.getYear()));
+		assertThat(insertCorrespondenceV2.getAllowSystemDeleteDateTime().getValue().getMonth(), is(todayPlus5Years.getMonthOfYear()));
+		assertThat(insertCorrespondenceV2.getAllowSystemDeleteDateTime().getValue().getDay(), is(todayPlus5Years.getDayOfMonth()));
 		assertThat(insertCorrespondenceV2.getArchiveReference().getValue(), is(mockedMessageDtoBuilder.getAltinnArchive()));
 	}
 

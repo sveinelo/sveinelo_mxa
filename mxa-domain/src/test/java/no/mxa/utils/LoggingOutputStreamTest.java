@@ -22,6 +22,7 @@
 package no.mxa.utils;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.times;
@@ -72,19 +73,18 @@ public class LoggingOutputStreamTest {
 		expected.add("Test" + System.lineSeparator());
 		expected.add("\rTTT");
 		assertEquals(expected, captor.getAllValues());
-
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testWrongInit1() {
 		new LoggingOutputStream(null, null).close();
+		fail("Should throw Exception");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testWrongInit2() {
-		try (LoggingOutputStream loggingOutputStream = new LoggingOutputStream(logger, null);) {
-			// Nothing to do here
-		}
+		new LoggingOutputStream(logger, null);
+		fail("Should throw Exception");
 	}
 
 	@Test(expected = IOException.class)

@@ -166,8 +166,9 @@ public class BatchFTPLoaderImpl implements BatchFTPLoader {
 		LogDTO logEntry = logGenerator.generateLog("Feil under prosessering av bekreftelsesfil (" + simpleName + "): "
 				+ ftpFile.getName(), UniversalConstants.RCT_PROCESS_FILE_FAILED);
 		logService.saveLog(logEntry);
-		if (LOGGER.isErrorEnabled())
+		if (LOGGER.isErrorEnabled()) {
 			LOGGER.error("Got " + simpleName + " when parsing receipt file");
+		}
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Got " + simpleName + " when parsing receipt file", e);
 		}

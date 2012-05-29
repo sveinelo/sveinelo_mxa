@@ -33,7 +33,7 @@
 			</generator>
 		</id>
 		<property name="messageKey" type="java.lang.String" not-null="true">
-			<column name="MESSAGEKEY" length="80" not-null="true" />
+			<column name="MESSAGEKEY" length="80" not-null="true" unique="true" />
 		</property>
 		<property name="sendingSystem" type="java.lang.String" not-null="true">
 			<column name="SENDINGSYSTEM" length="15" not-null="true" />

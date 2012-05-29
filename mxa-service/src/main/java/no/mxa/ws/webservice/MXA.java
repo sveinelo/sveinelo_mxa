@@ -30,6 +30,7 @@ import no.mxa.dto.LogDTO;
 import no.mxa.dto.MessageDTO;
 import no.mxa.service.LogGenerator;
 import no.mxa.service.MessageService;
+import no.mxa.utils.UnicodeUtil;
 import no.mxa.ws.parser.DTOGenerator;
 import no.mxa.ws.parser.Message;
 import no.mxa.ws.parser.Parser;
@@ -46,6 +47,8 @@ public class MXA implements IMXA {
 	private final MessageService messageService;
 	private final LogGenerator logGenerator;
 
+	private boolean throwExceptions = false;
+
 	@Inject
 	public MXA(Parser parser, DTOGenerator dtoGenerator, MessageService messageService, LogGenerator logGenerator) {
 		this.parser = parser;
@@ -61,7 +64,7 @@ public class MXA implements IMXA {
 	// TODO: Refactor this method.
 	public int submitMessage(final String msg) {
 		assert (msg != null) : "Message may not be null.";
-		String message = msg;
+		String message = UnicodeUtil.decode(msg, "UTF-8");
 		int returnCode;
 		boolean saved;
 		returnCode = -1;
@@ -75,10 +78,8 @@ public class MXA implements IMXA {
 				writeXMLfile(message);
 			}
 
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("submitMessage start");
-			}
-
+			LOGGER.debug("submitMessage start");
+			// TODO the BOM removal needs to be in a library.. not here....
 			// Remove Byte Order Mark from XML if present. The XML-parser fails if BOM is present.
 			if (message.indexOf("<") > 0 && message.indexOf("<") < 4) {
 				message = message.substring(message.indexOf("<"));
@@ -87,9 +88,7 @@ public class MXA implements IMXA {
 			// Run the XML validation
 			validationString = parser.validateDocument(message);
 
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Validation String: " + validationString);
-			}
+			LOGGER.debug("Validation String: {}", validationString);
 
 			// If validation is OK, run the XML parsing
 			if (validationString.equals("OK")) {
@@ -137,6 +136,9 @@ public class MXA implements IMXA {
 			// Important to never let any exceptions be visible to the client.
 			LOGGER.error("Failed", re);
 			returnCode = UniversalConstants.WEB_SERVICE_MESSAGE_SAVING_ERROR;
+			if (isThrowExceptions()) {
+				throw re;
+			}
 		}
 		return returnCode;
 	}
@@ -151,5 +153,13 @@ public class MXA implements IMXA {
 			LOGGER.debug("Can not write xml file", e);
 			LOGGER.debug(message);
 		}
+	}
+
+	public boolean isThrowExceptions() {
+		return throwExceptions;
+	}
+
+	public void setThrowExceptions(boolean throwExceptions) {
+		this.throwExceptions = throwExceptions;
 	}
 }

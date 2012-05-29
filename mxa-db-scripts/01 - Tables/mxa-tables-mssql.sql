@@ -8,7 +8,7 @@ GO
 CREATE TABLE [dbo].[ATTACHMENT](
 	[ID] [numeric](19, 0) IDENTITY(1,1) NOT NULL,
 	[MESSAGEID] [numeric](19, 0) NOT NULL,
-	[ATTACHMENT] [text] NOT NULL,
+	[ATTACHMENT] [varchar](max) NOT NULL,
 	[MIMETYPE] [varchar](255) NOT NULL,
 	[FILENAME] [varchar](50) NOT NULL,
 	[NAME] [varchar](50) NOT NULL,

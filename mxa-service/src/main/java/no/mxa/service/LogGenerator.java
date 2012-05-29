@@ -89,5 +89,15 @@ public interface LogGenerator {
 	 */
 	void saveLog(LogDTO log);
 
+	/**
+	 * Method used to save a LogDTO that is not connected to a Message
+	 * 
+	 * @param additionalLogMessage
+	 *            : String to eventually append to the regular log message
+	 * @param type
+	 *            : Log type. See definitions in UniversalConstants
+	 */
+	void saveLog(String additionalLogMessage, String type);
+
 	LogDTO generateLog(String logEntryMessage, LogType logType, String messageReference) throws NotUniqueMessageException;
 }

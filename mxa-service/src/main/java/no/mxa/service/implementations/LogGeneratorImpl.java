@@ -145,4 +145,10 @@ public class LogGeneratorImpl implements LogGenerator {
 			return generateLog(logEntryMessage, "", messageReference);
 		}
 	}
+
+	@Override
+	public void saveLog(String additionalLogMessage, String type) {
+		LogDTO dto = generateLog(additionalLogMessage, type);
+		saveLog(dto);
+	}
 }

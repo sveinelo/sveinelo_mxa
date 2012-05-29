@@ -26,7 +26,6 @@ import java.io.BufferedWriter;
 import javax.inject.Inject;
 
 import no.mxa.UniversalConstants;
-import no.mxa.dto.LogDTO;
 import no.mxa.dto.MessageDTO;
 import no.mxa.service.LogGenerator;
 import no.mxa.service.MessageService;
@@ -64,49 +63,39 @@ public class MXA implements IMXA {
 	// TODO: Refactor this method.
 	public int submitMessage(final String msg) {
 		assert (msg != null) : "Message may not be null.";
-		String message = UnicodeUtil.decode(msg, "UTF-8");
-		int returnCode;
-		boolean saved;
-		returnCode = -1;
-		String validationString = null;
-		Message parsedMessage = null;
-		MessageDTO messageDTO = null;
-		parsedMessage = null;
-		saved = false;
+		int returnCode = -1;
 		try {
+			String message = UnicodeUtil.decode(msg, "UTF-8");
 			if (LOGGER.isTraceEnabled()) {
 				writeXMLfile(message);
 			}
 
 			LOGGER.debug("submitMessage start");
-			// TODO the BOM removal needs to be in a library.. not here....
-			// Remove Byte Order Mark from XML if present. The XML-parser fails if BOM is present.
-			if (message.indexOf("<") > 0 && message.indexOf("<") < 4) {
-				message = message.substring(message.indexOf("<"));
-			}
 
 			// Run the XML validation
-			validationString = parser.validateDocument(message);
+			String validationString = parser.validateDocument(message);
 
 			LOGGER.debug("Validation String: {}", validationString);
 
+			Message parsedMessage = null;
 			// If validation is OK, run the XML parsing
 			if (validationString.equals("OK")) {
 				parsedMessage = parser.parseDocument(message);
 			} else {
+
+				// FIXME This assignment will never have any effect since it WILL be overwritten later. Maybe we should abort
+				// processing here...
 				returnCode = UniversalConstants.WEB_SERVICE_MESSAGE_VALIDATION_ERROR;
 
 				// Save log related to message parsing error
-				LogDTO validationErrorLog = null;
-				validationErrorLog = logGenerator.generateLog(UniversalConstants.MSG_PARSE_ERROR_DESCRIPTION,
-						UniversalConstants.MSG_PARSE_ERROR);
-				logGenerator.saveLog(validationErrorLog);
+				logGenerator.saveLog(UniversalConstants.MSG_PARSE_ERROR_DESCRIPTION, UniversalConstants.MSG_PARSE_ERROR);
 			}
 
+			boolean saved = false;
 			// If parsing is OK, run the repository save
 			if (parsedMessage != null) {
 				LOGGER.debug("Save message");
-				messageDTO = dtoGenerator.generateMessageDTO(parsedMessage);
+				MessageDTO messageDTO = dtoGenerator.generateMessageDTO(parsedMessage);
 				try {
 					messageService.saveMessage(messageDTO);
 					saved = true;
@@ -115,6 +104,8 @@ public class MXA implements IMXA {
 					LOGGER.debug("Saving message failed: ", re);
 				}
 			} else {
+				// FIXME This assignment will never have any effect since it WILL be overwritten later. Maybe we should abort
+				// processing here...
 				returnCode = UniversalConstants.WEB_SERVICE_MESSAGE_VALIDATION_ERROR;
 			}
 
@@ -125,10 +116,7 @@ public class MXA implements IMXA {
 				returnCode = UniversalConstants.WEB_SERVICE_MESSAGE_SAVING_ERROR;
 
 				// Save log related to message parsing error
-				LogDTO saveErrorLog = null;
-				saveErrorLog = logGenerator.generateLog(UniversalConstants.MSG_SAVE_ERROR_DESCRIPTION,
-						UniversalConstants.MSG_SAVE_ERROR);
-				logGenerator.saveLog(saveErrorLog);
+				logGenerator.saveLog(UniversalConstants.MSG_SAVE_ERROR_DESCRIPTION, UniversalConstants.MSG_SAVE_ERROR);
 			}
 
 			// Else return 2
@@ -144,11 +132,10 @@ public class MXA implements IMXA {
 	}
 
 	private void writeXMLfile(String message) {
-		BufferedWriter out;
-		try {
-			out = new BufferedWriter(new FileWriterWithEncoding(System.currentTimeMillis() + ".xml", "UTF-8"));
+		String generatedFilename = System.currentTimeMillis() + ".xml";
+		try (FileWriterWithEncoding fileWriterWithEncoding = new FileWriterWithEncoding(generatedFilename, "UTF-8");
+				BufferedWriter out = new BufferedWriter(fileWriterWithEncoding);) {
 			out.write(message);
-			out.close();
 		} catch (Exception e) {
 			LOGGER.debug("Can not write xml file", e);
 			LOGGER.debug(message);

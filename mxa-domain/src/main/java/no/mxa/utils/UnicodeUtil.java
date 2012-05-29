@@ -57,7 +57,7 @@ public class UnicodeUtil {
 		try (StringReader stringReader = new StringReader(text);
 				ReaderInputStream readerInputStream = new ReaderInputStream(stringReader);
 				UnicodeInputStream bomInputStream = new UnicodeInputStream(readerInputStream, "UTF-8");
-				InputStreamReader inputStreamReader = new InputStreamReader(bomInputStream);
+				InputStreamReader inputStreamReader = new InputStreamReader(bomInputStream, "UTF-8");
 				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);) {
 			LOGGER.debug("Encoding: {}", bomInputStream.getEncoding());
 			String line;

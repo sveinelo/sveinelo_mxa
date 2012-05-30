@@ -62,7 +62,6 @@ public class Parser extends DefaultHandler {
 	private List<Attachment> attachments;
 	private List<ContactInfo> contactInfo;
 	private InputSource document;
-	private static String returnMessage = "OK";
 	private StringBuilder stringBuilder;
 	private final Resource schema;
 
@@ -80,7 +79,6 @@ public class Parser extends DefaultHandler {
 	 */
 	public String validateDocument(String xmlString) {
 		document = new InputSource(new StringReader(xmlString));
-		returnMessage = "OK"; // Need to reset this...
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			factory.setValidating(false);
@@ -92,10 +90,11 @@ public class Parser extends DefaultHandler {
 
 			SAXParser parser = factory.newSAXParser();
 			XMLReader reader = parser.getXMLReader();
-			reader.setErrorHandler(new MyErrorHandler());
+			MyErrorHandler errorHandler = new MyErrorHandler();
+			reader.setErrorHandler(errorHandler);
 			reader.parse(document);
 
-			return returnMessage;
+			return errorHandler.getReturnMessage();
 		} catch (SAXException e) {
 
 			LOGGER.error("Problem validating document.", e);
@@ -114,7 +113,9 @@ public class Parser extends DefaultHandler {
 	 * Class for handling errors that can occur while validating xml. Returns error category and explanation of what went wrong
 	 * 
 	 */
-	private static class MyErrorHandler extends DefaultHandler {
+	private class MyErrorHandler extends DefaultHandler {
+
+		private String returnMessage = "OK";
 
 		@Override
 		public void warning(SAXParseException e) throws SAXException {
@@ -130,6 +131,11 @@ public class Parser extends DefaultHandler {
 		public void fatalError(SAXParseException e) throws SAXException {
 			returnMessage = "Fatal error: " + e.getMessage();
 		}
+
+		public String getReturnMessage() {
+			return returnMessage;
+		}
+
 	}
 
 	/**

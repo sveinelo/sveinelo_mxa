@@ -54,7 +54,7 @@
 			<column name="PARTICIPANTID" length="11" not-null="true" />
 		</property>
 		<property name="messageReference" type="java.lang.String" not-null="true">
-			<column name="MESSAGEREFERENCE" length="40" not-null="true" />
+			<column name="MESSAGEREFERENCE" length="40" not-null="true" unique="true"/>
 		</property>
 		<property name="idproc" type="java.lang.String" not-null="true">
 			<column name="IDPROC" length="40" not-null="true" />

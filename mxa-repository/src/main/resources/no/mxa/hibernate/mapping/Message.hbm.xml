@@ -39,7 +39,7 @@
 			<column name="SENDINGSYSTEM" length="15" not-null="true" />
 		</property>
 		<property name="batchSending" type="java.lang.Integer" not-null="true">
-			<column name="BATCHSENDING" precision="1" not-null="true" check="BATCHSENDING IN (0, 1)"/>
+			<column name="BATCHSENDING" precision="1" not-null="true" check="BATCHSENDING IN (0, 1)" />
 		</property>
 		<property name="domain" type="java.lang.String" not-null="true">
 			<column name="DOMAIN" length="10" not-null="true" />
@@ -54,7 +54,7 @@
 			<column name="PARTICIPANTID" length="11" not-null="true" />
 		</property>
 		<property name="messageReference" type="java.lang.String" not-null="true">
-			<column name="MESSAGEREFERENCE" length="40" not-null="true" unique="true"/>
+			<column name="MESSAGEREFERENCE" length="40" not-null="true" unique="true" />
 		</property>
 		<property name="idproc" type="java.lang.String" not-null="true">
 			<column name="IDPROC" length="40" not-null="true" />
@@ -66,13 +66,13 @@
 			<column name="ALTINNARCHIVE" length="50" />
 		</property>
 		<property name="messageHeader" type="java.lang.String" not-null="true">
-			<column name="MESSAGEHEADER" length="128" not-null="true" />
+			<column name="MESSAGEHEADER" length="512" not-null="true" />
 		</property>
 		<property name="messageSummary" type="java.lang.String" not-null="true">
-			<column name="MESSAGESUMMARY" length="512" not-null="true" />
+			<column name="MESSAGESUMMARY" length="2000" not-null="true" />
 		</property>
 		<property name="sentAltinn" type="java.lang.Integer" not-null="true">
-			<column name="SENTALTINN" precision="1" not-null="true" check="SENTALTINN IN (0, 1)"/>
+			<column name="SENTALTINN" precision="1" not-null="true" check="SENTALTINN IN (0, 1)" />
 		</property>
 		<property name="sentAltinnDate" type="java.sql.Timestamp">
 			<column name="SENTALTINNDATE" />
@@ -84,7 +84,7 @@
 			<column name="READDEADLINE" not-null="true" />
 		</property>
 		<property name="overdueNoticeSent" type="java.lang.Integer" not-null="true">
-			<column name="OVERDUENOTICESENT" precision="1" not-null="true" check="OVERDUENOTICESENT IN (0, 1)"/>
+			<column name="OVERDUENOTICESENT" precision="1" not-null="true" check="OVERDUENOTICESENT IN (0, 1)" />
 		</property>
 		<bag name="attachments" cascade="all" lazy="false" inverse="true">
 			<key column="MESSAGEID" />

@@ -20,10 +20,9 @@
 				</param>
 			</generator>
 		</id>
-		<many-to-one name="message" class="no.mxa.dto.MessageDTO"
-			column="MESSAGEID" not-null="true" />
+		<many-to-one name="message" class="no.mxa.dto.MessageDTO" column="MESSAGEID" not-null="true" />
 		<property name="type" type="java.lang.String" not-null="true">
-			<column name="TYPE" length="10" not-null="true" check="(TYPE IN ('SMS','EMAIL'))"/>
+			<column name="TYPE" length="10" not-null="true" check="(TYPE IN ('SMS','EMAIL'))" />
 		</property>
 		<property name="address" type="java.lang.String" not-null="true">
 			<column name="ADDRESS" length="200" not-null="true" />

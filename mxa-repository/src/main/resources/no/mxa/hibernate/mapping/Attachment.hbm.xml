@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- #%L Repository %% Copyright (C) 2009 - 2012 Patentstyret %% This program 
-	is free software: you can redistribute it and/or modify it under the terms 
-	of the GNU General Public License as published by the Free Software Foundation, 
-	either version 3 of the License, or (at your option) any later version. This 
-	program is distributed in the hope that it will be useful, but WITHOUT ANY 
-	WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
-	FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. 
-	You should have received a copy of the GNU General Public License along with 
+<!-- #%L Repository %% Copyright (C) 2009 - 2012 Patentstyret %% This program is free software: you can redistribute it and/or 
+	modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 
+	3 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, 
+	but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+	GNU General Public License for more details. You should have received a copy of the GNU General Public License along with 
 	this program. If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L% -->
 
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
@@ -20,8 +17,7 @@
 				</param>
 			</generator>
 		</id>
-		<many-to-one name="message" class="no.mxa.dto.MessageDTO"
-			column="MESSAGEID" not-null="true" />
+		<many-to-one name="message" class="no.mxa.dto.MessageDTO" column="MESSAGEID" not-null="true" />
 		<property name="base64EncodedAttachement" type="java.lang.String" not-null="true">
 			<column name="ATTACHMENT" not-null="true" />
 		</property>
@@ -29,13 +25,10 @@
 			<column name="MIMETYPE" length="255" not-null="true" />
 		</property>
 		<property name="fileName" type="java.lang.String" not-null="true">
-			<column name="FILENAME" length="50" not-null="true" />
+			<column name="FILENAME" length="255" not-null="true" />
 		</property>
 		<property name="name" type="java.lang.String" not-null="true">
-			<column name="NAME" length="50" not-null="true" />
+			<column name="NAME" length="255" not-null="true" />
 		</property>
 	</class>
-</hibernate-mapping>  
-     
-  
-  
+</hibernate-mapping>

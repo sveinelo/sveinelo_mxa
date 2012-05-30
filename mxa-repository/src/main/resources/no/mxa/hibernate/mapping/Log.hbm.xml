@@ -33,7 +33,7 @@
 			</generator>
 		</id>
 		<many-to-one name="message" class="no.mxa.dto.MessageDTO" column="MESSAGEID" />
-		<property name="time" type="java.sql.Timestamp" >
+		<property name="time" type="java.sql.Timestamp">
 			<column name="TIME" />
 		</property>
 		<property name="logType" type="java.lang.String" not-null="true">

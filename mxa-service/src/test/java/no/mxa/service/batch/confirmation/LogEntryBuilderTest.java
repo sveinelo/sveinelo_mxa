@@ -48,7 +48,7 @@ public class LogEntryBuilderTest {
 		LogEntry logEntry = builder.build();
 		assertNotNull(logEntry);
 		LOGGER.debug(logEntry.toString());
-		assertEquals("participantId: lkjj readDateTime: Today shortName: shorty", logEntry.toLogEntryMessage());
+		assertEquals("reportee: null; readDateTime: Today; shortName: shorty;", logEntry.toLogEntryMessage());
 	}
 
 	@Test
@@ -65,7 +65,7 @@ public class LogEntryBuilderTest {
 		assertNotNull(logEntry);
 		LOGGER.debug(logEntry.toString());
 		assertEquals(
-				"participantId: lkjj shortName: shorty confirmedDateTime: dateTime confirmedRoleList roleList loginMethod: 3",
+				"reportee: null; participantId: lkjj; shortName: shorty; confirmedDateTime: dateTime; confirmedRoleList roleList; loginMethod: 3;",
 				logEntry.toLogEntryMessage());
 	}
 

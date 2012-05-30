@@ -65,11 +65,11 @@ public class LogEntryBuilder {
 			if (type == null) {
 				throw new InvalidLogEntryTypeException();
 			} else if (type.equals("Read")) {
-				return MessageFormat
-						.format("reportee: {0} readDateTime: {1} shortName: {2}", reportee, readDateTime, shortName);
+				return MessageFormat.format("reportee: {0}; readDateTime: {1}; shortName: {2};", reportee, readDateTime,
+						shortName);
 			} else if (type.equals("Confirmed")) {
 				return MessageFormat
-						.format("reportee: {5} ;participantId: {0} ;shortName: {1} ;confirmedDateTime: {2} ;confirmedRoleList {3} ;loginMethod: {4}",
+						.format("reportee: {5}; participantId: {0}; shortName: {1}; confirmedDateTime: {2}; confirmedRoleList {3}; loginMethod: {4};",
 								participantId, shortName, confirmedDateTime, confirmedRoleList, loginMethod, reportee);
 			} else {
 				throw new InvalidLogEntryTypeException();

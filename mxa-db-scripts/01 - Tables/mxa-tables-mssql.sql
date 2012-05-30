@@ -10,8 +10,8 @@ CREATE TABLE [dbo].[ATTACHMENT](
 	[MESSAGEID] [bigint] NOT NULL,
 	[ATTACHMENT] [varchar](max) NOT NULL,
 	[MIMETYPE] [varchar](255) NOT NULL,
-	[FILENAME] [varchar](50) NOT NULL,
-	[NAME] [varchar](50) NOT NULL,
+	[FILENAME] [varchar](255) NOT NULL,
+	[NAME] [varchar](255) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -111,8 +111,8 @@ CREATE TABLE [dbo].[MESSAGE](
 	[IDPROC] [varchar](40) NOT NULL,
 	[DUEDATE] [datetime] NULL,
 	[ALTINNARCHIVE] [varchar](50) NULL,
-	[MESSAGEHEADER] [varchar](128) NOT NULL,
-	[MESSAGESUMMARY] [varchar](512) NOT NULL,
+	[MESSAGEHEADER] [varchar](512) NOT NULL,
+	[MESSAGESUMMARY] [varchar](2000) NOT NULL,
 	[SENTALTINN] [int] NOT NULL,
 	[SENTALTINNDATE] [datetime] NULL,
 	[MSG_STATUS] [int] NOT NULL,

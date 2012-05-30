@@ -56,7 +56,7 @@ public class CorrespondenceConfirmationAdapter extends AbstractReceiptAdapter {
 			LogEntryBuilder logBuilder = new LogEntryBuilder(getTypeString());
 			logBuilder.setMessageReference(getConfirmation().getCorrespondenceReference());
 			logBuilder.setShortName(getConfirmation().getServiceCode() + "-" + getConfirmation().getServiceEdition());
-
+			logBuilder.setReportee(getConfirmation().getReportee());
 			if (isRead()) {
 				Read read = getConfirmation().getRead();
 				Date readDateTime = read.getReadDateTime();

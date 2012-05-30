@@ -21,6 +21,8 @@
  */
 package no.mxa.service.batch.confirmation;
 
+import java.text.MessageFormat;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +52,7 @@ public class LogEntryBuilder {
 		private String confirmedDateTime;
 		private String confirmedRoleList;
 		private String loginMethod;
+		private String reportee;
 
 		/**
 		 * If the <LogEntry> type is "Read", attributes concerning a Read entry will be returned. And similar for "Confirmed"
@@ -62,10 +65,12 @@ public class LogEntryBuilder {
 			if (type == null) {
 				throw new InvalidLogEntryTypeException();
 			} else if (type.equals("Read")) {
-				return "participantId: " + participantId + " readDateTime: " + readDateTime + " shortName: " + shortName;
+				return MessageFormat
+						.format("reportee: {0} readDateTime: {1} shortName: {2}", reportee, readDateTime, shortName);
 			} else if (type.equals("Confirmed")) {
-				return "participantId: " + participantId + " shortName: " + shortName + " confirmedDateTime: "
-						+ confirmedDateTime + " confirmedRoleList " + confirmedRoleList + " loginMethod: " + loginMethod;
+				return MessageFormat
+						.format("reportee: {5} ;participantId: {0} ;shortName: {1} ;confirmedDateTime: {2} ;confirmedRoleList {3} ;loginMethod: {4}",
+								participantId, shortName, confirmedDateTime, confirmedRoleList, loginMethod, reportee);
 			} else {
 				throw new InvalidLogEntryTypeException();
 			}
@@ -174,6 +179,14 @@ public class LogEntryBuilder {
 		public void setLoginMethod(String loginMethod) {
 			this.loginMethod = loginMethod;
 		}
+
+		public String getReportee() {
+			return reportee;
+		}
+
+		public void setReportee(String reportee) {
+			this.reportee = reportee;
+		}
 	}
 
 	public LogEntryBuilder(String type) {
@@ -245,6 +258,15 @@ public class LogEntryBuilder {
 			throw new IllegalLogEntryStateException();
 		}
 		logEntry.setLoginMethod(loginMethod);
+		return this;
+
+	}
+
+	public LogEntryBuilder setReportee(String reportee) {
+		if (state == State.BUILD) {
+			throw new IllegalLogEntryStateException();
+		}
+		logEntry.setReportee(reportee);
 		return this;
 
 	}

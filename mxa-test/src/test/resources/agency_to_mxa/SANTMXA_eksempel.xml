@@ -22,7 +22,7 @@
   -->
 
 <Message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" sendingSystem="AGENCY" batchSending="0" domain="VM" caseDescription="test sans player" caseOfficer="mcr,Charrier Mathieu">
-  <ParticipantId>31124901793</ParticipantId>
+  <ParticipantId>01234567890</ParticipantId>
   <MessageReference>VM20090006136-01</MessageReference>
   <Idproc>1111133</Idproc>
   <AltinnArchive>AM12345</AltinnArchive>
@@ -37,10 +37,10 @@
   <NotificationMessages>
     <NotificationMessage>
       <SMSPhoneNumbers>
-        <SMSPhoneNumber>+332145864</SMSPhoneNumber>
+        <SMSPhoneNumber>+012345678</SMSPhoneNumber>
       </SMSPhoneNumbers>
       <EmailAddresses>
-        <EmailAddress>oslo@patentkontor.com</EmailAddress>
+        <EmailAddress>mxa_test@mxatest.tst</EmailAddress>
       </EmailAddresses>
     </NotificationMessage>
   </NotificationMessages>

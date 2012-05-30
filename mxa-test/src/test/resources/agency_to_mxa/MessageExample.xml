@@ -25,7 +25,7 @@
 	xsi:noNamespaceSchemaLocation="sant_mxa.xsd"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	caseDescription="test message example" caseOfficer="ttt,Mr. Test">
-	<ParticipantId>31124901793</ParticipantId>
+	<ParticipantId>01234567890</ParticipantId>
 	<MessageReference>P1234-5-test</MessageReference>
 	<Idproc>66A50D806D9444E5E044000E7F7E0BD2</Idproc>
 	<DueDate>2009-04-07</DueDate>

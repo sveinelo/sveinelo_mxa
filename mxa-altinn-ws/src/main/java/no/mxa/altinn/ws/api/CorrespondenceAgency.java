@@ -86,7 +86,7 @@ public class CorrespondenceAgency implements AltinnWS {
 	}
 
 	private String getSystemUserCode() {
-		return messageValues.getServiceCode();
+		return messageValues.getGovOrgan();
 	}
 
 	private String getSystemPassword() {

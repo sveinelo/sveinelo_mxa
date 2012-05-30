@@ -83,7 +83,7 @@ public class EnhancedParserTest {
 
 		for (ContactInfo contactInfo : contactInfoList) {
 			assertNotNull(contactInfo);
-			assertEquals("EmailAddress does not match.", "mail@oslopatent.no", contactInfo.getAddress());
+			assertEquals("EmailAddress does not match.", "mxa_test@mxatest.tst", contactInfo.getAddress());
 		}
 	}
 
@@ -137,7 +137,7 @@ public class EnhancedParserTest {
 		assertEquals("1111133", message.getIdproc());
 		assertEquals("VM20090006136-011111133", message.getMessageKey());
 		assertEquals("VM20090006136-01", message.getMessageReference());
-		assertEquals("31124901793", message.getParticipantId());
+		assertEquals("01234567890", message.getParticipantId());
 		assertEquals("AGENCY", message.getSendingSystem());
 
 		List<Attachment> attachmentList = message.getAttachments();
@@ -160,9 +160,9 @@ public class EnhancedParserTest {
 		assertNotNull(contactInfoList);
 		assertTrue("Number of ContactInfos were different from one.", contactInfoList.size() == 2);
 		assertEquals("SMS", contactInfoList.get(0).getType());
-		assertEquals("+332145864", contactInfoList.get(0).getAddress());
+		assertEquals("+012345678", contactInfoList.get(0).getAddress());
 		assertEquals("EMAIL", contactInfoList.get(1).getType());
-		assertEquals("oslo@patentkontor.com", contactInfoList.get(1).getAddress());
+		assertEquals("mxa_test@mxatest.tst", contactInfoList.get(1).getAddress());
 	}
 
 	@Test
@@ -177,7 +177,7 @@ public class EnhancedParserTest {
 	}
 
 	@Test
-	public void parsing_example_file_from_jens_petter_264() {
+	public void parsing_example_file_264() {
 		Message message = parser.parseDocument(xml_264);
 		List<ContactInfo> contactInfoList = message.getContactInfo();
 		assertNotNull(contactInfoList);
@@ -186,7 +186,7 @@ public class EnhancedParserTest {
 
 		for (ContactInfo contactInfo : contactInfoList) {
 			assertNotNull(contactInfo);
-			assertEquals("EmailAddress does not match.", "mail@oslopatent.no", contactInfo.getAddress());
+			assertEquals("EmailAddress does not match.", "mxa_test@mxatest.tst", contactInfo.getAddress());
 		}
 	}
 

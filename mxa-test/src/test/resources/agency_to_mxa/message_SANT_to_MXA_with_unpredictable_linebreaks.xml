@@ -44,7 +44,7 @@ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                  
                  
                  
-             <ParticipantId>31124901793</ParticipantId>
+             <ParticipantId>01234567890</ParticipantId>
          <MessageReference>VM20090006136-01            
          </MessageReference>
          
@@ -72,9 +72,9 @@ Tittel:test sans player&lt;br /&gt;Patentstyrets saksbehandler:mcr</MessageSumme
 TVhBLWRva3VtZW50IHRpbCBBbHR1dC4K
 
 </Attachment></Attachments></Content>
-<NotificationMessages><NotificationMessage><SMSPhoneNumbers><SMSPhoneNumber>+332145864</SMSPhoneNumber>
+<NotificationMessages><NotificationMessage><SMSPhoneNumbers><SMSPhoneNumber>+012345678</SMSPhoneNumber>
 </SMSPhoneNumbers>
                     
                     
-                        <EmailAddresses><EmailAddress>oslo@patentkontor.com</EmailAddress></EmailAddresses></NotificationMessage>
+                        <EmailAddresses><EmailAddress>mxa_test@mxatest.tst</EmailAddress></EmailAddresses></NotificationMessage>
                         </NotificationMessages></Message>

@@ -26,15 +26,14 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.fail;
 
 import java.net.MalformedURLException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import no.mxa.UniversalConstants;
 import no.mxa.altinn.ws.AltinnFault;
 import no.mxa.altinn.ws.ICorrespondenceAgencyExternalBasic;
-import no.mxa.altinn.ws.ICorrespondenceAgencyExternalBasicInsertCorrespondenceBasicAltinnFaultFaultFaultMessage;
 import no.mxa.altinn.ws.ICorrespondenceAgencyExternalBasicInsertCorrespondenceBasicV2AltinnFaultFaultFaultMessage;
 import no.mxa.altinn.ws.ICorrespondenceAgencyExternalBasicTestAltinnFaultFaultFaultMessage;
 import no.mxa.altinn.ws.ReceiptExternal;
@@ -42,14 +41,17 @@ import no.mxa.altinn.ws.ReceiptStatusEnum;
 import no.mxa.altinn.ws.api.AltinnWS;
 import no.mxa.altinn.ws.api.CorrespondenceBuilderException;
 import no.mxa.dto.AttachmentDTO;
+import no.mxa.dto.ContactInfoDTO;
 import no.mxa.dto.MessageDTO;
 import no.mxa.test.support.SpringBasedTest;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 public class AltinnWsTest extends SpringBasedTest {
+	private static final String UNUSED_DESCRIPTION = "Description";
 
 	@Inject
 	private AltinnWS altinnWS;
@@ -61,39 +63,23 @@ public class AltinnWsTest extends SpringBasedTest {
 		emptyAllDomainTables();
 		SimpleJdbcTemplate template = getSimpleJdbcTemplate();
 		String keyvaluesQuery = "INSERT INTO KEYVALUES (ID, KEY_NAME, DATEVALUE, NUMERICVALUE, STRINGVALUE, DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?)";
-		template.update(keyvaluesQuery, 1L, "GOVORGAN", null, null, "PAT", "Description");
-		template.update(keyvaluesQuery, 2L, "LANGUAGECODE", null, null, "1044", "Description");
-		template.update(keyvaluesQuery, 3L, "ALTINNPASSWORD", null, null, "Wrong Password", "Description");
-		template.update(keyvaluesQuery, 4L, "SERVICECODE", null, null, "PAT", "ServiceCode");
-		template.update(keyvaluesQuery, 5L, "SERVICEEDITION", null, null, "1", "ServiceEdition");
+		template.update(keyvaluesQuery, 1L, "GOVORGAN", null, null, "PAT", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 2L, "LANGUAGECODE", null, null, "1044", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 3L, "ALTINNPASSWORD", null, null, "Wrong Password", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 4L, "SERVICECODE", null, null, "PAT", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 5L, "SERVICEEDITION", null, null, "1", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 6L, "MAILFROM", null, null, "mxa@mxa.tst", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 7L, "NOTIFICATIONTYPE", null, null, "Correspondence", UNUSED_DESCRIPTION);
 	}
 
 	@Test
-	public void ping() throws ICorrespondenceAgencyExternalBasicTestAltinnFaultFaultFaultMessage {
+	public void pingConfiguredEndpoint() throws ICorrespondenceAgencyExternalBasicTestAltinnFaultFaultFaultMessage {
 		port.test();
 	}
 
 	@Test
-	public void shouldSendAMessageToAltinnTest() throws MalformedURLException, CorrespondenceBuilderException,
-			ICorrespondenceAgencyExternalBasicInsertCorrespondenceBasicAltinnFaultFaultFaultMessage {
-		MessageDTO message = new MessageDTO();
-		message.setMessageReference("REF001");
-		// TODO: ParticipantId is primary used by Patentstyret!
-		message.setParticipantId("910013874");
-		message.setCaseOfficer("Test Case Officer");
-		message.setCaseDescription("Test Case Description");
-		message.setMessageHeader("AltinnWsTestHeader");
-		message.setMessageSummary("Altinn Ws Test Summary in Altut or Body in Correspondence.");
-		List<AttachmentDTO> attachments = new ArrayList<>();
-		String string = "TVhBLWRva3VtZW50IHRpbCBBbHR1dC4K"; // Content "MXA-dokument til Altut."
-		String mimeType = "application/txt";
-		String fileName = "mxa_dokument_til_altinn_ii.txt";
-		String name = "Visningsnavn for dokumentet, æøå.";
-		String attachmentAsString = string;
-		AttachmentDTO attachement = new AttachmentDTO(mimeType, fileName, name, attachmentAsString);
-		attachments.add(attachement);
-		message.setAttachments(attachments);
-
+	public void shouldSendAMessageToAltinnTest() throws MalformedURLException, CorrespondenceBuilderException {
+		MessageDTO message = createMessage();
 		try {
 			ReceiptExternal receiptExternal = altinnWS.sendMessage(message);
 			assertThat(receiptExternal.getReceiptStatusCode(), is(ReceiptStatusEnum.OK));
@@ -104,4 +90,56 @@ public class AltinnWsTest extends SpringBasedTest {
 		}
 	}
 
+	private MessageDTO createMessage() {
+		MessageDTO message = new MessageDTO();
+		message.setMessageReference("REF001");
+		message.setParticipantId("01234567890");
+		message.setCaseOfficer("Test Case Officer");
+		message.setCaseDescription("Test Case Description");
+		message.setMessageHeader("AltinnWsTestHeader");
+		message.setMessageSummary("Altinn Ws Test Summary in Altut or Body in Correspondence.");
+		List<AttachmentDTO> attachments = createAttachemnts();
+		message.setAttachments(attachments);
+		List<ContactInfoDTO> contactInfos = createContactInfos(message);
+		message.setContactInfo(contactInfos);
+
+		message.setAltinnArchive("AltinnArchive");
+		message.setBatchSending(0);
+		message.setCaseDescription("caseDescription");
+		message.setCaseOfficer("caseOfficer");
+		message.setDomain("DOMAIN");
+		message.setDueDate(new DateTime().plusDays(1).toDate());
+		message.setIdproc("idproc");
+		message.setMessageKey("messageKey");
+		message.setMessageStatus(UniversalConstants.MSG_STATUS_RECEIVED);
+		message.setOverdueNoticeSent(UniversalConstants.MSG_OVERDUENOTICE_FALSE);
+		message.setReadDeadline(new DateTime().plusDays(20).toDate());
+		message.setSendingSystem("AltinnWsTest");
+		message.setSentAltinn(UniversalConstants.MSG_SENTALTINN_FALSE);
+		message.setSentAltinnDate(null);
+		return message;
+	}
+
+	private List<AttachmentDTO> createAttachemnts() {
+		List<AttachmentDTO> attachments = new ArrayList<>();
+		String string = "TVhBLWRva3VtZW50IHRpbCBBbHR1dC4K"; // Content "MXA-dokument til Altut."
+		String mimeType = "application/txt";
+		String fileName = "mxa_dokument_til_altinn_ii.txt";
+		String name = "Visningsnavn for dokumentet, æøå.";
+		String attachmentAsString = string;
+		AttachmentDTO attachement = new AttachmentDTO(mimeType, fileName, name, attachmentAsString);
+		attachments.add(attachement);
+		return attachments;
+	}
+
+	/** Notifications */
+	private List<ContactInfoDTO> createContactInfos(MessageDTO message) {
+		List<ContactInfoDTO> contactInfos = new ArrayList<>();
+		ContactInfoDTO contactInfo = new ContactInfoDTO();
+		contactInfo.setType(UniversalConstants.CONTACTINFOTYPE_EMAIL);
+		contactInfo.setAddress("Svein.Erik.Lovland@visma.com");
+		contactInfo.setMessage(message);
+		contactInfos.add(contactInfo);
+		return contactInfos;
+	}
 }

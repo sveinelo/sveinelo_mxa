@@ -110,7 +110,7 @@ public class CorrespondenceBuilder {
 		insertCorrespondenceV2.setArchiveReference(getArchiveReference(message));
 
 		/** Correspondences.Correspondence.Content */
-		externalContentV2.setLanguageCode(getLanguageCode());
+		externalContentV2.setLanguageCode(getContentLanguageCode());
 		externalContentV2.setMessageTitle(getMessageTitle(message));
 		externalContentV2.setMessageBody(getMessageBody(message));
 
@@ -134,7 +134,7 @@ public class CorrespondenceBuilder {
 		if (message.getContactInfo() != null && message.getContactInfo().size() > 0) {
 			notification = createNotification();
 			notification.setFromAddress(getFromAddress());
-			notification.setLanguageCode(getLanguageCode());
+			notification.setLanguageCode(getNotificationLanguageCode());
 			notification.setNotificationType(getNotificationType());
 
 			for (ContactInfoDTO contactInfoDTO : message.getContactInfo()) {
@@ -221,13 +221,17 @@ public class CorrespondenceBuilder {
 
 	/** Correspondences.Correspondence.Content.LanguageCode */
 	/** Correspondences.Correspondence.Notifications.Notification.LanguageCode */
-	private JAXBElement<String> getLanguageCode() {
+	private JAXBElement<String> getNotificationLanguageCode() {
+		return objectFactory.createNotificationLanguageCode(messageValues.getLanguageCode());
+	}
+
+	private JAXBElement<String> getContentLanguageCode() {
 		return objectFactory.createExternalContentV2LanguageCode(messageValues.getLanguageCode());
 	}
 
 	/** Correspondences.Correspondence.Notifications.Notification.FromAddress */
 	private JAXBElement<String> getFromAddress() {
-		return objectFactory.createExternalContentV2LanguageCode(messageValues.getMailFrom());
+		return objectFactory.createNotificationFromAddress(messageValues.getMailFrom());
 	}
 
 	/** Correspondences.Correspondence.Content.MessageTitle */
@@ -278,7 +282,7 @@ public class CorrespondenceBuilder {
 
 	/** Correspondences.Correspondence.Notifications */
 	private JAXBElement<NotificationBEList> getNotificationBEList(NotificationBEList notificationBEList) {
-		return objectFactory.createInsertCorrespondenceNotifications(notificationBEList);
+		return objectFactory.createInsertCorrespondenceV2Notifications(notificationBEList);
 	}
 
 	/**

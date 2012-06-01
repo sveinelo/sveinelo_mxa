@@ -30,7 +30,6 @@ import java.util.List;
  * DTO class which handles database mappings related to messages to be stored in the repository
  */
 public class MessageDTO implements Serializable {
-
 	/**
 	 * Unique generated version number
 	 */
@@ -40,25 +39,42 @@ public class MessageDTO implements Serializable {
 	 * Private class variables
 	 */
 	private Long id;
-	private String messageKey; // Used for authentication (and authorization)
-	private String sendingSystem; // Identifies the sending system
-	private Integer batchSending; // Flag to decide if the message will be delivered to Altinn as batch or via online web
-									// service call
-	private String domain; // A two to ten letter code showing what type of case the documents relates to
-	private String caseDescription; // Mark denomination, product type, title etc.
-	private String caseOfficer; // Officer in charge, case officer or
-	private String participantId; // Social security number OR organization number
-	private String messageReference; // Unique message reference within a short name
-	private String idproc; // Key to authenticate the user when status link is opened
-	private Date dueDate; // Deadline to confirm a message
-	private String altinnArchive; // Archive reference from Altinn
-	private String messageHeader; // Message headline
-	private String messageSummary; // Message summary
-	private Integer sentAltinn; // Message sent to Altinn
-	private Timestamp sentAltinnDate; // Timestamp when message was sent to Altinn.
-	private Integer messageStatus; // As defined in UniversalConstants.java
-	private Date readDeadline; // Deadline to read message in Altinn
-	private Integer overdueNoticeSent; // True if notice has been sent by email if message is not read in Altinn
+	/** Used for authentication (and authorization) */
+	private String messageKey;
+	/** Identifies the sending system */
+	private String sendingSystem;
+	/** Flag to decide if the message will be delivered to Altinn as batch or via online web service call */
+	private Integer batchSending;
+	/** A two to ten letter code showing what type of case the documents relates to */
+	private String domain;
+	/** Mark denomination, product type, title etc. */
+	private String caseDescription;
+	/** Officer in charge, case officer or */
+	private String caseOfficer;
+	/** Social security number OR organization number */
+	private String participantId;
+	/** Unique message reference within a short name */
+	private String messageReference;
+	/** Key to authenticate the user when status link is opened */
+	private String idproc;
+	/** Deadline to confirm a message */
+	private Date dueDate;
+	/** Archive reference from Altinn */
+	private String altinnArchive;
+	/** Message headline */
+	private String messageHeader;
+	/** Message summary */
+	private String messageSummary;
+	/** Message sent to Altinn */
+	private Integer sentAltinn;
+	/** Timestamp when message was sent to Altinn. */
+	private Timestamp sentAltinnDate;
+	/** As defined in UniversalConstants.java */
+	private Integer messageStatus;
+	/** Deadline to read message in Altinn */
+	private Date readDeadline;
+	/** True if notice has been sent by email if message is not read in Altinn */
+	private Integer overdueNoticeSent;
 	private List<AttachmentDTO> attachments;
 	private List<ContactInfoDTO> contactInfo;
 	private List<LogDTO> log;
@@ -67,7 +83,6 @@ public class MessageDTO implements Serializable {
 	 * Default constructor
 	 */
 	public MessageDTO() {
-
 	}
 
 	/**

@@ -60,7 +60,6 @@
 		<quartz.version>1.8.6</quartz.version>
 		<javax.mail.version>1.4.5</javax.mail.version>
 		<javax.inject.version>1</javax.inject.version>
-		<ojdbc.version>6</ojdbc.version>
 
 		<jta.version>1.1</jta.version>
 		<hibernate.version>3.6.10.Final</hibernate.version>
@@ -259,6 +258,16 @@
 			</dependency>
 			<!-- webservice -->
 			<dependency>
+				<groupId>org.springframework.ws</groupId>
+				<artifactId>spring-ws-core</artifactId>
+				<version>${spring-ws.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.ws</groupId>
+				<artifactId>spring-ws-test</artifactId>
+				<version>${spring-ws.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.jvnet.mimepull</groupId>
 				<artifactId>mimepull</artifactId>
 				<version>${mimepull.version}</version>
@@ -320,7 +329,24 @@
 				<artifactId>xercesImpl</artifactId>
 				<version>${xerces.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.codehaus.castor</groupId>
+				<artifactId>castor-xml</artifactId>
+				<version>${castor.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
 			<!-- jsf and servlet -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${servlet-api.version}</version>
+				<scope>provided</scope>
+			</dependency>
 			<dependency>
 				<groupId>com.sun.facelets</groupId>
 				<artifactId>jsf-facelets</artifactId>
@@ -427,33 +453,6 @@
 				<artifactId>MockFtpServer</artifactId>
 				<version>${mockFtpServer.version}</version>
 				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>servlet-api</artifactId>
-				<version>${servlet-api.version}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.codehaus.castor</groupId>
-				<artifactId>castor-xml</artifactId>
-				<version>${castor.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.ws</groupId>
-				<artifactId>spring-ws-core</artifactId>
-				<version>${spring-ws.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.ws</groupId>
-				<artifactId>spring-ws-test</artifactId>
-				<version>${spring-ws.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

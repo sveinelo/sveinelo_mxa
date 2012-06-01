@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:web-services="http://www.springframework.org/schema/web-services" xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xsi:schemaLocation="http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<context:component-scan base-package="no.mxa.ws.webservice"></context:component-scan>
+	<web-services:annotation-driven unmarshaller="jaxb2Marshaller" marshaller="jaxb2Marshaller" />
+	<web-services:dynamic-wsdl id="message" portTypeName="MessageRequest" targetNamespace="http://mxa.no/definitions"
+		locationUri="/ws/MXAPortV2/">
+		<web-services:xsd location="classpath:/ws/MxaV2.xsd" />
+	</web-services:dynamic-wsdl>
+
+	<oxm:jaxb2-marshaller id="jaxb2Marshaller" contextPath="no.mxa.ws.model" />
+		
+</beans>

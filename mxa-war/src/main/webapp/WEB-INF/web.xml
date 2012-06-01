@@ -51,6 +51,24 @@
 		<url-pattern>/MXAPort</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>spring-ws</servlet-name>
+		<servlet-class>org.springframework.ws.transport.http.MessageDispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:/spring-ws-context.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>transformWsdlLocations</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>spring-ws</servlet-name>
+		<url-pattern>/ws/*</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<description>DownloadAttachmentServlet - MXA</description>
 		<display-name>Download Attachment</display-name>
 		<servlet-name>download</servlet-name>

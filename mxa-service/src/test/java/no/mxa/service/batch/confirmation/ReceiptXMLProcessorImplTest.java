@@ -27,6 +27,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +43,7 @@ import no.mxa.service.MessageService;
 import no.mxa.service.NotUniqueMessageException;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.BOMInputStream;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -80,8 +82,10 @@ public class ReceiptXMLProcessorImplTest {
 	private String convertResource2String(Resource resource) {
 		String result;
 		try (StringWriter writer = new StringWriter();) {
-			IOUtils.copy(resource.getInputStream(), writer);
+			InputStream inputStream = new BOMInputStream(resource.getInputStream());
+			IOUtils.copy(inputStream, writer);
 			result = writer.toString();
+			result = new String(result.getBytes(), "UTF-8");
 		} catch (IOException e) {
 			throw new AssertionError("We need to be able to read the ResourceFiles for this test to succeed.", e);
 		}
@@ -112,8 +116,8 @@ public class ReceiptXMLProcessorImplTest {
 
 	@Test
 	public void parseOldRecieptXML() throws IOException {
-		boolean success = processor.process(fileMap.get("AltUtConfirmationBatchExample.xml"), "file.log");
-		assertTrue("Should process fine.", success);
+		boolean success = processor.process(fileMap.get("AltUtConfirmationBatchExample.xml"), "someFile.log");
+		assertTrue("Old files should process fine.", success);
 	}
 
 	@Test

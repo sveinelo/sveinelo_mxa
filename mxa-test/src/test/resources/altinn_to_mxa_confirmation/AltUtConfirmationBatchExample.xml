@@ -21,7 +21,7 @@
   #L%
   -->
 
-<AltUtConfirmationBatch batchReference="1" previousReference="0" receiverReference="KRT" timeStamp="2005-09-20T17:50:09" confirmationsInBatch="3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../XSD filer/AltUtConfirmationBatch.xsd">
+<AltUtConfirmationBatch batchReference="1" previousReference="0" receiverReference="KRT" timeStamp="2005-09-20T17:50:09" confirmationsInBatch="3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 	<AltUtConfirmations>
 		<Confirmation participantId="924567825" shortName="Årsoppgave" messageReference="P1234-12">
 			<Read>

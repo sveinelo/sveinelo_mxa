@@ -12,7 +12,7 @@
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="Confirmation" maxOccurs="unbounded">
+							<xs:element name="Confirmation" maxOccurs="unbounded" minOccurs="0">
 								<xs:annotation>
 									<xs:documentation>En lest/godkjent Altut melding</xs:documentation>
 								</xs:annotation>

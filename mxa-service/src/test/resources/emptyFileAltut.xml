@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AltUtConfirmationBatch batchReference="735" previousReference="734" receiverReference="" timeStamp="2012-06-03T10:55:10" confirmationsInBatch="0" xsi="file:///C:/Users/abichper/Documents/MXA/mxa-git/mxa-altinn-ws/src/main/castor/AltUtConfirmationBatch.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AltUtConfirmations/>
+</AltUtConfirmationBatch>
+

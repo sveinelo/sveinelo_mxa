@@ -65,9 +65,9 @@ public class ReceiptXMLProcessorImpl implements ReceiptXMLProcessor {
 				for (MessageAdapter msg : messages) {
 					if (msg.isValid()) {
 						updateMessageAndCreateLog(msg);
-						processed = true;
 					}
 				}
+				processed = true;
 				// If we can decode the XML with the adapter, stop processing with other adapters.
 				break;
 			} catch (ValidationException e) {

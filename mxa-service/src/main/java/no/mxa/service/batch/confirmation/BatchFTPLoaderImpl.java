@@ -33,9 +33,9 @@ import no.mxa.dto.LogDTO;
 import no.mxa.service.KeyValues;
 import no.mxa.service.LogGenerator;
 import no.mxa.service.LogService;
+import no.mxa.utils.UnicodeUtil;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.slf4j.Logger;
@@ -148,10 +148,12 @@ public class BatchFTPLoaderImpl implements BatchFTPLoader {
 	}
 
 	private String convertStreamToString(InputStream is) throws IOException {
-		BOMInputStream bomInputStream = new BOMInputStream(is);
+		UnicodeUtil.UnicodeInputStream bomInputStream = new UnicodeUtil.UnicodeInputStream(is, "UTF-8");
 		StringWriter sw = new StringWriter();
 		IOUtils.copy(bomInputStream, sw);
-		return sw.toString();
+		String returnValue = sw.toString();
+		returnValue = UnicodeUtil.decode(returnValue, "UTF-8");
+		return returnValue;
 	}
 
 	private void logThatFileHasBeenParsed(FTPFile ftpFile) {

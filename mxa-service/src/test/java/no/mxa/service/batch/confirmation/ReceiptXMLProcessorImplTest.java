@@ -67,6 +67,7 @@ public class ReceiptXMLProcessorImplTest {
 		fileMap = new HashMap<String, String>();
 		addFileToMap("BOMTest.log");
 		addFileToMap("AltUtConfirmationBatchExample.xml");
+		addFileToMap("emptyFileAltut.xml");
 		addFileToMap("AltUtConfirmationBatchExampleBOM.xml");
 		addFileToMap("BrokenAltUtConfirmationBatchExample.xml");
 		addFileToMap("CorrespondenceConfirmationsEksempel.xml");
@@ -112,6 +113,12 @@ public class ReceiptXMLProcessorImplTest {
 	@Test
 	public void parseOldRecieptXML() throws IOException {
 		boolean success = processor.process(fileMap.get("AltUtConfirmationBatchExample.xml"), "file.log");
+		assertTrue("Should process fine.", success);
+	}
+
+	@Test
+	public void parseEmptyrOldRecieptXML() throws IOException {
+		boolean success = processor.process(fileMap.get("emptyFileAltut.xml"), "file.log");
 		assertTrue(success);
 	}
 

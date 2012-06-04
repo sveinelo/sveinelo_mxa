@@ -25,6 +25,8 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
 
+import no.mxa.utils.UnicodeUtil;
+
 import org.exolab.castor.xml.MarshalException;
 import org.exolab.castor.xml.ValidationException;
 
@@ -36,7 +38,8 @@ public abstract class AbstractReceiptAdapter implements ReceiptAdapter {
 
 	@Override
 	public List<MessageAdapter> parseXml(final String xml) throws MarshalException, ValidationException {
-		return unmarshal(new StringReader(xml));
+		String decodedXml = UnicodeUtil.decode(xml, "UTF-8");
+		return unmarshal(new StringReader(decodedXml));
 	}
 
 	abstract List<MessageAdapter> unmarshal(Reader reader) throws MarshalException, ValidationException;

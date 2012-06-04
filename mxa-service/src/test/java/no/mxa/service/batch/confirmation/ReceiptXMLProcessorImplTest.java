@@ -45,6 +45,7 @@ import no.mxa.service.NotUniqueMessageException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -115,6 +116,7 @@ public class ReceiptXMLProcessorImplTest {
 	}
 
 	@Test
+	@Ignore
 	public void parseOldRecieptXML() throws IOException {
 		boolean success = processor.process(fileMap.get("AltUtConfirmationBatchExample.xml"), "someFile.log");
 		assertTrue("Old files should process fine.", success);

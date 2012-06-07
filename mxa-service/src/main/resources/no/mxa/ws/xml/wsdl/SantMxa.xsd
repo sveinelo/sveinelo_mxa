@@ -222,7 +222,7 @@
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:maxLength value="50"/>
+						<xs:maxLength value="2000"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:attribute>

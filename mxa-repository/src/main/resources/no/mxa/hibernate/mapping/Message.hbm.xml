@@ -45,7 +45,7 @@
 			<column name="DOMAIN" length="10" not-null="true" />
 		</property>
 		<property name="caseDescription" type="java.lang.String">
-			<column name="CASEDESCRIPTION" length="50" />
+			<column name="CASEDESCRIPTION" length="2000" />
 		</property>
 		<property name="caseOfficer" type="java.lang.String">
 			<column name="CASEOFFICER" length="50" />

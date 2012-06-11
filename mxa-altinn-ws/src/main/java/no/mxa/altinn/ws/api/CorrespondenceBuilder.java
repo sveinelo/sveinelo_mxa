@@ -131,13 +131,33 @@ public class CorrespondenceBuilder {
 		}
 
 		/** Correspondences.Correspondence.Notifications.Notification */
+		// FIXME Need to put Notification back in
+		// buildNotifictions(message, notificationBEList, receiverEndPointBEList);
+
+		/** Correspondences.Correspondence.Content.Attachments.BinaryAttachments */
+		attachmentsV2.setBinaryAttachments(getBinaryAttachmentExternalBEV2List(binaryAttachmentExternalBEV2List));
+
+		/** Set attachments on content */
+		externalContentV2.setAttachments(getAttachmentsV2(attachmentsV2));
+		/** Set content on correspondence */
+		insertCorrespondenceV2.setContent(getExternalContentV2(externalContentV2));
+		/** Set notifications on correspondence */
+		insertCorrespondenceV2.setNotifications(getNotificationBEList(notificationBEList));
+
+		return insertCorrespondenceV2;
+	}
+
+	private void buildNotifictions(MessageDTO message, NotificationBEList notificationBEList,
+			ReceiverEndPointBEList receiverEndPointBEList) {
+		Notification notification;
+		ReceiverEndPoint receiverEndPoint;
 		if (message.getContactInfo() != null && message.getContactInfo().size() > 0) {
 			notification = createNotification();
 			notification.setFromAddress(getFromAddress());
 			notification.setLanguageCode(getNotificationLanguageCode());
 			notification.setNotificationType(getNotificationType());
 
-			for (ContactInfoDTO contactInfoDTO : message.getContactInfo()) {
+			for (final ContactInfoDTO contactInfoDTO : message.getContactInfo()) {
 				receiverEndPoint = createReceiverEndPoint();
 				receiverEndPoint.setTransportType(getTransportType(contactInfoDTO));
 				receiverEndPoint.setReceiverAddress(getReceiverAddress(contactInfoDTO));
@@ -151,18 +171,6 @@ public class CorrespondenceBuilder {
 			/** Add notification in list */
 			notificationBEList.getNotification().add(notification);
 		}
-
-		/** Correspondences.Correspondence.Content.Attachments.BinaryAttachments */
-		attachmentsV2.setBinaryAttachments(getBinaryAttachmentExternalBEV2List(binaryAttachmentExternalBEV2List));
-
-		/** Set attachments on content */
-		externalContentV2.setAttachments(getAttachmentsV2(attachmentsV2));
-		/** Set content on correspondence */
-		insertCorrespondenceV2.setContent(getExternalContentV2(externalContentV2));
-		/** Set notifications on correspondence */
-		insertCorrespondenceV2.setNotifications(getNotificationBEList(notificationBEList));
-
-		return insertCorrespondenceV2;
 	}
 
 	/** Correspondences.Correspondence.ServiceCode */

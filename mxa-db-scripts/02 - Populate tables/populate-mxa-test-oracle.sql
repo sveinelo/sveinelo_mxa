@@ -56,7 +56,7 @@ ${caseDescription}
 Med vennlig hilsen
 Administrator MXA
 ','E-post hovedtekst med ${messageHeader}, ${messageSummary}');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (29,'NOTIFICATIONTYPE',null,null,'Correspondence','NotificationType i Correspondence');
+Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (29,'NOTIFICATIONTYPE',null,null,'Correspondence','NotificationType i Correspondence. "none" for å ikke sende Notifications');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (30,'SERVICECODE',null,null,'PAT','Tjenestekode, f.eks. PSA');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (31,'SERVICEEDITION',null,null,'1','Tjenesteutgavekoden som meldingen gjelder for');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (32,'MAILNOTICEDAYS',null,7,null,'Antall dager mellom melding sendt til Altinn og at infomail blir sendt.');

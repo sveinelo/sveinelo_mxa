@@ -131,8 +131,9 @@ public class CorrespondenceBuilder {
 		}
 
 		/** Correspondences.Correspondence.Notifications.Notification */
-		// FIXME Need to put Notification back in
-		// buildNotifictions(message, notificationBEList, receiverEndPointBEList);
+		if ("none".equals(message)) {
+			buildNotifictions(message, notificationBEList, receiverEndPointBEList);
+		}
 
 		/** Correspondences.Correspondence.Content.Attachments.BinaryAttachments */
 		attachmentsV2.setBinaryAttachments(getBinaryAttachmentExternalBEV2List(binaryAttachmentExternalBEV2List));

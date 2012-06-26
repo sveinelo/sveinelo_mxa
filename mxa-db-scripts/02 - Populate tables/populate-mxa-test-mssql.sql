@@ -56,7 +56,7 @@ ${caseDescription}
 Med vennlig hilsen
 Administrator MXA
 ','E-post hovedtekst med ${messageHeader}, ${messageSummary}');
-Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES ('NOTIFICATIONTYPE',null,null,'Correspondence','NotificationType i Correspondence');
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES ('NOTIFICATIONTYPE',null,null,'Correspondence','NotificationType i Correspondence. "none" for å ikke sende Notifications');
 Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES ('SERVICECODE',null,null,'PAT','Tjenestekode, f.eks. PSA');
 Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES ('SERVICEEDITION',null,null,'1','Tjenesteutgavekoden som meldingen gjelder for');
 

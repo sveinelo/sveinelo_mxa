@@ -131,7 +131,7 @@ public class CorrespondenceBuilder {
 		}
 
 		/** Correspondences.Correspondence.Notifications.Notification */
-		if ("none".equals(message)) {
+		if (!"none".equals(message)) {
 			buildNotifictions(message, notificationBEList, receiverEndPointBEList);
 		}
 

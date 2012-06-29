@@ -70,7 +70,7 @@ public final class DateUtils {
 		return cal;
 	}
 
-	public static XMLGregorianCalendar getToday() throws DatatypeConfigurationException {
+	public static XMLGregorianCalendar getNowPlusFiveMinutes() throws DatatypeConfigurationException {
 		DateTime nowPlusFiveMinutes = new DateTime().plusMinutes(5);
 		return DatatypeFactory.newInstance().newXMLGregorianCalendar(nowPlusFiveMinutes.toGregorianCalendar());
 	}

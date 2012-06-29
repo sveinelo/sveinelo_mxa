@@ -131,8 +131,8 @@ public class CorrespondenceBuilder {
 		}
 
 		/** Correspondences.Correspondence.Notifications.Notification */
-		if (!"none".equals(message)) {
-			buildNotifictions(message, notificationBEList, receiverEndPointBEList);
+		if (isNotificationTypeDifferentFromNone()) {
+			addNotifictions(message, notificationBEList, receiverEndPointBEList);
 		}
 
 		/** Correspondences.Correspondence.Content.Attachments.BinaryAttachments */
@@ -148,7 +148,11 @@ public class CorrespondenceBuilder {
 		return insertCorrespondenceV2;
 	}
 
-	private void buildNotifictions(MessageDTO message, NotificationBEList notificationBEList,
+	private boolean isNotificationTypeDifferentFromNone() {
+		return !"none".equals(messageValues.getNotificationType());
+	}
+
+	private void addNotifictions(MessageDTO message, NotificationBEList notificationBEList,
 			ReceiverEndPointBEList receiverEndPointBEList) throws CorrespondenceBuilderException {
 		Notification notification;
 		ReceiverEndPoint receiverEndPoint;
@@ -169,9 +173,8 @@ public class CorrespondenceBuilder {
 
 			/** Add receiverEndPoint in notification */
 			notification.setReceiverEndPoints(getReceiverEndPointBEList(receiverEndPointBEList));
-			// TODO fix shipmentdate
 			try {
-				notification.setShipmentDateTime(DateUtils.getToday());
+				notification.setShipmentDateTime(DateUtils.getNowPlusFiveMinutes());
 			} catch (DatatypeConfigurationException e) {
 				throw new CorrespondenceBuilderException("Failed to set shipmentDateTime", e);
 			}

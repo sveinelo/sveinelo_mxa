@@ -149,7 +149,7 @@ public class CorrespondenceBuilder {
 	}
 
 	private void buildNotifictions(MessageDTO message, NotificationBEList notificationBEList,
-			ReceiverEndPointBEList receiverEndPointBEList) {
+			ReceiverEndPointBEList receiverEndPointBEList) throws CorrespondenceBuilderException {
 		Notification notification;
 		ReceiverEndPoint receiverEndPoint;
 		if (message.getContactInfo() != null && message.getContactInfo().size() > 0) {
@@ -169,6 +169,12 @@ public class CorrespondenceBuilder {
 
 			/** Add receiverEndPoint in notification */
 			notification.setReceiverEndPoints(getReceiverEndPointBEList(receiverEndPointBEList));
+			// TODO fix shipmentdate
+			try {
+				notification.setShipmentDateTime(DateUtils.getToday());
+			} catch (DatatypeConfigurationException e) {
+				throw new CorrespondenceBuilderException("Failed to set shipmentDateTime", e);
+			}
 			/** Add notification in list */
 			notificationBEList.getNotification().add(notification);
 		}
@@ -326,7 +332,7 @@ public class CorrespondenceBuilder {
 	 * Correspondences.Correspondence.Notifications.Notification. ReceiverEndPoints
 	 */
 	private JAXBElement<ReceiverEndPointBEList> getReceiverEndPointBEList(ReceiverEndPointBEList receiverEndPointBEList) {
-		return objectFactory.createReceiverEndPointBEList(receiverEndPointBEList);
+		return objectFactory.createNotificationReceiverEndPoints(receiverEndPointBEList);
 	}
 
 	/** Correspondences.Correspondence */

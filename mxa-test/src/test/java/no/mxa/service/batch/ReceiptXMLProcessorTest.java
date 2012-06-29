@@ -39,6 +39,7 @@ import no.mxa.service.batch.confirmation.ReceiptXMLProcessorImpl;
 import no.mxa.test.support.SpringBasedTest;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -86,6 +87,7 @@ public class ReceiptXMLProcessorTest extends SpringBasedTest {
 	}
 
 	@Test
+	@Ignore("Venter på Altinn og rett format på correspondence.confirmation")
 	public void shouldParseNewCorrespondenceConfirmationFormat2010() throws SAXException, IOException,
 			ParserConfigurationException {
 		String xml = convertStreamToString((new ClassPathResource(folder

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>mxa</artifactId>
@@ -62,6 +63,26 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/wsimport/</source>
+								<source>${project.build.directory}/generated-sources/xjc/</source>
+								<source>${project.build.directory}/generated-sources/castor/</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<showDeprecation>false</showDeprecation>
@@ -70,7 +91,7 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
+				<groupId>org.jvnet.jax-ws-commons</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
 				<executions>
 					<execution>
@@ -80,12 +101,13 @@
 					</execution>
 				</executions>
 				<configuration>
+					<extension>true</extension>
 					<packageName>no.mxa.altinn.ws</packageName>
 					<wsdlDirectory>${basedir}/src/main/resources/META-INF/wsdl</wsdlDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
-			<!-- https://github.com/hwellmann/m2eclipse-extras/raw/master/p2/ -->
+				<!-- https://github.com/hwellmann/m2eclipse-extras/raw/master/p2/ -->
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
 				<executions>

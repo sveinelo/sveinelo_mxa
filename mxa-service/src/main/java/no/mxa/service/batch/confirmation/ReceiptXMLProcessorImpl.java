@@ -21,7 +21,10 @@
  */
 package no.mxa.service.batch.confirmation;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.inject.Inject;
 
@@ -59,6 +62,7 @@ public class ReceiptXMLProcessorImpl implements ReceiptXMLProcessor {
 	@Override
 	public boolean process(String xml, String filename) {
 		boolean processed = false;
+		Map<String, Exception> exceptions = new HashMap<>();
 		for (ReceiptAdapter adapter : receiptAdapters) {
 			try {
 				List<MessageAdapter> messages = adapter.parseXml(xml);
@@ -74,10 +78,12 @@ public class ReceiptXMLProcessorImpl implements ReceiptXMLProcessor {
 				LOGGER.debug("The Message cannot be decoded with the {} adapter", new Object[] { adapter.getClass().getName(),
 						e });
 				LOGGER.trace("Problem while decoding", e);
+				exceptions.put(adapter.getClass().getName(), e);
 			} catch (MarshalException e) {
 				LOGGER.debug("The Message cannot be decoded with the {} adapter", new Object[] { adapter.getClass().getName(),
 						e });
 				LOGGER.trace("Problem while decoding", e);
+				exceptions.put(adapter.getClass().getName(), e);
 			}
 		}
 		if (!processed) {
@@ -86,6 +92,12 @@ public class ReceiptXMLProcessorImpl implements ReceiptXMLProcessor {
 			LogDTO logEntry = logGenerator.generateLog("Feil under prosessering av bekreftelsesfil: " + filename,
 					UniversalConstants.RCT_PROCESS_FILE_FAILED);
 			logService.saveLog(logEntry);
+			for (Entry<String, Exception> entry : exceptions.entrySet()) {
+				String message = String.format("Problems while reading XML (File: '%s'): Adapter '%s': %s ", filename,
+						entry.getKey(), entry.getValue().getMessage());
+				LogDTO generateLog = logGenerator.generateLog(message, UniversalConstants.RCT_PROCESS_FILE_FAILED);
+				logService.saveLog(generateLog);
+			}
 		} else {
 			if (LOGGER.isInfoEnabled()) {
 				LOGGER.info("Processed Message: '{}'...", xml.substring(0, 50));

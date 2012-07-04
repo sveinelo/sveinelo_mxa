@@ -27,10 +27,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import no.mxa.altinn.castor.confirmations.Confirmation;
-import no.mxa.altinn.castor.confirmations.Confirmed;
-import no.mxa.altinn.castor.confirmations.CorrespondenceConfirmations;
-import no.mxa.altinn.castor.confirmations.Read;
+import no.mxa.altinn.castor.confirmations2009.Confirmation;
+import no.mxa.altinn.castor.confirmations2009.Confirmed;
+import no.mxa.altinn.castor.confirmations2009.CorrespondenceConfirmations;
+import no.mxa.altinn.castor.confirmations2009.Read;
 
 import org.exolab.castor.xml.MarshalException;
 import org.exolab.castor.xml.Unmarshaller;
@@ -38,8 +38,8 @@ import org.exolab.castor.xml.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CorrespondenceConfirmationAdapter extends AbstractReceiptAdapter {
-	private static final Logger LOGGER = LoggerFactory.getLogger(CorrespondenceConfirmationAdapter.class);
+public class CorrespondenceConfirmation2009Adapter extends AbstractReceiptAdapter {
+	private static final Logger LOGGER = LoggerFactory.getLogger(CorrespondenceConfirmation2009Adapter.class);
 
 	private final DateFormat dateTimeFormat = DateFormat.getDateTimeInstance();
 

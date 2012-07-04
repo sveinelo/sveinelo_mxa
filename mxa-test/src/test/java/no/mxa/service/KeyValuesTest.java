@@ -50,20 +50,7 @@ public class KeyValuesTest extends SpringBasedTest {
 	public void shouldReturnCorrectKeyValues() {
 		prepareTestData();
 
-		assertThat(keyValues.getGovOrgan(), is("TestOrgan"));
-		assertThat(keyValues.getShortname(), is("SN"));
-		assertThat(keyValues.getViewFormat(), is("Format"));
-		assertThat(keyValues.getAllowDelete(), is(1));
-		assertThat(keyValues.getPersistent(), is(2));
-		assertThat(keyValues.getRoleReqRead(), is("RoleReqRead"));
-		assertThat(keyValues.getRoleReqDeleteConfirm(), is("RoleReqDeleteConfirm"));
-		assertThat(keyValues.getRoleReqGovAgency(), is("RoleReqGovAgency"));
-		assertThat(keyValues.getSender(), is("Sender"));
-		assertThat(keyValues.getLoginSecurityLevel(), is("SecLevel"));
-		assertThat(keyValues.getRequireConfirmation(), is(4));
-		assertThat(keyValues.getAllowUserDeleteDays(), is(7));
 		assertThat(keyValues.getLanguageCode(), is("NO"));
-		assertThat(keyValues.getNotificationTypeName(), is("NotificationTypeName"));
 		assertThat(keyValues.getAltinnPassword(), is("AltinnPassword"));
 		assertThat(keyValues.getSmtpHost(), is("SmtpHost"));
 		assertThat(keyValues.getSmtpUser(), is("SmtpUser"));
@@ -83,19 +70,7 @@ public class KeyValuesTest extends SpringBasedTest {
 	private void prepareTestData() {
 		String keyValuesQuery = "INSERT INTO KEYVALUES " + "(ID, KEY_NAME, NUMERICVALUE, STRINGVALUE) " + "VALUES (?, ?, ?, ?)";
 		template.update(keyValuesQuery, 1, "GOVORGAN", null, "TestOrgan");
-		template.update(keyValuesQuery, 1, "SHORTNAME", null, "SN");
-		template.update(keyValuesQuery, 1, "VIEWFORMAT", null, "Format");
-		template.update(keyValuesQuery, 1, "ALLOWDELETE", 1, null);
-		template.update(keyValuesQuery, 1, "PERSISTENT", 2, null);
-		template.update(keyValuesQuery, 1, "ROLEREQREAD", null, "RoleReqRead");
-		template.update(keyValuesQuery, 1, "ROLEREQDELETECONFIRM", null, "RoleReqDeleteConfirm");
-		template.update(keyValuesQuery, 1, "ROLEREQGOVAGENCY", null, "RoleReqGovAgency");
-		template.update(keyValuesQuery, 1, "SENDER", null, "Sender");
-		template.update(keyValuesQuery, 1, "LOGINSECURITYLEVEL", null, "SecLevel");
-		template.update(keyValuesQuery, 1, "REQUIRECONFIRMATION", 4, null);
-		template.update(keyValuesQuery, 1, "ALLOWUSERDELETEDAYS", 7, null);
 		template.update(keyValuesQuery, 1, "LANGUAGECODE", null, "NO");
-		template.update(keyValuesQuery, 1, "NOTIFICATIONTYPENAME", null, "NotificationTypeName");
 		template.update(keyValuesQuery, 1, "ALTINNPASSWORD", null, "AltinnPassword");
 		template.update(keyValuesQuery, 1, "SMTPHOST", null, "SmtpHost");
 		template.update(keyValuesQuery, 1, "SMTPUSER", null, "SmtpUser");

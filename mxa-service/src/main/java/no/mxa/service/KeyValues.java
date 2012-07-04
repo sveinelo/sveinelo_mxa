@@ -47,13 +47,11 @@ public class KeyValues implements MessageValues {
 	 */
 	private KeyValuesDTO findKeyValue(String key) {
 		// Get values from database
-		List<KeyValuesDTO> keyValues = keyValuesService.searchByProperty("key",
-				key);
+		List<KeyValuesDTO> keyValues = keyValuesService.searchByProperty("key", key);
 
 		// Throw exception if not found in DB or multiple values in DB.
 		if (keyValues != null && keyValues.size() != 1) {
-			throw new RuntimeException("Error reading keyvalue " + key
-					+ " from database.");
+			throw new RuntimeException("Error reading keyvalue " + key + " from database.");
 		}
 		return keyValues.get(0);
 	}
@@ -68,50 +66,6 @@ public class KeyValues implements MessageValues {
 		return findKeyValue("GOVORGAN").getStringValue();
 	}
 
-	public String getShortname() {
-		return findKeyValue("SHORTNAME").getStringValue();
-	}
-
-	public String getViewFormat() {
-		return findKeyValue("VIEWFORMAT").getStringValue();
-	}
-
-	public Integer getAllowDelete() {
-		return findKeyValue("ALLOWDELETE").getNumericValue();
-	}
-
-	public Integer getPersistent() {
-		return findKeyValue("PERSISTENT").getNumericValue();
-	}
-
-	public String getRoleReqRead() {
-		return findKeyValue("ROLEREQREAD").getStringValue();
-	}
-
-	public String getRoleReqDeleteConfirm() {
-		return findKeyValue("ROLEREQDELETECONFIRM").getStringValue();
-	}
-
-	public String getRoleReqGovAgency() {
-		return findKeyValue("ROLEREQGOVAGENCY").getStringValue();
-	}
-
-	public String getSender() {
-		return findKeyValue("SENDER").getStringValue();
-	}
-
-	public String getLoginSecurityLevel() {
-		return findKeyValue("LOGINSECURITYLEVEL").getStringValue();
-	}
-
-	public Integer getRequireConfirmation() {
-		return findKeyValue("REQUIRECONFIRMATION").getNumericValue();
-	}
-
-	public Integer getAllowUserDeleteDays() {
-		return findKeyValue("ALLOWUSERDELETEDAYS").getNumericValue();
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -120,10 +74,6 @@ public class KeyValues implements MessageValues {
 	@Override
 	public String getLanguageCode() {
 		return findKeyValue("LANGUAGECODE").getStringValue();
-	}
-
-	public String getNotificationTypeName() {
-		return findKeyValue("NOTIFICATIONTYPENAME").getStringValue();
 	}
 
 	/*

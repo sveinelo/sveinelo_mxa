@@ -45,7 +45,6 @@ import no.mxa.service.NotUniqueMessageException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -75,7 +74,6 @@ public class ReceiptXMLProcessorImplTest {
 		addFileToMap("BrokenAltUtConfirmationBatchExample.xml");
 		addFileToMap("CorrespondenceConfirmationsEksempel.xml");
 		addFileToMap("CorrespondenceConfirmation_NVE.xml");
-		addFileToMap("_CorrespondenceConfirmation_NVE.xml");
 	}
 
 	private void addFileToMap(String filename) {
@@ -107,7 +105,8 @@ public class ReceiptXMLProcessorImplTest {
 		when(messageServiceStub.hasDeviation(anyString())).thenReturn(false);
 
 		List<ReceiptAdapter> receiptAdapters = new ArrayList<ReceiptAdapter>();
-		receiptAdapters.add(new CorrespondenceConfirmationAdapter());
+		receiptAdapters.add(new CorrespondenceConfirmation2010Adapter());
+		receiptAdapters.add(new CorrespondenceConfirmation2009Adapter());
 		receiptAdapters.add(new AltUtConfirmationBatchAdapter());
 		processor = new ReceiptXMLProcessorImpl(logGeneratorStub, logServiceStub, messageServiceStub, receiptAdapters);
 	}
@@ -118,7 +117,6 @@ public class ReceiptXMLProcessorImplTest {
 	}
 
 	@Test
-	@Ignore
 	public void parseOldRecieptXML() throws IOException {
 		boolean success = processor.process(fileMap.get("AltUtConfirmationBatchExample.xml"), "someFile.log");
 		assertTrue("Old files should process fine.", success);
@@ -131,22 +129,14 @@ public class ReceiptXMLProcessorImplTest {
 	}
 
 	@Test
-	@Ignore("Venter på Altinn og rett format på correspondence.confirmation")
 	public void parseNewRecieptXML() throws IOException {
 		boolean success = processor.process(fileMap.get("CorrespondenceConfirmationsEksempel.xml"), "file.log");
 		assertTrue(success);
 	}
 
 	@Test
-	@Ignore("Venter på Altinn og rett format på correspondence.confirmation")
 	public void parseCorrespondenceRecieptFromNveXML() throws IOException {
 		boolean success = processor.process(fileMap.get("CorrespondenceConfirmation_NVE.xml"), "file.log");
-		assertTrue(success);
-	}
-
-	@Test
-	public void _tweaked_delete_this_test_parseCorrespondenceRecieptFromNveXML() throws IOException {
-		boolean success = processor.process(fileMap.get("_CorrespondenceConfirmation_NVE.xml"), "file.log");
 		assertTrue(success);
 	}
 

@@ -4,20 +4,8 @@ DELETE FROM KEYVALUES;
 
 REM INSERTING into KEYVALUES
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (1,'GOVORGAN',null,null,'PAT','GOVORGAN er patentstyrets bruker hos altinn');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (2,'SHORTNAME',null,null,'PAT_1','Overskrift brukt i meldingene som sendes til altinn');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (3,'VIEWFORMAT',null,null,'bin','Definerer meldingstypen i Altinn');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (4,'ALLOWDELETE',null,1,null,'Styrer om Altinn skal tillate brukere å sette medlingene i Altinn');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (5,'PERSISTENT',null,0,null,'Styrer om meldingene skal kunne slettes automatisk av Altinn');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (6,'ROLEREQREAD',null,null,'MOINR','Hvilken rolle som kreves for å lese meldinger i Altinn');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (7,'ROLEREQDELETECONFIRM',null,null,'MOINR','Hvilken rolle som kreves for å bekrefte eller slette i Altinn');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (8,'ROLEREQGOVAGENCY',null,null,'SKPAT','Rollekrav for etat');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (9,'SENDER',null,null,'Patentstyret','Hva som står som avsender i Altinn');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (10,'LOGINSECURITYLEVEL',null,null,'2','Hvilket sikkerhetsnivå som kreves i Altinn for å se meldingene');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (11,'REQUIRECONFIRMATION',null,0,null,'Styrer om meldingene skal bekreftes i Altinn eller ikke');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (12,'ALLOWUSERDELETEDAYS',null,1,null,'Hvor mange dager meldingen skal ligge i Altinn før brukeren kan slette meldingen');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (13,'LANGUAGECODE',null,null,'1044','Språkkode i Altinn. 1044 er norsk');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (14,'ALTINNPASSWORD',null,null,'Wrong Password','Patentstyrets passord i Altinn');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (15,'NOTIFICATIONTYPENAME',null,null,'Default6','Hvilken varselsmelding som sendes fra Altinn til mottaker');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (16,'SMTPHOST',null,null,'10.0.0.25','Mailserver i patentstyret');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (17,'SMTPUSER',null,null,null,'Brukernavn på mailserveren. Settes til null hvis autentisering ikke benyttes');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (18,'SMTPPASSWORD',null,null,null,'Passord på mailserveren. Settes til null hvis autentisering ikke benyttes');

@@ -26,7 +26,7 @@
           </xs:annotation>
         </xs:element>
         <xs:element minOccurs="1" name="CountConfirmationsInShipment" type="xs:int" />
-        <xs:element maxOccurs="unbounded" name="Confirmation">
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="Confirmation">
           <xs:annotation>
             <xs:documentation>En lest/godkjent Altut melding</xs:documentation>
           </xs:annotation>

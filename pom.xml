@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>no.mxa</groupId>
 	<artifactId>mxa</artifactId>
@@ -593,6 +594,11 @@
 			<plugins>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.7</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>license-maven-plugin</artifactId>
 					<version>1.0</version>
 				</plugin>
@@ -950,7 +956,8 @@
 														</copy>
 													</then>
 												</if>
-												<cobertura-report datafile="${cobertura.complete.ser.file}" format="${cobertura.format}" destdir="${cobertura.working.dir}/report">
+												<cobertura-report datafile="${cobertura.complete.ser.file}" format="${cobertura.format}"
+													destdir="${cobertura.working.dir}/report">
 													<fileset dir="${cobertura.working.dir}/source" />
 												</cobertura-report>
 											</then>

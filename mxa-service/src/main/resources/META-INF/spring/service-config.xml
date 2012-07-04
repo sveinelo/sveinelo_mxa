@@ -51,7 +51,8 @@
 	<bean id="receiptXMLProcessor" class="no.mxa.service.batch.confirmation.ReceiptXMLProcessorImpl" />
 	<bean id="receiptProcessor" class="no.mxa.service.batch.confirmation.ReceiptProcessor" />
 
-	<bean id="correspondenceConfirmationAdapter" class="no.mxa.service.batch.confirmation.CorrespondenceConfirmationAdapter" />
+	<bean id="correspondenceConfirmation2010Adapter" class="no.mxa.service.batch.confirmation.CorrespondenceConfirmation2010Adapter" />
+	<bean id="correspondenceConfirmation2009Adapter" class="no.mxa.service.batch.confirmation.CorrespondenceConfirmation2009Adapter" />
 	<bean id="altUtConfirmationBatchAdapter" class="no.mxa.service.batch.confirmation.AltUtConfirmationBatchAdapter" />
 
 	<bean id="sendMailService" class="no.mxa.service.implementations.SendMailServiceImpl" />

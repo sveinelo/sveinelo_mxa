@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>no.mxa</groupId>
 	<artifactId>mxa</artifactId>
 	<packaging>pom</packaging>
-	<version>2.28-SNAPSHOT</version>
+	<version>2.28</version>
 	<name>Message Exchange Altinn</name>
 	<description>Message Exchange Altinn.</description>
 	<inceptionYear>2009</inceptionYear>
@@ -14,9 +13,9 @@
 		<url>http://ut-006.patentstyret.no:8080/jenkins/</url>
 	</ciManagement>
 	<scm>
-		<connection>scm:svn:http://ut-006.patentstyret.no/svn/altut/trunk/</connection>
-		<developerConnection>scm:svn:http://ut-006.patentstyret.no/svn/altut/trunk/</developerConnection>
-		<url>http://ut-006.patentstyret.no/svn/altut/trunk/</url>
+		<connection>scm:svn:http://ut-006.patentstyret.no/svn/altut/tags/mxa-2.28</connection>
+		<developerConnection>scm:svn:http://ut-006.patentstyret.no/svn/altut/tags/mxa-2.28</developerConnection>
+		<url>http://ut-006.patentstyret.no/svn/altut/tags/mxa-2.28</url>
 	</scm>
 	<modules>
 		<module>mxa-domain</module>
@@ -956,8 +955,7 @@
 														</copy>
 													</then>
 												</if>
-												<cobertura-report datafile="${cobertura.complete.ser.file}" format="${cobertura.format}"
-													destdir="${cobertura.working.dir}/report">
+												<cobertura-report datafile="${cobertura.complete.ser.file}" format="${cobertura.format}" destdir="${cobertura.working.dir}/report">
 													<fileset dir="${cobertura.working.dir}/source" />
 												</cobertura-report>
 											</then>

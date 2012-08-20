@@ -29,7 +29,6 @@ import no.mxa.UniversalConstants;
 import no.mxa.dto.MessageDTO;
 import no.mxa.service.LogGenerator;
 import no.mxa.service.MessageService;
-import no.mxa.utils.UnicodeUtil;
 import no.mxa.ws.parser.DTOGenerator;
 import no.mxa.ws.parser.Message;
 import no.mxa.ws.parser.Parser;
@@ -65,9 +64,14 @@ public class MXA implements IMXA {
 		assert (msg != null) : "Message may not be null.";
 		int returnCode = -1;
 		try {
-			String message = UnicodeUtil.decode(msg, "UTF-8");
 			if (LOGGER.isTraceEnabled()) {
-				writeXMLfile(message);
+				writeXMLfile("# Original string:\n" + msg);
+			}
+
+			String message = handleByteOrderMarkAndCharacterEncoding(msg);
+
+			if (LOGGER.isTraceEnabled()) {
+				writeXMLfile("# Parsed string:\n" + message);
 			}
 
 			LOGGER.debug("submitMessage start");
@@ -129,6 +133,24 @@ public class MXA implements IMXA {
 			}
 		}
 		return returnCode;
+	}
+
+	/**
+	 * 
+	 * @param originalMessage
+	 *            message as it was when received
+	 * @return message with byte order mark removed if present
+	 */
+	private String handleByteOrderMarkAndCharacterEncoding(final String originalMessage) {
+		// TODO: What if we recieve ISO-8859-1 from the client? Then æøå will not be handled correctly.
+
+		// Remove Byte Order Mark from XML if present. The XML-parser fails if BOM is present.
+		if (originalMessage.indexOf("<") > 0 && originalMessage.indexOf("<") < 4) {
+			return originalMessage.substring(originalMessage.indexOf("<"));
+		}
+		return originalMessage;
+
+		// return UnicodeUtil.decode(msg, "UTF-8");
 	}
 
 	private void writeXMLfile(String message) {

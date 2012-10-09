@@ -102,6 +102,7 @@ public class SendSingleCorrespondenceMessage implements SingleMessageSender {
 		message.setSentAltinn(UniversalConstants.MSG_SENTALTINN_TRUE);
 		message.setMessageStatus(UniversalConstants.MSG_STATUS_SENT_ALTINN);
 		message.setSentAltinnDate(time);
+		message.setReadDeadline(DateUtils.getFutureDate(new Date(), keyValues.getMailNoticeDays()));
 		messageService.mergeMessage(message);
 		return time;
 	}
@@ -111,8 +112,6 @@ public class SendSingleCorrespondenceMessage implements SingleMessageSender {
 		LogDTO logEntry = logGenerator.generateLog(additionalLogMessage, UniversalConstants.MSG_SENT_ALTINN,
 				messageDTO.getId(), time);
 		logService.saveLog(logEntry);
-		messageDTO.setReadDeadline(DateUtils.getFutureDate(new Date(), keyValues.getMailNoticeDays()));
-		messageService.saveMessage(messageDTO);
 	}
 
 	private String extractRecieptText(ReceiptExternal receipt) {

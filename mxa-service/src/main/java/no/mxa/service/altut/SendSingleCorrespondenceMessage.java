@@ -23,6 +23,7 @@ package no.mxa.service.altut;
 
 import java.net.MalformedURLException;
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.inject.Inject;
 import javax.xml.bind.JAXBElement;
@@ -36,9 +37,11 @@ import no.mxa.altinn.ws.api.AltinnWS;
 import no.mxa.altinn.ws.api.CorrespondenceBuilderException;
 import no.mxa.dto.LogDTO;
 import no.mxa.dto.MessageDTO;
+import no.mxa.service.KeyValues;
 import no.mxa.service.LogGenerator;
 import no.mxa.service.LogService;
 import no.mxa.service.MessageService;
+import no.mxa.utils.DateUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,13 +55,16 @@ public class SendSingleCorrespondenceMessage implements SingleMessageSender {
 	private final LogGenerator logGenerator;
 	private final LogService logService;
 
+	private final KeyValues keyValues;
+
 	@Inject
 	public SendSingleCorrespondenceMessage(AltinnWS altinnWS, MessageService messageService, LogGenerator logGenerator,
-			LogService logService) {
+			LogService logService, KeyValues keyValues) {
 		this.altinnWS = altinnWS;
 		this.messageService = messageService;
 		this.logGenerator = logGenerator;
 		this.logService = logService;
+		this.keyValues = keyValues;
 	}
 
 	@Override
@@ -105,6 +111,8 @@ public class SendSingleCorrespondenceMessage implements SingleMessageSender {
 		LogDTO logEntry = logGenerator.generateLog(additionalLogMessage, UniversalConstants.MSG_SENT_ALTINN,
 				messageDTO.getId(), time);
 		logService.saveLog(logEntry);
+		messageDTO.setReadDeadline(DateUtils.getFutureDate(new Date(), keyValues.getMailNoticeDays()));
+		messageService.saveMessage(messageDTO);
 	}
 
 	private String extractRecieptText(ReceiptExternal receipt) {

@@ -37,6 +37,7 @@ import no.mxa.altinn.ws.ReceiptStatusEnum;
 import no.mxa.altinn.ws.api.AltinnWS;
 import no.mxa.dto.LogDTO;
 import no.mxa.dto.MessageDTO;
+import no.mxa.service.KeyValues;
 import no.mxa.service.LogGenerator;
 import no.mxa.service.LogService;
 import no.mxa.service.MessageService;
@@ -57,11 +58,14 @@ public class SendSingleCorrespondenceMessageTest {
 	private LogGenerator logGenerator;
 	@Mock
 	private LogService logService;
+	@Mock
+	private KeyValues keyValues;
 	private SendSingleCorrespondenceMessage singleCorrespondenceMessage;
 
 	@Before
 	public void setup() {
-		singleCorrespondenceMessage = new SendSingleCorrespondenceMessage(altinnWS, messageService, logGenerator, logService);
+		singleCorrespondenceMessage = new SendSingleCorrespondenceMessage(altinnWS, messageService, logGenerator, logService,
+				keyValues);
 	}
 
 	@Test

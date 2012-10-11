@@ -86,7 +86,7 @@
 		<property name="overdueNoticeSent" type="java.lang.Integer" not-null="true">
 			<column name="OVERDUENOTICESENT" precision="1" not-null="true" check="OVERDUENOTICESENT IN (0, 1)" />
 		</property>
-		<bag name="attachments" cascade="all" lazy="true" inverse="true">
+		<bag name="attachments" cascade="all" lazy="false" inverse="true">
 			<key column="MESSAGEID" />
 			<one-to-many class="no.mxa.dto.AttachmentDTO" />
 		</bag>

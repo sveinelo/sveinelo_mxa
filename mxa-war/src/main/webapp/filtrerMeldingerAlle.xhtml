@@ -136,7 +136,7 @@
 									<f:facet name="header">
 										<h:outputText value="Meldingsreferanse" />
 									</f:facet>
-									<h:outputLink value="visMelding.xhtml?messageKey=${message.messageKey}">
+									<h:outputLink value="visMelding.xhtml?messageKey=${message.urlEncodedMessageKey}">
 										<h:outputText value="#{message.messageReference}" />
 									</h:outputLink>
 								</h:column>

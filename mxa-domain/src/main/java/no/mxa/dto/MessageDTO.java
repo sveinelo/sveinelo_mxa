@@ -22,6 +22,8 @@
 package no.mxa.dto;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -175,6 +177,19 @@ public class MessageDTO implements Serializable {
 	 */
 	public String getMessageKey() {
 		return messageKey;
+	}
+
+	/**
+	 * Encode the the key for use in URL (the #-char needs to be encoded)
+	 * 
+	 * @return
+	 */
+	public String getUrlEncodedMessageKey() {
+		try {
+			return URLEncoder.encode(getMessageKey(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**

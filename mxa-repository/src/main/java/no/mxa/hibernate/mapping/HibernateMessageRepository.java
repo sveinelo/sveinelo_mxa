@@ -44,6 +44,7 @@ import org.hibernate.criterion.Restrictions;
  */
 public class HibernateMessageRepository extends BaseHibernateRepository<MessageDTO> implements MessageRepository {
 
+	private static final int MAX_RESULTS = 100;
 	private static final String SENT_ALTINN_DATE = "sentAltinnDate";
 	private static final String MESSAGE_STATUS = "messageStatus";
 	private static final String UNCHECKED = "unchecked";
@@ -70,7 +71,7 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 	@Override
 	public List<MessageDTO> findByExample(MessageDTO instance) {
 		return getSessionFactory().getCurrentSession().createCriteria(getDtoClassName()).add(Example.create(instance))
-				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(100).list();
+				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS).list();
 	}
 
 	@SuppressWarnings(UNCHECKED)
@@ -80,7 +81,7 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 				+ " ORDER BY sentaltinndate desc";
 		Query queryObject = getSessionFactory().getCurrentSession().createQuery(queryString);
 		queryObject.setParameter(0, value);
-		return queryObject.setMaxResults(100).list();
+		return queryObject.setMaxResults(MAX_RESULTS).list();
 	}
 
 	@Override
@@ -96,7 +97,7 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 
 		List<MessageDTO> messagesWithDeviations = deviationsCriteria
 				.add(Restrictions.or(Restrictions.and(Restrictions.and(Restrictions.and(notRead, notFailed), notConfirmed),
-						lessThanPresentDate), failed)).addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(100).list();
+						lessThanPresentDate), failed)).addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS).list();
 
 		return messagesWithDeviations;
 	}
@@ -112,7 +113,7 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 
 		// Return different lists based on input values
 		if (fromDate == null && toDate == null) {
-			returnList = criteriaToBuild.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(100).list();
+			returnList = criteriaToBuild.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS).list();
 		} else if (fromDate != null && toDate == null) {
 			returnList = addDateRestrictionsOnFromDateAndReturnList(criteriaToBuild, fromDate.getTime());
 		} else if (fromDate == null && toDate != null) {
@@ -165,20 +166,20 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 	@SuppressWarnings(UNCHECKED)
 	private List<MessageDTO> addDateRestrictionsOnFromDateAndReturnList(Criteria criteria, Long fromDateTime) {
 		return criteria.add(Restrictions.gt(SENT_ALTINN_DATE, new Timestamp(fromDateTime)))
-				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(100).list();
+				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS).list();
 	}
 
 	@SuppressWarnings(UNCHECKED)
 	private List<MessageDTO> addDateRestrictionsOnToDateAndReturnList(Criteria criteria, Long toDateTime) {
 		return criteria.add(Restrictions.lt(SENT_ALTINN_DATE, new Timestamp(toDateTime)))
-				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(100).list();
+				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS).list();
 	}
 
 	@SuppressWarnings(UNCHECKED)
 	private List<MessageDTO> addDateRestrictionsOnFromDateAndToDateAndReturnList(Criteria criteria, Long fromDateTime,
 			Long toDateTime) {
 		return criteria.add(Restrictions.between(SENT_ALTINN_DATE, new Timestamp(fromDateTime), new Timestamp(toDateTime)))
-				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(100).list();
+				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS).list();
 	}
 
 }

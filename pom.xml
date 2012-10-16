@@ -4,7 +4,7 @@
 	<groupId>no.mxa</groupId>
 	<artifactId>mxa</artifactId>
 	<packaging>pom</packaging>
-	<version>2.37-SNAPSHOT</version>
+	<version>2.37</version>
 	<name>Message Exchange Altinn</name>
 	<description>Message Exchange Altinn.</description>
 	<inceptionYear>2009</inceptionYear>

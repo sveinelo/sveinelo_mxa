@@ -15,7 +15,7 @@
 	<scm>
 		<connection>scm:git:git://git.code.sf.net/p/mxa/code mxa-code</connection>
 		<developerConnection>scm:git:ssh://per-abich@git.code.sf.net/p/mxa/code</developerConnection>
-		<url>https://per-abich@git.code.sf.net/p/mxa/code</url>
+		<url>https://sourceforge.net/p/mxa/code/</url>
 	</scm>
 	<modules>
 		<module>mxa-domain</module>

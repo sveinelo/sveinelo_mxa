@@ -13,9 +13,9 @@
 		<url>http://ut-006.patentstyret.no:8080/jenkins/</url>
 	</ciManagement>
 	<scm>
-		<connection>scm:svn:http://ut-006.patentstyret.no/svn/altut/trunk/</connection>
-		<developerConnection>scm:svn:http://ut-006.patentstyret.no/svn/altut/trunk/</developerConnection>
-		<url>http://ut-006.patentstyret.no/svn/altut/trunk/</url>
+		<connection>scm:git:git://git.code.sf.net/p/mxa/code mxa-code</connection>
+		<developerConnection>scm:git:ssh://per-abich@git.code.sf.net/p/mxa/code</developerConnection>
+		<url>https://per-abich@git.code.sf.net/p/mxa/code</url>
 	</scm>
 	<modules>
 		<module>mxa-domain</module>
@@ -475,6 +475,14 @@
 	</dependencies>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<localCheckout>true</localCheckout>
+					<pushChanges>false</pushChanges>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>license-maven-plugin</artifactId>

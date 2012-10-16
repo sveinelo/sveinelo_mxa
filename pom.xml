@@ -479,8 +479,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
-					<localCheckout>true</localCheckout>
-					<pushChanges>false</pushChanges>
+<!-- 					<localCheckout>true</localCheckout> -->
+<!-- 					<pushChanges>false</pushChanges> -->
 				</configuration>
 			</plugin>
 			<plugin>

@@ -835,10 +835,15 @@
 	</build>
 	<distributionManagement>
 		<downloadUrl>http://ut-006:8080/nexus/content/groups/public</downloadUrl>
+<!-- 		<repository> -->
+<!-- 			<id>mxa.releases</id> -->
+<!-- 			<name>Internal Releases</name> -->
+<!-- 			<url>http://ut-006:8080/nexus/content/repositories/releases</url> -->
+<!-- 		</repository> -->
 		<repository>
-			<id>mxa.releases</id>
-			<name>Internal Releases</name>
-			<url>http://ut-006:8080/nexus/content/repositories/releases</url>
+			<id>mxa.sf.releases</id>
+			<name>SourceForge Releases</name>
+			<url>sftp://frs.sourceforge.net:/home/frs/project/m/mx/mxa/releases</url>
 		</repository>
 		<snapshotRepository>
 			<id>mxa.snapshots</id>

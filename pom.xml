@@ -8,10 +8,6 @@
 	<name>Message Exchange Altinn</name>
 	<description>Message Exchange Altinn.</description>
 	<inceptionYear>2009</inceptionYear>
-	<ciManagement>
-		<system>Jenkins</system>
-		<url>http://ut-006.patentstyret.no:8080/jenkins/</url>
-	</ciManagement>
 	<scm>
 		<connection>scm:git:git://git.code.sf.net/p/mxa/code mxa-code</connection>
 		<developerConnection>scm:git:ssh://per-abich@git.code.sf.net/p/mxa/code</developerConnection>

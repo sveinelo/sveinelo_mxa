@@ -474,6 +474,13 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>2.2</version>
+			</extension>
+		</extensions>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -834,7 +841,7 @@
 		</pluginManagement>
 	</build>
 	<distributionManagement>
-		<downloadUrl>http://ut-006:8080/nexus/content/groups/public</downloadUrl>
+<!-- 		<downloadUrl>http://ut-006:8080/nexus/content/groups/public</downloadUrl> -->
 <!-- 		<repository> -->
 <!-- 			<id>mxa.releases</id> -->
 <!-- 			<name>Internal Releases</name> -->
@@ -846,9 +853,9 @@
 			<url>sftp://frs.sourceforge.net:/home/frs/project/m/mx/mxa/releases</url>
 		</repository>
 		<snapshotRepository>
-			<id>mxa.snapshots</id>
+			<id>mxa.sf.snapshots</id>
 			<name>Internal Snapshots</name>
-			<url>http://ut-006:8080/nexus/content/repositories/snapshots</url>
+			<url>sftp://frs.sourceforge.net:/home/frs/project/m/mx/mxa/snapshots</url>
 			<uniqueVersion>false</uniqueVersion>
 		</snapshotRepository>
 	</distributionManagement>

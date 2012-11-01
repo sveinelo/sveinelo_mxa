@@ -21,7 +21,6 @@
  */
 package no.mxa.service.implementations;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -46,18 +45,12 @@ import no.mxa.service.KeyValues;
 import no.mxa.service.RecipientDTO;
 import no.mxa.service.SendMailService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Class used to send email to external parties.
  */
 public class SendMailServiceImpl implements SendMailService {
-
 	private final KeyValues keyValues;
 	private final AttachmentService attachmentService;
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(SendMailServiceImpl.class);
 
 	@Inject
 	public SendMailServiceImpl(KeyValues keyValues, AttachmentService attachmentService) {
@@ -65,36 +58,16 @@ public class SendMailServiceImpl implements SendMailService {
 		this.attachmentService = attachmentService;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see no.mxa.service.implementations.SendMail#sendMailMessage(java.lang.String[], java.lang.String, java.lang.String,
-	 * java.lang.String)
-	 */
 	@Override
 	public void sendMailMessage(List<RecipientDTO> recipients, String subject, String messageText,
 			List<AttachmentDTO> attachments, String from) throws MessagingException, SQLException {
-		// Set SMTP server
-		Session session;
 
-		Properties properties = new Properties();
-		properties.put("mail.smtp.host", keyValues.getSmtpHost());
-		if (keyValues.getSmtpUser() != null) {
-			properties.put("mail.smtp.auth", "true");
-			Authenticator authenticator = new SMTPAuthenticator();
-
-			// Create session
-			session = Session.getDefaultInstance(properties, authenticator);
-		} else {
-			session = Session.getDefaultInstance(properties);
-		}
+		Session session = createSession();
 
 		// To debug the mail session, uncomment the following line.
 		// session.setDebug(true);
-		// Create message
 		Message message = new MimeMessage(session);
 
-		// Set from and to address and cc
 		message.setFrom(new InternetAddress(from));
 
 		for (RecipientDTO recipient : recipients) {
@@ -107,30 +80,42 @@ public class SendMailServiceImpl implements SendMailService {
 		multipart.addBodyPart(messageBodyPart);
 
 		if (attachments != null) {
-			for (AttachmentDTO attachment : attachments) {
-				BodyPart bp = new MimeBodyPart();
-				byte[] attachmentData = attachmentService.getAttachmentAsByteArray(attachment.getId());
-				if (attachment.getMimeType().equals("text/plain")) {
-					try {
-						bp.setContent(new String(attachmentData, "UTF-8"), attachment.getMimeType());
-					} catch (UnsupportedEncodingException e) {
-						LOGGER.error("Encoding problem", e);
-					}
-				} else {
-					bp.setContent(attachmentData, attachment.getMimeType());
-				}
-				bp.setFileName(attachment.getFileName());
-				multipart.addBodyPart(bp);
-			}
+			addAttachmentsTo(multipart, attachments);
 		}
 
 		message.setContent(multipart);
-
-		// // Set Subject and content and content type
 		message.setSubject(subject);
-		// message.setContent(messageText,"text/plain");
 
 		Transport.send(message);
+	}
+
+	private Session createSession() {
+		Properties properties = new Properties();
+		properties.put("mail.smtp.host", keyValues.getSmtpHost());
+		Integer smtpPort = keyValues.getSmtpPort();
+		properties.put("mail.smtp.port", smtpPort != null ? smtpPort.toString() : Integer.toString(25));
+		if (keyValues.getSmtpUser() != null) {
+			properties.put("mail.smtp.auth", "true");
+			Authenticator authenticator = new SMTPAuthenticator();
+
+			return Session.getInstance(properties, authenticator);
+		} else {
+			return Session.getInstance(properties);
+		}
+	}
+
+	private void addAttachmentsTo(Multipart multipart, List<AttachmentDTO> attachments) throws SQLException, MessagingException {
+		for (AttachmentDTO attachment : attachments) {
+			BodyPart bp = new MimeBodyPart();
+			byte[] attachmentData = attachmentService.getAttachmentAsByteArray(attachment.getId());
+			if (attachment.getMimeType().equals("text/plain")) {
+				bp.setContent(String.valueOf(attachmentData), attachment.getMimeType());
+			} else {
+				bp.setContent(attachmentData, attachment.getMimeType());
+			}
+			bp.setFileName(attachment.getFileName());
+			multipart.addBodyPart(bp);
+		}
 	}
 
 	/**

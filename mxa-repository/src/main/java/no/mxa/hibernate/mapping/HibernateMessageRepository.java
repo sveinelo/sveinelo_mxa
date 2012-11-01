@@ -180,7 +180,7 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 				.add(Restrictions.lt("readDeadline", presentDate))
 				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED))
 				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_READ_IN_ALTINN)).add(Restrictions.lt(
-				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).list();
+				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).setFetchMode("attachments", FetchMode.JOIN).list();
 	}
 
 	@Override
@@ -191,7 +191,7 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 				.add(Restrictions.lt("readDeadline", presentDate))
 				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED))
 				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_READ_IN_ALTINN)).add(Restrictions.lt(
-				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).list();
+				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).setFetchMode("attachments", FetchMode.JOIN).list();
 	}
 
 }

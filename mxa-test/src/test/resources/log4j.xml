@@ -15,9 +15,9 @@
 		<level value="info" />
 	</logger>
 	
-	<!-- logs outgoing xml -->
+	<!-- logs outgoing xml when set to trace-->
 	<logger name="no.mxa.altinn.ws.api">
-		<level value="trace" />
+		<level value="warn" />
 	</logger>
 
 	<!-- 3rdparty Loggers -->

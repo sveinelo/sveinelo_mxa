@@ -124,6 +124,15 @@ public class KeyValues implements MessageValues {
 		return findKeyValue("RECEIPTFTPPASSWORD").getStringValue();
 	}
 
+	public Integer getReceiptFtpServerPort() {
+		// TODO Document this behavior (and remove default port from code?).
+		try {
+			return findKeyValue("RECEIPTFTPPORT").getNumericValue();
+		} catch (RuntimeException re) {
+			return Integer.valueOf(21);
+		}
+	}
+
 	public String getMailToPat() {
 		return findKeyValue("MAILTOPAT").getStringValue();
 	}
@@ -180,6 +189,15 @@ public class KeyValues implements MessageValues {
 	@Override
 	public String getServiceEdition() {
 		return findKeyValue("SERVICEEDITION").getStringValue();
+	}
+
+	public Integer getSmtpPort() {
+		// TODO Document this behavior (and remove default port from code?).
+		try {
+			return findKeyValue("SMTPPORT").getNumericValue();
+		} catch (RuntimeException re) {
+			return Integer.valueOf(25);
+		}
 	}
 
 }

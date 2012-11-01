@@ -83,7 +83,7 @@ public class BatchFTPLoaderImpl implements BatchFTPLoader {
 	private FTPClient createFtpClientWithCorrectRootFolder() throws MxaFtpException {
 		FTPClient client = new FTPClient();
 		try {
-			client.connect(keyValues.getReceiptFtpServer());
+			client.connect(keyValues.getReceiptFtpServer(), keyValues.getReceiptFtpServerPort());
 
 			boolean login = client.login(keyValues.getReceiptFtpUser(), keyValues.getReceiptFtpPassword());
 			boolean changeWorkingDirectory = client.changeWorkingDirectory(keyValues.getReceiptFtpPath());

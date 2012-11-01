@@ -85,15 +85,6 @@ public class BatchFTPLoaderImplTest {
 	}
 
 	@Before
-	public void setupKeyValues() {
-		when(keyValues.getReceiptFtpServer()).thenReturn(FAKE_FTP_HOSTNAME);
-		when(keyValues.getReceiptFtpUser()).thenReturn(userAccount.getUsername());
-		when(keyValues.getReceiptFtpPassword()).thenReturn(userAccount.getPassword());
-		when(keyValues.getReceiptFtpPath()).thenReturn("/data");
-
-	}
-
-	@Before
 	public void createFakeFtpServer() throws Exception {
 		fakeFtpServer = new FakeFtpServer();
 		userAccount = new UserAccount("user", "password", "/data");
@@ -111,6 +102,14 @@ public class BatchFTPLoaderImplTest {
 
 		fakeFtpServer.start();
 		LOGGER.trace("Fake FTP server started.");
+		setupKeyValues();
+	}
+
+	private void setupKeyValues() {
+		when(keyValues.getReceiptFtpServer()).thenReturn(FAKE_FTP_HOSTNAME);
+		when(keyValues.getReceiptFtpUser()).thenReturn(userAccount.getUsername());
+		when(keyValues.getReceiptFtpPassword()).thenReturn(userAccount.getPassword());
+		when(keyValues.getReceiptFtpPath()).thenReturn("/data");
 	}
 
 	private void addRealFiles(FileSystem fileSystem, String path) {

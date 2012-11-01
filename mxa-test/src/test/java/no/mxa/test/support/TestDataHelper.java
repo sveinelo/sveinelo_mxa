@@ -23,15 +23,18 @@ package no.mxa.test.support;
 
 import javax.sql.DataSource;
 
+import no.mxa.dto.ContactInfoDTO;
 import no.mxa.dto.KeyValuesDTO;
 import no.mxa.dto.MessageDTO;
 
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 public class TestDataHelper {
-	private final String keyvaluesQuery = "INSERT INTO KEYVALUES (ID, KEY_NAME, DATEVALUE, NUMERICVALUE, STRINGVALUE, DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String contactQuery = "INSERT INTO CONTACTINFO (ID, MESSAGEID, TYPE, ADDRESS) VALUES (?, ?, ?, ?)";
 
-	private final String messageQuery = "INSERT INTO MESSAGE (ID, MESSAGEKEY, SENDINGSYSTEM, BATCHSENDING, DOMAIN, "
+	private static final String keyvaluesQuery = "INSERT INTO KEYVALUES (ID, KEY_NAME, DATEVALUE, NUMERICVALUE, STRINGVALUE, DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?)";
+
+	private static final String messageQuery = "INSERT INTO MESSAGE (ID, MESSAGEKEY, SENDINGSYSTEM, BATCHSENDING, DOMAIN, "
 			+ "PARTICIPANTID, MESSAGEREFERENCE, IDPROC, MESSAGEHEADER, MESSAGESUMMARY, SENTALTINN, "
 			+ "MSG_STATUS, READDEADLINE, OVERDUENOTICESENT) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -45,6 +48,10 @@ public class TestDataHelper {
 		template.update(messageQuery, m.getId(), m.getMessageKey(), m.getSendingSystem(), m.getBatchSending(), m.getDomain(),
 				m.getParticipantId(), m.getMessageReference(), m.getIdproc(), m.getMessageHeader(), m.getMessageSummary(),
 				m.getSentAltinn(), m.getMessageStatus(), m.getReadDeadline(), m.getOverdueNoticeSent());
+
+		for (ContactInfoDTO contact : m.getContactInfo()) {
+			template.update(contactQuery, contact.getId(), m.getId(), contact.getType(), contact.getAddress());
+		}
 	}
 
 	public void insertKeyvalue(KeyValuesDTO kv) {

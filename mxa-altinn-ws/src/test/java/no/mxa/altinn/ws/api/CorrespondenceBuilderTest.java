@@ -73,8 +73,7 @@ public class CorrespondenceBuilderTest {
 		/** Attachments */
 		assertAttachments(insertCorrespondenceV2);
 		/** Notifications */
-		// FIXME Need to uncomment the notification test again
-		// assertNotifications(insertCorrespondenceV2);
+		assertNotifications(insertCorrespondenceV2);
 	}
 
 	/** Correspondences.Correspondence */

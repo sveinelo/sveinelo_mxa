@@ -47,36 +47,31 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @DirtiesContext
 public class OracleIntegrationTest extends OracleBasedTest {
+	private final static long testMessageId = -1L;
 
 	@Inject
 	private DataSource dataSource;
 	private SimpleJdbcTemplate template;
-	private final long messageId = 200L;
+	@Inject
 	private MessageRepository repository;
 
 	@Before
 	public void prepareDataBase() {
 		template = new SimpleJdbcTemplate(dataSource);
 
-		template.update("DELETE FROM MESSAGE where id = " + messageId);
+		template.update("DELETE FROM MESSAGE where id = " + testMessageId);
 
 		String messageQuery = "INSERT INTO MESSAGE (ID, MESSAGEKEY, SENDINGSYSTEM, BATCHSENDING, DOMAIN, "
 				+ "PARTICIPANTID, MESSAGEREFERENCE, IDPROC, MESSAGEHEADER, MESSAGESUMMARY, SENTALTINN, "
 				+ "MSG_STATUS, READDEADLINE, OVERDUENOTICESENT) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " + "?, ?, ?)";
-		template.update(messageQuery, messageId, "Key001", "AGENCY", 0, "PS", "01010101010", "MSREF", "Proc", "Header",
+		template.update(messageQuery, testMessageId, "Key001", "AGENCY", 0, "PS", "01010101010", "MSREF", "Proc", "Header",
 				"Summary", 1, 10, new Date(), 0);
 	}
 
 	@Test
 	public void shouldRetrieveDataFromOracleDatabase() {
-		MessageDTO result = repository.findById(messageId);
+		MessageDTO result = repository.findById(testMessageId);
 		assertThat(result, is(notNullValue()));
 		assertThat(result.getMessageKey(), is("Key001"));
 	}
-
-	@Inject
-	public void setRepository(MessageRepository repository) {
-		this.repository = repository;
-	}
-
 }

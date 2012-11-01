@@ -42,20 +42,13 @@ public class DeviationMessagesModel {
 		this.messageService = messageService;
 	}
 
-	/**
-	 * Populates the deviationList
-	 */
 	@PostConstruct
-	public void updateDeviationList() {
+	public void populateDeviationList() {
 		deviationList = messageService.searchByMessageDeviations(new Date());
 	}
 
 	public List<MessageDTO> getDeviationList() {
 		return deviationList;
-	}
-
-	public void setDeviationList(List<MessageDTO> deviationList) {
-		this.deviationList = deviationList;
 	}
 
 }

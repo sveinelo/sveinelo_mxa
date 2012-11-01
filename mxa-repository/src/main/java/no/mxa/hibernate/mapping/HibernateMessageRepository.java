@@ -31,6 +31,7 @@ import no.mxa.dto.MessageDTO;
 import no.mxa.utils.hibernate.BaseHibernateRepository;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -77,6 +78,14 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 	@SuppressWarnings(UNCHECKED)
 	@Override
 	public List<MessageDTO> findByProperty(String propertyName, Object value) {
+		if ("messageKey".equals(propertyName)) {
+			MessageDTO messageDTO = new MessageDTO();
+			messageDTO.setMessageKey((String) value);
+			Criteria criteriaToBuild = (getSessionFactory().getCurrentSession().createCriteria(this.getDtoClassName())
+					.add(Example.create(messageDTO).ignoreCase()));
+			criteriaToBuild.setFetchMode("attachments", FetchMode.JOIN);
+			return criteriaToBuild.list();
+		}
 		String queryString = "from " + getDtoClassName() + " as model where model." + propertyName + "= ?"
 				+ " ORDER BY sentaltinndate desc";
 		Query queryObject = getSessionFactory().getCurrentSession().createQuery(queryString);
@@ -107,6 +116,9 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 	public List<MessageDTO> findByCriteriaFromGUI(MessageDTO criteria, Date fromDate, Date toDate, String caseDescription,
 			String messageReference) {
 		Criteria criteriaToBuild = buildCriteria(criteria, caseDescription, messageReference);
+		criteriaToBuild.setFetchMode("attachments", FetchMode.SELECT);
+		criteriaToBuild.setReadOnly(true);
+		criteriaToBuild.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<MessageDTO> returnList = null;
 		// Add 24 hours to include toDate in search
 		Long numberOfMilliSecondsInTwentyFourHours = 0L + (24 * 60 * 60 * 1000);
@@ -125,28 +137,6 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 		}
 
 		return returnList;
-	}
-
-	@Override
-	@SuppressWarnings(UNCHECKED)
-	public List<MessageDTO> findNoticeMessages(Date presentDate) {
-		return (getSessionFactory().getCurrentSession().createCriteria(this.getDtoClassName())
-				.add(Restrictions.eq("overdueNoticeSent", UniversalConstants.MSG_OVERDUENOTICE_FALSE))
-				.add(Restrictions.lt("readDeadline", presentDate))
-				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED))
-				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_READ_IN_ALTINN)).add(Restrictions.lt(
-				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).list();
-	}
-
-	@Override
-	@SuppressWarnings(UNCHECKED)
-	public List<MessageDTO> findWarnMessages(Date presentDate) {
-		return (getSessionFactory().getCurrentSession().createCriteria(this.getDtoClassName())
-				.add(Restrictions.eq("overdueNoticeSent", UniversalConstants.MSG_OVERDUENOTICE_TRUE))
-				.add(Restrictions.lt("readDeadline", presentDate))
-				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED))
-				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_READ_IN_ALTINN)).add(Restrictions.lt(
-				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).list();
 	}
 
 	private Criteria buildCriteria(MessageDTO criteria, String caseDescription, String messageReference) {
@@ -180,6 +170,28 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 			Long toDateTime) {
 		return criteria.add(Restrictions.between(SENT_ALTINN_DATE, new Timestamp(fromDateTime), new Timestamp(toDateTime)))
 				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS).list();
+	}
+
+	@Override
+	@SuppressWarnings(UNCHECKED)
+	public List<MessageDTO> findNoticeMessages(Date presentDate) {
+		return (getSessionFactory().getCurrentSession().createCriteria(this.getDtoClassName())
+				.add(Restrictions.eq("overdueNoticeSent", UniversalConstants.MSG_OVERDUENOTICE_FALSE))
+				.add(Restrictions.lt("readDeadline", presentDate))
+				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED))
+				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_READ_IN_ALTINN)).add(Restrictions.lt(
+				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).list();
+	}
+
+	@Override
+	@SuppressWarnings(UNCHECKED)
+	public List<MessageDTO> findWarnMessages(Date presentDate) {
+		return (getSessionFactory().getCurrentSession().createCriteria(this.getDtoClassName())
+				.add(Restrictions.eq("overdueNoticeSent", UniversalConstants.MSG_OVERDUENOTICE_TRUE))
+				.add(Restrictions.lt("readDeadline", presentDate))
+				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED))
+				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_READ_IN_ALTINN)).add(Restrictions.lt(
+				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).list();
 	}
 
 }

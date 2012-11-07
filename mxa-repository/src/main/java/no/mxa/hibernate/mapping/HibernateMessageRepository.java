@@ -21,6 +21,7 @@
  */
 package no.mxa.hibernate.mapping;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +35,7 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
@@ -60,6 +62,13 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 		super(sessionFactory);
 	}
 
+	@Override
+	public MessageDTO findById(Serializable id) {
+		Session session = getSessionFactory().getCurrentSession();
+		session.enableFetchProfile("message-with-attachements");
+		return super.findById(id);
+	}
+
 	/**
 	 * @return class name
 	 */
@@ -72,7 +81,8 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 	@Override
 	public List<MessageDTO> findByExample(MessageDTO instance) {
 		return getSessionFactory().getCurrentSession().createCriteria(getDtoClassName()).add(Example.create(instance))
-				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS).list();
+				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS).setFetchMode("attachments", FetchMode.JOIN)
+				.list();
 	}
 
 	@SuppressWarnings(UNCHECKED)
@@ -106,7 +116,8 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 
 		List<MessageDTO> messagesWithDeviations = deviationsCriteria
 				.add(Restrictions.or(Restrictions.and(Restrictions.and(Restrictions.and(notRead, notFailed), notConfirmed),
-						lessThanPresentDate), failed)).addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS).list();
+						lessThanPresentDate), failed)).addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS)
+				.setFetchMode("attachments", FetchMode.JOIN).list();
 
 		return messagesWithDeviations;
 	}

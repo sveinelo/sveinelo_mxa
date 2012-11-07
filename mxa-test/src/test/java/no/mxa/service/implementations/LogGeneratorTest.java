@@ -21,9 +21,10 @@
  */
 package no.mxa.service.implementations;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -51,13 +52,9 @@ public class LogGeneratorTest extends SpringBasedTest {
 	@Inject
 	private LogGenerator logGenerator;
 	private LogDTO logDTO;
-	MessageRepository messageRepository;
-	private Long existingId = 58L;
-
 	@Inject
-	public void setRepository(MessageRepository messageRepository) {
-		this.messageRepository = messageRepository;
-	}
+	private MessageRepository messageRepository;
+	private Long existingId = 58L;
 
 	@Before
 	public void setUp() throws Exception {
@@ -81,7 +78,7 @@ public class LogGeneratorTest extends SpringBasedTest {
 	public void testGenerateLogWithMessageId() {
 		logDTO = logGenerator.generateLog(" <Ekstra logg>", UniversalConstants.MSG_SENT_ALTINN, existingId);
 
-		assertThat(logDTO.getMessage().getId(), is(existingId));
+		assertThat(logDTO.getMessage().getId(), is(equalTo(existingId)));
 	}
 
 	@Test

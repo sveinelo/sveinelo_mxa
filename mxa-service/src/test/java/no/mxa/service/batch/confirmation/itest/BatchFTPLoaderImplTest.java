@@ -1,6 +1,6 @@
 package no.mxa.service.batch.confirmation.itest;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
@@ -151,8 +151,7 @@ public class BatchFTPLoaderImplTest {
 		try {
 			batchFTPLoader.getFilesFromFtpAsString();
 		} catch (MxaFtpException e) {
-			assertThat(e.getCause(), is(ConnectException.class));
-
+			assertThat(e.getCause(), instanceOf(ConnectException.class));
 		}
 	}
 

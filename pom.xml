@@ -11,7 +11,7 @@
 	<inceptionYear>2009</inceptionYear>
 	<scm>
 		<connection>scm:git:git://git.code.sf.net/p/mxa/code mxa-code</connection>
-		<developerConnection>scm:git:ssh://per-abich@git.code.sf.net/p/mxa/code</developerConnection>
+		<developerConnection>scm:git:ssh://git.code.sf.net/p/mxa/code</developerConnection>
 		<url>https://sourceforge.net/p/mxa/code/</url>
 	</scm>
 	<modules>

@@ -49,7 +49,7 @@
 			<div id="nav"></div>
 			<div id="content">
 				<div class="mssg error">
-					<h1>Det har oppstï¿½tt en feil</h1>
+					<h1>Det har oppst�tt en feil</h1>
 					<p>
 						<%
 							if (exception != null) {

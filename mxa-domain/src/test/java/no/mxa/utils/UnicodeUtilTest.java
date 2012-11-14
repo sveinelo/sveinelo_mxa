@@ -52,7 +52,6 @@ public class UnicodeUtilTest {
 		out.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF });
 		out.write(testString.getBytes());
 		out.close();
-		byte[] byteArray = out.toByteArray();
 		Resource bomTest = new ClassPathResource("BOMTest.xml");
 		InputStream in = bomTest.getInputStream();
 		BOMInputStream uis = new BOMInputStream(in, true);
@@ -62,9 +61,9 @@ public class UnicodeUtilTest {
 		while ((line = reader.readLine()) != null) {
 			sb.append(line);
 		}
+		reader.close();
 		bomString = sb.toString();
 		testString = bomString.substring(bomString.indexOf("<"));
-		System.out.println(bomString);
 	}
 
 	@Test
@@ -93,7 +92,6 @@ public class UnicodeUtilTest {
 		for (final byte b : inputString.getBytes()) {
 			firstCharsHEX.append(Integer.toHexString(b)).append(" ");
 		}
-		System.out.println(firstCharsHEX);
 		return firstCharsHEX;
 	}
 

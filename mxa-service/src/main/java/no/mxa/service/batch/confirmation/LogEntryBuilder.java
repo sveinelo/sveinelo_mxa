@@ -180,10 +180,6 @@ public class LogEntryBuilder {
 			this.loginMethod = loginMethod;
 		}
 
-		public String getReportee() {
-			return reportee;
-		}
-
 		public void setReportee(String reportee) {
 			this.reportee = reportee;
 		}

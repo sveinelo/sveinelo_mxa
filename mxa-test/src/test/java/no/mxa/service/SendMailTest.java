@@ -45,7 +45,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;
@@ -76,8 +75,8 @@ public class SendMailTest extends SpringBasedTest {
 		String messageQuery = "INSERT INTO MESSAGE (ID, MESSAGEKEY, SENDINGSYSTEM, BATCHSENDING, DOMAIN, "
 				+ "PARTICIPANTID, MESSAGEREFERENCE, IDPROC, MESSAGEHEADER, MESSAGESUMMARY, SENTALTINN, "
 				+ "MSG_STATUS, READDEADLINE, OVERDUENOTICESENT) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " + "?, ?, ?)";
-		template.update(messageQuery, 1L, "Key001", "AGENCY", 0, "PS", "01010101010", "MSREF", "Proc", "Header",
-				"Summary", 1, 10, new Date(), 0);
+		template.update(messageQuery, 1L, "Key001", "AGENCY", 0, "PS", "01010101010", "MSREF", "Proc", "Header", "Summary", 1,
+				10, new Date(), 0);
 		String keyvaluesQuery = "INSERT INTO KEYVALUES (ID, KEY_NAME, DATEVALUE, NUMERICVALUE, STRINGVALUE, DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?)";
 		template.update(keyvaluesQuery, 1L, "MAILNOTICESUBJECT", null, null, SUBJECT, "Description");
 		template.update(keyvaluesQuery, 2L, "MAILNOTICECONTENT", null, null, "Content", "Description");
@@ -94,9 +93,9 @@ public class SendMailTest extends SpringBasedTest {
 	}
 
 	@After
-    public void after() {
-        wiser.stop();
-    }
+	public void after() {
+		wiser.stop();
+	}
 
 	@Test
 	@Transactional
@@ -107,7 +106,7 @@ public class SendMailTest extends SpringBasedTest {
 		MessageDTO message = repository.findById(1L);
 		sendMailService.sendMailMessage(recipients, keyValues.getMailNoticeSubject(), keyValues.getMailNoticeContent(),
 				message.getAttachments(), keyValues.getMailFrom());
-		
+
 		List<WiserMessage> messages = wiser.getMessages();
 		assertThat(messages.size(), is(2));
 		for (WiserMessage wiserMessage : messages) {

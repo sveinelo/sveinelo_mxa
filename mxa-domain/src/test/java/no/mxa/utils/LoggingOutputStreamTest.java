@@ -83,8 +83,15 @@ public class LoggingOutputStreamTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testWrongInit2() {
-		new LoggingOutputStream(logger, null);
-		fail("Should throw Exception");
+		LoggingOutputStream loggingOutputStream = null;
+		try {
+			loggingOutputStream = new LoggingOutputStream(logger, null);
+			fail("Should throw Exception");
+		} finally {
+			if (loggingOutputStream != null) {
+				loggingOutputStream.close();
+			}
+		}
 	}
 
 	@Test(expected = IOException.class)

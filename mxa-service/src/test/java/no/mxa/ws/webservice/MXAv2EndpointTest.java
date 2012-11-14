@@ -21,6 +21,15 @@
  */
 package no.mxa.ws.webservice;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
+import java.io.IOException;
+
+import no.mxa.ws.model.MessageRequest;
+import no.mxa.ws.model.MessageResponse;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,6 +47,11 @@ public class MXAv2EndpointTest {
 	}
 
 	@Test
-	public void shouldReadSendingSystem() {
+	public void shouldReadSendingSystem() throws IOException {
+		MessageRequest request = new MessageRequest();
+
+		MessageResponse response = mxaV2.messageSubmit(request);
+
+		assertThat(response.getStatus().getMessage(), is(equalTo("All is well.")));
 	}
 }

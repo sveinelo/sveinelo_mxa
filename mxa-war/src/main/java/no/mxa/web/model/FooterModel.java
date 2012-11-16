@@ -32,9 +32,8 @@ public class FooterModel {
 	private String version;
 
 	public FooterModel(String version) {
-		developedBy = "Applikasjonen ble sist startet: " + DateFormat.getDateInstance().format(new Date());
-
 		this.version = version;
+		developedBy = "Applikasjonen ble sist startet: " + DateFormat.getDateInstance().format(new Date());
 	}
 
 	public String getDevelopedBy() {

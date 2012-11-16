@@ -23,7 +23,6 @@ package no.mxa.web.model;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import no.mxa.dto.LogDTO;
@@ -34,20 +33,14 @@ import no.mxa.service.LogService;
  */
 public class LogEntriesWithNoMessageModel {
 	private LogService logService;
-	private List<LogDTO> logEntriesWithNoMessage;
 
 	@Inject
 	public LogEntriesWithNoMessageModel(LogService logService) {
 		this.logService = logService;
 	}
 
-	@PostConstruct
-	public void populateLogEntriesWithNoMessage() {
-		logEntriesWithNoMessage = logService.getAllLogsWithNullInMessageId();
-	}
-
 	public List<LogDTO> getLogEntriesWithNoMessage() {
-		return logEntriesWithNoMessage;
+		return logService.getAllLogsWithNullInMessageId();
 	}
 
 }

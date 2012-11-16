@@ -32,7 +32,7 @@
 		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
 		<property name="dataSource" ref="dataSource" />
 		<property name="transactionManager" ref="transactionManager" />
-		<property name="overwriteExistingJobs" value="false" />
+		<property name="overwriteExistingJobs" value="true" />
 		<property name="autoStartup" value="true" />
 		<property name="startupDelay" value="300" />
 		<property name="triggers">
@@ -43,6 +43,7 @@
 							<property name="jobClass" value="no.mxa.service.batch.CheckNewMessagesQuartzJob" />
 						</bean>
 					</property>
+					<property name="cronExpression" value="00 00/10 6-21 ? * *" />
 				</bean>
 				<bean id="cronConfirmationBatch" class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail">
@@ -50,6 +51,7 @@
 							<property name="jobClass" value="no.mxa.service.batch.ConfirmationBatchQuartzJob" />
 						</bean>
 					</property>
+					<property name="cronExpression" value="00 30 04 ? * *" />
 				</bean>
 				<bean id="cronSendDeviationNoticeAndWarn" class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail">
@@ -57,6 +59,7 @@
 							<property name="jobClass" value="no.mxa.service.batch.SendDeviationNoticeAndWarnQuartzJob" />
 						</bean>
 					</property>
+					<property name="cronExpression" value="00 30 05 ? * *" />
 				</bean>
 			</list>
 		</property>

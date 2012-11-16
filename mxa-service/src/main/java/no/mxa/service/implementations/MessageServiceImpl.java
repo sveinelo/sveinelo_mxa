@@ -102,7 +102,7 @@ public class MessageServiceImpl implements MessageService {
 		if (sentAltinn == UniversalConstants.MSG_SENTALTINN_TRUE
 				|| messageDTOToUpdate.getMessageStatus() == UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED) {
 			// Generate a new log entry
-			LogDTO logDTO = this.logGenerator.generateLog(UniversalConstants.MESSAGE_ALTINN_RESEND_DESCRIPTION,
+			LogDTO logDTO = logGenerator.generateLog(UniversalConstants.MESSAGE_ALTINN_RESEND_DESCRIPTION,
 					UniversalConstants.MSG_ALTINN_RESEND, messageId);
 			logGenerator.saveLog(logDTO);
 

@@ -46,13 +46,6 @@ public class FilterMessagesModel {
 	@Inject
 	public FilterMessagesModel(MessageService messageService) {
 		this.messageService = messageService;
-	}
-
-	/**
-	 * Instantiate an empty MessageDTO to avoid NullpointerException.
-	 */
-	@PostConstruct
-	public void createEmptyMessageDTO() {
 		criteria = new MessageDTO();
 	}
 

@@ -39,55 +39,57 @@ public class KeyValues implements MessageValues {
 		this.keyValuesService = keyValuesService;
 	}
 
-	/**
-	 * Looks up values for key in database
-	 * 
-	 * @param key
-	 * @return value
-	 */
-	private KeyValuesDTO findKeyValue(String key) {
-		// Get values from database
-		List<KeyValuesDTO> keyValues = keyValuesService.searchByProperty("key", key);
-
-		// Throw exception if not found in DB or multiple values in DB.
-		if (keyValues != null && keyValues.size() != 1) {
-			throw new RuntimeException("Error reading keyvalue " + key + " from database.");
-		}
-		return keyValues.get(0);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see no.mxa.service.MessageValues#getGovOrgan()
-	 */
 	@Override
-	public String getGovOrgan() {
-		return findKeyValue("GOVORGAN").getStringValue();
+	public String getSystemUserName() {
+		return findKeyValue("SYSTEMUSERNAME").getStringValue();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see no.mxa.service.MessageValues#getLanguageCode()
-	 */
 	@Override
-	public String getLanguageCode() {
-		return findKeyValue("LANGUAGECODE").getStringValue();
+	public String getSystemUserCode() {
+		return findKeyValue("SYSTEMUSERCODE").getStringValue();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see no.mxa.service.MessageValues#getAltinnPassword()
-	 */
 	@Override
 	public String getAltinnPassword() {
 		return findKeyValue("ALTINNPASSWORD").getStringValue();
 	}
 
+	@Override
+	public String getLanguageCode() {
+		return findKeyValue("LANGUAGECODE").getStringValue();
+	}
+
+	@Override
+	public String getMailFrom() {
+		return findKeyValue("MAILFROM").getStringValue();
+	}
+
+	@Override
+	public String getNotificationType() {
+		return findKeyValue("NOTIFICATIONTYPE").getStringValue();
+	}
+
+	@Override
+	public String getServiceCode() {
+		return findKeyValue("SERVICECODE").getStringValue();
+	}
+
+	@Override
+	public String getServiceEdition() {
+		return findKeyValue("SERVICEEDITION").getStringValue();
+	}
+
 	public String getSmtpHost() {
 		return findKeyValue("SMTPHOST").getStringValue();
+	}
+
+	public Integer getSmtpPort() {
+		// TODO Document this behavior (and remove default port from code?).
+		try {
+			return findKeyValue("SMTPPORT").getNumericValue();
+		} catch (RuntimeException re) {
+			return Integer.valueOf(25);
+		}
 	}
 
 	public String getSmtpUser() {
@@ -96,16 +98,6 @@ public class KeyValues implements MessageValues {
 
 	public String getSmtpPassword() {
 		return findKeyValue("SMTPPASSWORD").getStringValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see no.mxa.service.MessageValues#getMailFrom()
-	 */
-	@Override
-	public String getMailFrom() {
-		return findKeyValue("MAILFROM").getStringValue();
 	}
 
 	public String getReceiptFtpServer() {
@@ -161,43 +153,21 @@ public class KeyValues implements MessageValues {
 		return findKeyValue("MAILWARNDAYS").getNumericValue();
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Looks up values for key in database
 	 * 
-	 * @see no.mxa.service.MessageValues#getNotificationType()
+	 * @param key
+	 * @return value
 	 */
-	@Override
-	public String getNotificationType() {
-		return findKeyValue("NOTIFICATIONTYPE").getStringValue();
-	}
+	private KeyValuesDTO findKeyValue(String key) {
+		// Get values from database
+		List<KeyValuesDTO> keyValues = keyValuesService.searchByProperty("key", key);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see no.mxa.service.MessageValues#getServiceCode()
-	 */
-	@Override
-	public String getServiceCode() {
-		return findKeyValue("SERVICECODE").getStringValue();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see no.mxa.service.MessageValues#getServiceEdition()
-	 */
-	@Override
-	public String getServiceEdition() {
-		return findKeyValue("SERVICEEDITION").getStringValue();
-	}
-
-	public Integer getSmtpPort() {
-		// TODO Document this behavior (and remove default port from code?).
-		try {
-			return findKeyValue("SMTPPORT").getNumericValue();
-		} catch (RuntimeException re) {
-			return Integer.valueOf(25);
+		// Throw exception if not found in DB or multiple values in DB.
+		if (keyValues != null && keyValues.size() != 1) {
+			throw new RuntimeException("Error reading keyvalue " + key + " from database.");
 		}
+		return keyValues.get(0);
 	}
 
 }

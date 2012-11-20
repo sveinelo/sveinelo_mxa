@@ -93,7 +93,7 @@ public class CorrespondenceAgencyTest {
 
 	private void configureMockValues() throws Exception {
 		when(messageValues.getAltinnPassword()).thenReturn("Password");
-		when(messageValues.getGovOrgan()).thenReturn("SER");
+		when(messageValues.getSystemUserName()).thenReturn("SER");
 		when(correspondenceBuilder.buildInsertCorrespondenceV2FromMessageDTO(message)).thenReturn(insertCorrespondenceV2);
 		when(
 				port.insertCorrespondenceBasicV2(anyString(), anyString(), anyString(), anyString(),

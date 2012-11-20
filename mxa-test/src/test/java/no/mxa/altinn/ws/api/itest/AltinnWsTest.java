@@ -63,13 +63,14 @@ public class AltinnWsTest extends SpringBasedTest {
 		emptyAllDomainTables();
 		SimpleJdbcTemplate template = getSimpleJdbcTemplate();
 		String keyvaluesQuery = "INSERT INTO KEYVALUES (ID, KEY_NAME, DATEVALUE, NUMERICVALUE, STRINGVALUE, DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?)";
-		template.update(keyvaluesQuery, 1L, "GOVORGAN", null, null, "PAT", UNUSED_DESCRIPTION);
-		template.update(keyvaluesQuery, 2L, "LANGUAGECODE", null, null, "1044", UNUSED_DESCRIPTION);
-		template.update(keyvaluesQuery, 3L, "ALTINNPASSWORD", null, null, "Wrong Password", UNUSED_DESCRIPTION);
-		template.update(keyvaluesQuery, 4L, "SERVICECODE", null, null, "PAT", UNUSED_DESCRIPTION);
-		template.update(keyvaluesQuery, 5L, "SERVICEEDITION", null, null, "1", UNUSED_DESCRIPTION);
-		template.update(keyvaluesQuery, 6L, "MAILFROM", null, null, "mxa@mxa.tst", UNUSED_DESCRIPTION);
-		template.update(keyvaluesQuery, 7L, "NOTIFICATIONTYPE", null, null, "Correspondence", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 1L, "SYSTEMUSERNAME", null, null, "PAT", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 2L, "SYSTEMUSERCODE", null, null, "PAT", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 3L, "LANGUAGECODE", null, null, "1044", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 4L, "ALTINNPASSWORD", null, null, "Wrong Password", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 5L, "SERVICECODE", null, null, "PAT", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 6L, "SERVICEEDITION", null, null, "1", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 7L, "MAILFROM", null, null, "mxa@mxa.tst", UNUSED_DESCRIPTION);
+		template.update(keyvaluesQuery, 8L, "NOTIFICATIONTYPE", null, null, "Correspondence", UNUSED_DESCRIPTION);
 	}
 
 	@Test

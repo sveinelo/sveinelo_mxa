@@ -3,7 +3,8 @@
 DELETE FROM KEYVALUES;
 
 REM INSERTING into KEYVALUES
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (1,'GOVORGAN',null,null,'PAT','GOVORGAN er patentstyrets bruker hos altinn');
+Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (1,'SYSTEMUSERNAME',null,null,'PAT','SYSTEMUSERNAME er etatens bruker hos altinn');
+Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (2,'SYSTEMUSERCODE',null,null,'PAT_1','Kode for kildesystem. Tre første bokstaver representerer tjenesteeier. Etterfølgende tegn representerer avdeling system');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (13,'LANGUAGECODE',null,null,'1044','Språkkode i Altinn. 1044 er norsk');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (14,'ALTINNPASSWORD',null,null,'Wrong Password','Patentstyrets passord i Altinn');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (16,'SMTPHOST',null,null,'10.0.0.25','Mailserver i patentstyret');

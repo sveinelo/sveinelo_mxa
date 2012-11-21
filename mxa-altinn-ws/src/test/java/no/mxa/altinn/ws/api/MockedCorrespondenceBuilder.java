@@ -42,7 +42,7 @@ public class MockedCorrespondenceBuilder {
 	}
 
 	private void configureMockValues() {
-		when(messageValues.getGovOrgan()).thenReturn(mockedMessageDtoBuilder.getGovOrgan());
+		when(messageValues.getSystemUserName()).thenReturn(mockedMessageDtoBuilder.getGovOrgan());
 		when(messageValues.getLanguageCode()).thenReturn(mockedMessageDtoBuilder.getLanguageCode());
 		when(messageValues.getMailFrom()).thenReturn(mockedMessageDtoBuilder.getSenderEmailAddress());
 		when(messageValues.getNotificationType()).thenReturn(mockedMessageDtoBuilder.getNotificationType());

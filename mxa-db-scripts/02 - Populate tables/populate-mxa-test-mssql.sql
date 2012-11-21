@@ -3,17 +3,18 @@
 DELETE FROM KEYVALUES;
 
 --REM INSERTING into KEYVALUES
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (1,'GOVORGAN',null,null,'PAT','GOVORGAN er patentstyrets bruker hos altinn');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (2,'LANGUAGECODE',null,null,'1044','Språkkode i Altinn. 1044 er norsk');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (3,'ALTINNPASSWORD',null,null,'Wrong Password','Patentstyrets passord i Altinn');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (4,'SMTPHOST',null,null,'10.0.0.25','Mailserver i patentstyret');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (5,'SMTPUSER',null,null,null,'Brukernavn på mailserveren. Settes til null hvis autentisering ikke benyttes');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (6,'SMTPPASSWORD',null,null,null,'Passord på mailserveren. Settes til null hvis autentisering ikke benyttes');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values (7,'MAILFROM',null,null,'mxa@patentstyret.no','Avsender på mail som sendes fra MXA'); 
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (8,'RECEIPTFTPSERVER',null,null,'10.0.0.21','FTP-server hvor kvitteringsfilene fra Altinn ligger');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (9,'RECEIPTFTPPATH',null,null,'/altinn/test/kvittering','Filsti på FTP-serveren');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (10,'RECEIPTFTPUSER',null,null,'ftp_takisai','Bruker på FTP-serveren');
-Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (11,'RECEIPTFTPPASSWORD',null,null,'Wrong Password','Passord på FTP-serveren');
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values ('SYSTEMUSERNAME',null,null,'PAT','SYSTEMUSERNAME er etatens bruker hos altinn');
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values ('SYSTEMUSERCODE',null,null,'PAT_1','Kode for kildesystem. Tre første bokstaver representerer tjenesteeier. Etterfølgende tegn representerer avdeling system');
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values ('LANGUAGECODE',null,null,'1044','Språkkode i Altinn. 1044 er norsk');
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values ('ALTINNPASSWORD',null,null,'Wrong Password','Patentstyrets passord i Altinn');
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values ('SMTPHOST',null,null,'10.0.0.25','Mailserver i patentstyret');
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values ('SMTPUSER',null,null,null,'Brukernavn på mailserveren. Settes til null hvis autentisering ikke benyttes');
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values ('SMTPPASSWORD',null,null,null,'Passord på mailserveren. Settes til null hvis autentisering ikke benyttes');
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) values ('MAILFROM',null,null,'mxa@patentstyret.no','Avsender på mail som sendes fra MXA'); 
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES ('RECEIPTFTPSERVER',null,null,'10.0.0.21','FTP-server hvor kvitteringsfilene fra Altinn ligger');
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES ('RECEIPTFTPPATH',null,null,'/altinn/test/kvittering','Filsti på FTP-serveren');
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES ('RECEIPTFTPUSER',null,null,'ftp_takisai','Bruker på FTP-serveren');
+Insert into KEYVALUES (KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES ('RECEIPTFTPPASSWORD',null,null,'Wrong Password','Passord på FTP-serveren');
 --SendMail KEYVALUES
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (12,'MAILNOTICESUBJECT',null,null,'Brev fra Patentstyret er tilgjengelig i Altinn','E-post tittel felt');
 Insert into KEYVALUES (ID,KEY_NAME,DATEVALUE,NUMERICVALUE,STRINGVALUE,DESCRIPTION) VALUES (13,'MAILNOTICECONTENT',null,null,'

@@ -138,7 +138,7 @@ public class CorrespondenceBuilderTest {
 	}
 
 	private void configureMockValues() {
-		when(messageValues.getGovOrgan()).thenReturn(mockedMessageDtoBuilder.getGovOrgan());
+		when(messageValues.getSystemUserName()).thenReturn("TST");
 		when(messageValues.getLanguageCode()).thenReturn(mockedMessageDtoBuilder.getLanguageCode());
 		when(messageValues.getMailFrom()).thenReturn(mockedMessageDtoBuilder.getSenderEmailAddress());
 		when(messageValues.getNotificationType()).thenReturn(mockedMessageDtoBuilder.getNotificationType());

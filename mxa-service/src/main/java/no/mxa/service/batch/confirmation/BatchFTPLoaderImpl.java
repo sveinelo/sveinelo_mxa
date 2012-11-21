@@ -181,8 +181,9 @@ public class BatchFTPLoaderImpl implements BatchFTPLoader {
 		try {
 			boolean rename = client.rename(filename, PROCESSED_FOLDER_NAME + filename);
 			if (!rename) {
+				client.makeDirectory(PROCESSED_FOLDER_NAME);
 				// TODO: Ftp, should we also log something to the database-log?
-				LOGGER.error("Can not rename receipt file: " + filename);
+				LOGGER.error("Can not rename receipt file: '" + filename + "' to:'" + PROCESSED_FOLDER_NAME + filename + "'");
 			}
 		} catch (IOException e) {
 			// TODO: Ftp, should we also log something to the database-log?

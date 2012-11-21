@@ -86,7 +86,7 @@ public class CorrespondenceAgency implements AltinnWS {
 	}
 
 	private String getSystemUserCode() {
-		return messageValues.getGovOrgan();
+		return messageValues.getSystemUserCode();
 	}
 
 	private String getSystemPassword() {
@@ -94,7 +94,7 @@ public class CorrespondenceAgency implements AltinnWS {
 	}
 
 	private String getSystemUserName() {
-		return messageValues.getGovOrgan();
+		return messageValues.getSystemUserName();
 	}
 
 	private String getExternalShipmentReference(MessageDTO message) {

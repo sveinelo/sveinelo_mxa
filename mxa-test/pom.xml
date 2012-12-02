@@ -10,22 +10,35 @@
 	<artifactId>mxa-test</artifactId>
 	<name>Integration tests</name>
 	<description>Integrasjonstester for alle moduler i Message Exchange Altinn</description>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>test-jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+	<properties>
+		<build.directory.altinn.ws>../mxa-altinn-ws/target</build.directory.altinn.ws>
+		<build.directory.domain>../mxa-domain/target</build.directory.domain>
+		<build.directory.repository>../mxa-repository/target</build.directory.repository>
+		<build.directory.service>../mxa-service/target</build.directory.service>
+		<build.directory.war>../mxa-war/target</build.directory.war>
+		<build.directory.test>../mxa-test/target</build.directory.test>
 
-		</plugins>
-	</build>
+		<classes.directory.altinn.ws>../mxa-altinn-ws/target/classes</classes.directory.altinn.ws>
+		<classes.directory.domain>../mxa-domain/target/classes</classes.directory.domain>
+		<classes.directory.repository>../mxa-repository/target/classes</classes.directory.repository>
+		<classes.directory.service>../mxa-service/target/classes</classes.directory.service>
+		<classes.directory.war>../mxa-war/target/classes</classes.directory.war>
+		<classes.directory.test>../mxa-test/target/classes</classes.directory.test>
+
+		<sources.directory.altinn.ws>../mxa-altinn-ws/src/main/java</sources.directory.altinn.ws>
+		<sources.directory.domain>../mxa-domain/src/main/java</sources.directory.domain>
+		<sources.directory.repository>../mxa-repository/src/main/java</sources.directory.repository>
+		<sources.directory.service>../mxa-service/src/main/java</sources.directory.service>
+		<sources.directory.war>../mxa-war/src/main/java</sources.directory.war>
+		<sources.directory.test>../mxa-test/src/main/java</sources.directory.test>
+
+		<generated-sources.directory.altinn.ws>../mxa-altinn-ws/target/generated-sources/annotations</generated-sources.directory.altinn.ws>
+		<generated-sources.directory.domain>../mxa-domain/target/generated-sources/annotations</generated-sources.directory.domain>
+		<generated-sources.directory.repository>../mxa-repository/target/generated-sources/annotations</generated-sources.directory.repository>
+		<generated-sources.directory.service>../mxa-service/target/generated-sources/annotations</generated-sources.directory.service>
+		<generated-sources.directory.war>../mxa-war/target/generated-sources/annotations</generated-sources.directory.war>
+		<generated-sources.directory.test>../mxa-test/target/generated-sources/annotations</generated-sources.directory.test>
+	</properties>
 	<dependencies>
 		<!-- Internal dependencies -->
 		<dependency>
@@ -128,4 +141,117 @@
 		</dependency>
 		<!-- End test dependencies -->
 	</dependencies>
+	<profiles>
+		<profile>
+			<id>ci</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>jacoco-dependency-ant</id>
+								<goals>
+									<goal>copy</goal>
+								</goals>
+								<phase>process-test-resources</phase>
+								<inherited>false</inherited>
+								<configuration>
+									<artifactItems>
+										<artifactItem>
+											<groupId>org.jacoco</groupId>
+											<artifactId>org.jacoco.ant</artifactId>
+											<version>${jacoco.version}</version>
+										</artifactItem>
+									</artifactItems>
+									<stripVersion>true</stripVersion>
+									<outputDirectory>${basedir}/target/jacoco-jars</outputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<!-- Execute an ant task within maven -->
+										<echo message="Generating JaCoCo Reports" />
+										<taskdef name="report" classname="org.jacoco.ant.ReportTask">
+											<classpath path="${basedir}/target/jacoco-jars/org.jacoco.ant.jar" />
+										</taskdef>
+										<mkdir dir="${basedir}/target/coverage-report" />
+										<report>
+											<executiondata>
+												<fileset dir="${build.directory.altinn.ws}">
+													<include name="jacoco.exec" />
+												</fileset>
+												<fileset dir="${build.directory.domain}">
+													<include name="jacoco.exec" />
+												</fileset>
+												<fileset dir="${build.directory.repository}">
+													<include name="jacoco.exec" />
+												</fileset>
+												<fileset dir="${build.directory.service}">
+													<include name="jacoco.exec" />
+												</fileset>
+												<fileset dir="${build.directory.war}">
+													<include name="jacoco.exec" />
+												</fileset>
+												<fileset dir="${build.directory.test}">
+													<include name="jacoco.exec" />
+												</fileset>
+											</executiondata>
+											<structure name="jacoco-multi Coverage Project">
+												<group name="jacoco-multi">
+													<classfiles>
+														<fileset dir="${classes.directory.altinn.ws}" />
+														<fileset dir="${classes.directory.domain}" />
+														<fileset dir="${classes.directory.repository}" />
+														<fileset dir="${classes.directory.service}" />
+														<fileset dir="${classes.directory.war}" />
+													</classfiles>
+													<sourcefiles encoding="UTF-8">
+														<fileset dir="${sources.directory.altinn.ws}" />
+														<fileset dir="${sources.directory.domain}" />
+														<fileset dir="${sources.directory.repository}" />
+														<fileset dir="${sources.directory.service}" />
+														<fileset dir="${sources.directory.war}" />
+
+														<fileset dir="${generated-sources.directory.altinn.ws}" />
+														<fileset dir="${generated-sources.directory.domain}" />
+														<fileset dir="${generated-sources.directory.repository}" />
+														<fileset dir="${generated-sources.directory.service}" />
+														<fileset dir="${generated-sources.directory.war}" />
+													</sourcefiles>
+												</group>
+											</structure>
+											<html destdir="${basedir}/target/coverage-report/html" />
+											<xml destfile="${basedir}/target/coverage-report/coverage-report.xml" />
+											<csv destfile="${basedir}/target/coverage-report/coverage-report.csv" />
+										</report>
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>org.jacoco</groupId>
+								<artifactId>org.jacoco.ant</artifactId>
+								<version>${jacoco.version}</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

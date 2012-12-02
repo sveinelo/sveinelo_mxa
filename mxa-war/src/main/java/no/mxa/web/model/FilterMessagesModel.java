@@ -24,7 +24,6 @@ package no.mxa.web.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import no.mxa.dto.MessageDTO;

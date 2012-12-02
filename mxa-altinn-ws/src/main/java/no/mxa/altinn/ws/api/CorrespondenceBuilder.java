@@ -90,16 +90,10 @@ public class CorrespondenceBuilder {
 		BinaryAttachmentV2 binaryAttachmentV2 = null;
 		/** Correspondences.Correspondence.Notifications */
 		NotificationBEList notificationBEList = createNotificationBEList();
-		/** Correspondences.Correspondence.Notifications.Notification */
-		Notification notification = null;
 		/**
 		 * Correspondences.Correspondence.Notifications.Notification. ReceiverEndPoints
 		 */
 		ReceiverEndPointBEList receiverEndPointBEList = createReceiverEndPointBEList();
-		/**
-		 * Correspondences.Correspondence.Notifications.Notification. ReceiverEndPoints.ReceiverEndPoint
-		 */
-		ReceiverEndPoint receiverEndPoint = null;
 
 		/** Correspondences.Correspondence */
 		insertCorrespondenceV2.setServiceCode(getServiceCode());

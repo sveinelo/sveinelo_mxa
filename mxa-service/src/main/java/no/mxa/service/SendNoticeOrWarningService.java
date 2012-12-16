@@ -24,7 +24,7 @@ package no.mxa.service;
 import no.mxa.dto.MessageDTO;
 
 /**
- * The two first methods are used by SendNoticesAndWarnings.java which is part of a daily quartz-triggered job. The last GUI
+ * The two first methods are used by SendNoticesAndWarnings.java which is part of a daily triggered job. The last GUI
  * method is used by the front-end ("administrasjons-modul").
  */
 public interface SendNoticeOrWarningService {

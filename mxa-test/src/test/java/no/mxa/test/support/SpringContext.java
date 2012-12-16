@@ -27,7 +27,7 @@ public final class SpringContext {
 	static final String CTX_REPOSITORY = CTX_PREFIX + "/repository-config.xml";
 	static final String CTX_ALTINN_WS = CTX_PREFIX + "/altinn-ws-context.xml";
 	static final String CTX_SERVICE = CTX_PREFIX + "/service-config.xml";
-	static final String CTX_SERVICE_QUARTZ = CTX_PREFIX + "/service-quartz-config.xml";
+	static final String CTX_SERVICE_TASK = CTX_PREFIX + "/service-task-config.xml";
 	static final String CTX_WAR = CTX_PREFIX + "/war-config.xml";
 
 	static final String CTX_TEST_COMMON = CTX_PREFIX + "/test-common-config.xml";

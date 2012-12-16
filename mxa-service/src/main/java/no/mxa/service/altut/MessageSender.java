@@ -57,7 +57,7 @@ public class MessageSender {
 	}
 
 	/**
-	 * This method is called from a quartzjob to send new messages to Altinn.
+	 * This method is called from a job to send new messages to Altinn.
 	 * 
 	 */
 	public synchronized String sendMessages() {

@@ -170,4 +170,9 @@ public class KeyValues implements MessageValues {
 		return keyValues.get(0);
 	}
 
+	public String getCronCheckNewMessagesJob() {
+		// TODO get value from database and add the two other crontriggers
+		return "00 00/10 6-21 ? * *";
+	}
+
 }

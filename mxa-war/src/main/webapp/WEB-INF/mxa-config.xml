@@ -27,7 +27,7 @@
 	<import resource="classpath*:META-INF/spring/repository-config.xml" />
 	<import resource="classpath*:META-INF/spring/altinn-ws-context.xml" />
 	<import resource="classpath*:META-INF/spring/service-config.xml" />
-	<import resource="classpath*:META-INF/spring/service-quartz-config.xml" />
+	<import resource="classpath*:META-INF/spring/service-task-config.xml" />
 	<import resource="classpath*:META-INF/spring/war-config.xml" />
 	<import resource="classpath*:META-INF/spring/war-infrastructure-config.xml" />
 </beans>

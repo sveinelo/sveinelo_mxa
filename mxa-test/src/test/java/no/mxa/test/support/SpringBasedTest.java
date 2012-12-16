@@ -55,9 +55,6 @@ public abstract class SpringBasedTest {
 		simpleJdbcTemplate = new SimpleJdbcTemplate(getDataSource());
 	}
 
-	/**
-	 * Does not clear Quartz tables.
-	 */
 	protected void emptyAllDomainTables() {
 		simpleJdbcTemplate.update(DELETE_FROM_KEYVALUES);
 		simpleJdbcTemplate.update(DELETE_FROM_MESSAGE);

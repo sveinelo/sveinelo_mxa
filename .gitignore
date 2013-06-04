@@ -6,3 +6,5 @@ target/
 .svn/
 .cache
 .springBeans
+*.sublime-project
+*.sublime-workspace

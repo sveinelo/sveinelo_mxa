@@ -42,7 +42,7 @@ import org.springframework.core.io.Resource;
  * #%L
  * Service
  * %%
- * Copyright (C) 2009 - 2012 Patentstyret
+ * Copyright (C) 2009 - 2013 Patentstyret
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as

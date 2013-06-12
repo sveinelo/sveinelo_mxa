@@ -2,7 +2,7 @@
  * #%L
  * Service
  * %%
- * Copyright (C) 2009 - 2012 Patentstyret
+ * Copyright (C) 2009 - 2013 Patentstyret
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -33,6 +33,7 @@ import no.mxa.dto.MessageDTO;
 import no.mxa.service.LogGenerator;
 import no.mxa.service.MessageService;
 
+import org.hibernate.jdbc.TooManyRowsAffectedException;
 import org.springframework.transaction.annotation.Transactional;
 
 public class MessageServiceImpl implements MessageService {
@@ -84,7 +85,7 @@ public class MessageServiceImpl implements MessageService {
 	public MessageDTO searchByMessageKey(String messageKey) {
 		List<MessageDTO> list = this.messageRepository.findByProperty("messageKey", messageKey);
 		if (list.size() != 1) {
-			return null;
+			throw new TooManyRowsAffectedException("For mange rader returnert. Forventet 1 fikk: " + list.size(), 1, list.size());
 		} else {
 			return list.get(0);
 

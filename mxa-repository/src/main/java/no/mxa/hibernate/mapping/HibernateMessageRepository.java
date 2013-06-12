@@ -2,7 +2,7 @@
  * #%L
  * Repository
  * %%
- * Copyright (C) 2009 - 2012 Patentstyret
+ * Copyright (C) 2009 - 2013 Patentstyret
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -35,7 +35,6 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.classic.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
@@ -64,8 +63,6 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 
 	@Override
 	public MessageDTO findById(Serializable id) {
-		Session session = getSessionFactory().getCurrentSession();
-		session.enableFetchProfile("message-with-attachements");
 		return super.findById(id);
 	}
 
@@ -81,21 +78,12 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 	@Override
 	public List<MessageDTO> findByExample(MessageDTO instance) {
 		return getSessionFactory().getCurrentSession().createCriteria(getDtoClassName()).add(Example.create(instance))
-				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS).setFetchMode("attachments", FetchMode.JOIN)
-				.list();
+				.addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS).list();
 	}
 
 	@SuppressWarnings(UNCHECKED)
 	@Override
 	public List<MessageDTO> findByProperty(String propertyName, Object value) {
-		if ("messageKey".equals(propertyName)) {
-			MessageDTO messageDTO = new MessageDTO();
-			messageDTO.setMessageKey((String) value);
-			Criteria criteriaToBuild = (getSessionFactory().getCurrentSession().createCriteria(this.getDtoClassName())
-					.add(Example.create(messageDTO).ignoreCase()));
-			criteriaToBuild.setFetchMode("attachments", FetchMode.JOIN);
-			return criteriaToBuild.list();
-		}
 		String queryString = "from " + getDtoClassName() + " as model where model." + propertyName + "= ?"
 				+ " ORDER BY sentaltinndate desc";
 		Query queryObject = getSessionFactory().getCurrentSession().createQuery(queryString);
@@ -117,7 +105,7 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 		List<MessageDTO> messagesWithDeviations = deviationsCriteria
 				.add(Restrictions.or(Restrictions.and(Restrictions.and(Restrictions.and(notRead, notFailed), notConfirmed),
 						lessThanPresentDate), failed)).addOrder(Order.desc(SENT_ALTINN_DATE)).setMaxResults(MAX_RESULTS)
-				.setFetchMode("attachments", FetchMode.JOIN).list();
+				.list();
 
 		return messagesWithDeviations;
 	}
@@ -191,7 +179,7 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 				.add(Restrictions.lt("readDeadline", presentDate))
 				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED))
 				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_READ_IN_ALTINN)).add(Restrictions.lt(
-				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).setFetchMode("attachments", FetchMode.JOIN).list();
+				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).list();
 	}
 
 	@Override
@@ -202,7 +190,7 @@ public class HibernateMessageRepository extends BaseHibernateRepository<MessageD
 				.add(Restrictions.lt("readDeadline", presentDate))
 				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_SEND_ALTINN_FAILED))
 				.add(Restrictions.ne(MESSAGE_STATUS, UniversalConstants.MSG_STATUS_READ_IN_ALTINN)).add(Restrictions.lt(
-				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).setFetchMode("attachments", FetchMode.JOIN).list();
+				MESSAGE_STATUS, MAX_WARN_MESSAGE_STATUS))).list();
 	}
 
 }
